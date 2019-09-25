@@ -1,0 +1,629 @@
+﻿var _ListaFunciones;
+var funcionSelected;
+var $dropFunciones;
+
+
+function BuscarAutores(campo) {
+    $.ajax({
+        url: urlSite + "Acceso/General/WebServices.asmx/BuscarAutores",
+        async: true,
+        data: JSON.stringify({ busqueda: campo }),
+        type: 'POST',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        success: function (data) {
+            var lista = data.d;
+            $("body").data("AUTOR-" + request.term, lista);
+            response($.map(lista, function (concepto) {
+                return {
+                    label: ((concepto.NombreLatin.length > 1) ? concepto.NombreEspanol + "(" + concepto.NombreLatin + ")" : concepto.NombreEspanol + "(" + concepto.NombreGriego + ")"),
+                    value: ((concepto.NombreLatin.length > 1) ? concepto.NombreEspanol + "(" + concepto.NombreLatin + ")" : concepto.NombreEspanol + "(" + concepto.NombreGriego + ")"), ID: concepto.IdAutor
+                }
+            }));
+        },
+        error: function (xhr, status) {
+            alert("Ocurrió un error al procesar la petición. Por favor inténtelo nuevamente");
+        },
+        complete: function (xhr, status) { }
+    });
+}
+
+function BuscarCiudades(campo) {
+    $.ajax({
+        url: urlSite + "Acceso/General/WebServices.asmx/BuscarCiudades",
+        async: true,
+        data: JSON.stringify({ busqueda: campo }),
+        type: 'POST',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        success: function (data) {
+            var lista = data.d;
+            $("body").data("CIUDAD-" + request.term, lista);
+            response($.map(lista, function (concepto) { return { label: concepto.Descripcion, value: concepto.Descripcion, ID: concepto.IdCiudad } }));
+        },
+        error: function (xhr, status) {
+            alert("Ocurrió un error al procesar la petición. Por favor inténtelo nuevamente");
+        },
+        complete: function (xhr, status) { }
+    });
+}
+
+function BuscarEditores(campo) {
+    $.ajax({
+        url: urlSite + "Acceso/General/WebServices.asmx/BuscarEditores",
+        async: true,
+        data: JSON.stringify({ busqueda: campo }),
+        type: 'POST',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        success: function (data) {
+            var lista = data.d;
+            $("body").data("EDITOR-" + request.term, lista);
+            response($.map(lista, function (concepto) { return { label: concepto.Nombre, value: concepto.Nombre, ID: concepto.IdEditor } }));
+        },
+        error: function (xhr, status) {
+            alert("Ocurrió un error al procesar la petición. Por favor inténtelo nuevamente");
+        },
+        complete: function (xhr, status) { }
+    });
+}
+
+function BuscarIsbn(campo) {
+    $.ajax({
+        url: urlSite + "Acceso/General/WebServices.asmx/BuscarIsbn",
+        async: true,
+        data: JSON.stringify({ busqueda: campo }),
+        type: 'POST',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        success: function (data) {
+            var lista = data.d;
+            $("body").data("ISBN-" + request.term, lista);
+            response($.map(lista, function (concepto) { return { label: concepto.ClaveIsbn, value: concepto.ClaveIsbn, ID: concepto.IdIsbn, Objeto: concepto } }));
+        },
+        error: function (xhr, status) {
+            alert("Ocurrió un error al procesar la petición. Por favor inténtelo nuevamente");
+        },
+        complete: function (xhr, status) { }
+    });
+}
+
+function BuscarSerie(campo) {
+    $.ajax({
+        url: urlSite + "Acceso/General/WebServices.asmx/BuscarSerie",
+        async: true,
+        data: JSON.stringify({ busqueda: campo }),
+        type: 'POST',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        success: function (data) {
+            var lista = data.d;
+            $("body").data("SERIE-" + request.term, lista);
+            response($.map(lista, function (concepto) {
+                return {
+                    label: ((concepto.NombreLatin.length > 1) ? concepto.NombreLatin : concepto.NombreGriego),
+                    value: ((concepto.NombreLatin.length > 1) ? concepto.NombreLatin : concepto.NombreGriego), ID: concepto.IdSerie
+                }
+            }));
+        },
+        error: function (xhr, status) {
+            alert("Ocurrió un error al procesar la petición. Por favor inténtelo nuevamente");
+        },
+        complete: function (xhr, status) { }
+    });
+}
+
+function BuscarResponsables(campo) {
+    $.ajax({
+        url: urlSite + "Acceso/General/WebServices.asmx/BuscarResponsables",
+        async: true,
+        data: JSON.stringify({ busqueda: campo }),
+        type: 'POST',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        success: function (data) {
+            var lista = data.d;
+            $("body").data("RESP-" + request.term, lista);
+            response($.map(lista, function (concepto) { return { label: concepto.NombreCompleto + "(" + concepto.Rfc + ")", value: concepto.NombreCompleto + "(" + concepto.Rfc + ")", ID: concepto.IdResponsable, Objeto: concepto } }));
+        },
+        error: function (xhr, status) {
+            alert("Ocurrió un error al procesar la petición. Por favor inténtelo nuevamente");
+        },
+        complete: function (xhr, status) { }
+    });
+}
+
+
+function CargarFunciones() {
+    $.ajax({
+        url: urlSite + "Acceso/General/WebServices.asmx/CargarFunciones",
+        async: true,
+        //data: JSON.stringify({ busqueda: campo }),
+        type: 'POST',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        success: onGetFuncionesSuccess,
+        error: onError,
+        complete: function (xhr, status) { }
+    });
+}
+
+function GetTitulo(id) {
+    $.ajax({
+        url: urlSite + "Acceso/General/WebServices.asmx/GetTitulo",
+        async: true,
+        data: JSON.stringify({ idTitulo: id }),
+        type: 'POST',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        success: onGetTituloSuccess,
+        error: onError,
+        complete: function (xhr, status) { }
+    });
+}
+
+function setDataModalDetalle(idTitulo, detalleIsbn, ciudad, editor, autor, titOriginal, titulo, edicion, anioPub, paginas,
+                                     medidas, serie500, contenido, cualidades, colofon, tema, secundarias, uffyl, uiifl,
+                                     observaciones, serie, rutaArchivo, nombreArchivo, isNovedad, edicionNumero, reimpresion, urlPdf, urlVirtual, urlOnline) {
+    $(idHiddenClave).val(idTitulo);
+    // Disparar el validador
+    $(idLabelIdtitulo).text(idTitulo).change();
+
+    var stringIsbn = "";
+
+    if (typeof (detalleIsbn) != 'undefined' && detalleIsbn != null) {
+        if (detalleIsbn.length > 0) {
+            renderTableIsbn($("#DivIsbnEdit"), detalleIsbn);
+
+            for (var i = 0; i < detalleIsbn.length; i++) {
+                var idIsbn = detalleIsbn[i].IdIsbn;
+                var claveIsbn = detalleIsbn[i].ClaveIsbn;
+                stringIsbn += idIsbn + "#" + claveIsbn + "|";
+            }
+        } else {
+            renderTableIsbn($("#DivIsbnEdit"), []);
+        }
+    } else {
+        renderTableIsbn($("#DivIsbnEdit"), []);
+    }
+
+    $(idHiddenDetalleIsbn).val(stringIsbn);
+
+
+    if (typeof (ciudad) != 'undefined' & ciudad != null) {
+        if (typeof (serie) === 'string') {
+            $(idHiddenCiudad).val(ciudad);
+            $("#spanCiudad").text(ciudad);
+            //$(idTextCiudad).val(ciudad);
+        } else {
+            $(idHiddenCiudad).val(ciudad.IdCiudad);
+            $("#spanCiudad").text(ciudad.Descripcion);
+            //$(idTextCiudad).val(ciudad.Descripcion);
+        }
+    } else {
+        $(idHiddenCiudad).val("");
+        $("#spanCiudad").text("");
+    }
+
+    if (typeof (editor) != 'undefined' & editor != null) {
+        if (typeof (serie) === 'string') {
+            $(idHiddenEditor).val(editor);
+            $("#spanEditor").text(editor);
+            //$(idTextEditor).val(editor);
+        } else {
+            $(idHiddenEditor).val(editor.IdEditor);
+            // Disparar el validador
+            $("#spanEditor").text(editor.Nombre).change();
+            //$(idTextEditor).val(editor.Nombre);
+        }
+    } else {
+        $(idHiddenEditor).val("");
+        $("#spanEditor").text("");
+    }
+
+    if (typeof (autor) != 'undefined' & autor != null) {
+        if (typeof (autor) === 'string') {
+            $(idHiddenAutor).val(autor);
+            $("#spanAutor").text(autor);
+            //$(idTextAutor).val(autor);
+        } else {
+            $(idHiddenAutor).val(autor.IdAutor);
+            var nombreAutor = autor.NombreEspanol;
+            if (autor.NombreLatin.length > 1) {
+                nombreAutor = nombreAutor + '(' + autor.NombreLatin + ')';
+            } else if (autor.NombreGriego.length > 1) {
+                nombreAutor = nombreAutor + '(' + autor.NombreGriego + ')';
+            }
+            // Disparar el validador
+            $("#spanAutor").text(nombreAutor).change();
+            //$(idTextAutor).val(autor.NombreEspanol);
+        }
+    } else {
+        $(idHiddenAutor).val("");
+        $("#spanAutor").text("");
+    }
+
+    if (typeof (serie) != 'undefined' & serie != null) {
+        if (typeof (serie) === 'string') {
+            $(idHiddenSerie).val(serie);
+            $("#spanSerie").text(serie);
+            //$(idTextSerie ).val(serie);
+        } else {
+            $(idHiddenSerie).val(serie.IdSerie);
+            var nombreSerie = "";
+            if (serie.NombreLatin.length > 1) {
+                nombreSerie = serie.NombreLatin;
+            } else if (serie.NombreGriego.length > 1) {
+                nombreSerie = serie.NombreGriego;
+            }
+            // Disparar el validador
+            $("#spanSerie").text(nombreSerie).change();;
+            //$(idTextSerie ).val(serie.NombreLatin);
+        }
+    } else {
+        $(idHiddenSerie).val("");
+        $("#spanSerie").text("");
+    }
+
+    if (typeof (rutaArchivo) != 'undefined' & serie != null) {
+        $(idHiddenRutaArchivo).val(rutaArchivo);
+    } else {
+        $(idHiddenRutaArchivo).val("");
+    }
+
+    if (isNovedad === true) {
+        $(idCheckIsNovedad).prop("checked", true);
+    } else {
+        $(idCheckIsNovedad).prop("checked", false);
+    }
+
+    $(idTextTituloOriginal).val(titOriginal);
+    $(idTextTitulo).val(titulo);
+    //$(idTextEdicion).val(edicion);
+    $(idTextAnio).val(anioPub);
+    $(idTextPaginas).val(paginas);
+    $(idTextMedidas).val(medidas);
+    $(idTextSerie500).val(serie500);
+    $(idTextContenido).val(contenido);
+    $(idTextCualidades).val(cualidades);
+    $(idTextColofon).val(colofon);
+    $(idTextTema).val(tema);
+    $(idTextSecundarias).val(secundarias);
+    $(idTextU_FFYL).val(uffyl);
+    $(idTextU_IIFL).val(uiifl);
+    $(idTextObservaciones).val(observaciones);
+    $(idTextEdicionNumero).val((edicionNumero == 0 ? "" : edicionNumero));
+    $(idTextReimpresion).val((reimpresion == 0 ? "" : reimpresion));
+    $(idTextPdf).val(urlPdf);
+    $(idTextVirtual).val(urlVirtual);
+    $(idTextOnline).val(urlOnline);
+
+    $(idTextAutor).val("");
+    $(idTextEditor).val("");
+    $(idTextIsbn).val("");
+    $(idTextSerie).val("");
+    $(idTextCiudad).val("");
+    $(idTextResponsable).val("");
+    $("#spanResponsableSelected").text("");
+    responsableSelected = null;
+    funcionSelected = null;
+    isbnSelected = null;
+    $(idHiddenResponsables).val("");
+    $(idHiddenDetalleIsbn).val("");
+    $(idHiddenIdResp).val("");
+}
+
+function onGetTituloSuccess(data) {
+    var titulo = data.d;
+    setDataModalDetalle(titulo.IdTitulo, titulo.DetalleIsbn, titulo.Ciudad, titulo.Editor, titulo.Autor,
+                        titulo.TituloOriginal, titulo.Titulo, titulo.Edicion, titulo.AnioPublicacion, titulo.Paginas, titulo.Medidas, titulo.Serie500,
+                        titulo.Contenido, titulo.Cualidades, titulo.Colofon, titulo.Tema, titulo.Secundarias, titulo.UffYL, titulo.UiiFL, titulo.Observaciones,
+                        titulo.Serie, titulo.RutaArchivo, titulo.NombreArchivo, titulo.IsNovedad, titulo.NumeroEdicion, titulo.NumeroReimpresion, titulo.UrlPdf, titulo.UrlVirtual, titulo.UrlOnline);
+    $("#tabContentDetalle").show();
+    $("#tabContentDetalleLoading").hide();
+    $(idButtonAceptar).show();
+    validarPanel("#DialogoDetalleTitulo");
+
+    var finalString = "";
+
+    if (typeof (titulo.DetalleResponsables) != 'undefined' && titulo.DetalleResponsables != null) {
+        if (titulo.DetalleResponsables.length > 0) {
+            var listaResponsables = titulo.DetalleResponsables[0].Responsables;
+            $(idHiddenIdResp).val(titulo.DetalleResponsables[0].IdResponsableDetalle);
+            for (var i = 0; i < listaResponsables.length; i++) {
+                var idDetalle = listaResponsables[i].IdResponsableDetalle;
+                var idResponsable = listaResponsables[i].IdResponsable;
+                var idFuncion = listaResponsables[i].IdFuncion;
+                var orden = listaResponsables[i].OrdenFuncion;
+                finalString += idDetalle + "#" + idResponsable + "#" + idFuncion + "#" + orden + "|";
+            }
+            renderTableResponsables($("#DivResponsablesEdit"), listaResponsables);
+        }
+    } else {
+        renderTableResponsables($("#DivResponsablesEdit"), []);
+    }
+    $(idHiddenResponsables).val(finalString);
+}
+
+
+
+
+function onGetFuncionesSuccess(data) {
+    var funciones = data.d;
+    _ListaFunciones = funciones;
+    if (typeof (funciones) != 'undefined' && funciones.length > 0) {
+        $("#DivFuncionesEdit").html('');
+        if (typeof ($dropFunciones) != 'undefined')
+            $dropFunciones.remove();
+        //renderDropFunciones($("#DivFuncionesEdit"), funciones);                
+        $dropFunciones = renderDropFuncionIn($("#DivFuncionesEdit"), _ListaFunciones, false, "", function (element) {
+            funcionSelected = $(element).val() == "" ? null : { IdFuncion: $(element).val(), TipoFuncion: $(element).find("option:selected").text() };
+        });
+    }
+}
+
+
+function onError(xhr, status) {
+    $("#tabContentDetalle").show();
+    $("#tabContentDetalleLoading").hide();
+    $(idButtonAceptar).hide();
+    setDataModalDetalle("--ERROR--", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", false, "", "", "", "", "");
+    alert("Ocurrio un error desconocido al cargar el dato.");
+}
+
+
+var responsableSelected;
+var isbnSelected;
+var $gridDetalleResponsables;
+var $gridDetalleIsbn;
+
+function renderTableResponsables($divToAppend, listaResponsables) {
+    if (typeof ($gridDetalleResponsables) != 'undefined')
+        $gridDetalleResponsables.remove();
+
+    if (typeof (listaResponsables) != 'undefined') {
+        $gridDetalleResponsables = $('<table class="table table-bordered gridView-default gridView-NoResponsive"></table>');
+        var classAlternating = 'class="gridRow-default"';
+        for (var i = 0; i < listaResponsables.length; i++) {
+            if (i % 2 != 0) {
+                classAlternating = 'class="gridAlternatingRow-default"';
+            } else {
+                classAlternating = 'class="gridRow-default"';
+            }
+            var $tr = $('<tr ' + classAlternating + ' ></tr>');
+            var $tdAction = $("<td style='width:50px;'></td>");
+            $tdAction.append('<a class="btn btn-warning center text-center" onclick="javascript: return deleteResponsable(this);">Eliminar</a>')
+
+            var $td0 = $("<td class='gridViewColumnHidden'>" + listaResponsables[i].IdResponsable + "</td>");
+            var $td1 = $("<td></td>");
+            $td1.append(listaResponsables[i].NombreCompletoResponsable)
+            var $td2_0 = $("<td class='gridViewColumnHidden'>" + listaResponsables[i].IdFuncion + "</td>");
+            var $td2 = $("<td></td>");
+            renderDropFuncionIn($td2, _ListaFunciones, true, listaResponsables[i].IdFuncion, function (element) {
+                onChangeTipoFuncion(element);
+            })
+
+
+            var $td3 = $("<td></td>");
+            $td3.append(listaResponsables[i].OrdenFuncion)
+
+            $tr.append($tdAction);
+            $tr.append($td0);
+            $tr.append($td1);
+            $tr.append($td2_0);
+            $tr.append($td2);
+            $tr.append($td3);
+            $gridDetalleResponsables.append($tr);
+        }
+        if (typeof ($divToAppend) != 'undefined') {
+            $divToAppend.append($gridDetalleResponsables)
+        }
+    }
+    return listaResponsables;
+}
+
+function renderDropFunciones($divToAppend, listFunciones) {
+    if (typeof ($dropFunciones) != 'undefined')
+        $dropFunciones.remove();
+
+    if (typeof (listFunciones) != 'undefined') {
+        $dropFunciones = $('<select class="form-control"></select>');
+
+        for (var i = 0; i < listFunciones.length; i++) {
+            var $option;
+            if (i == 0) {
+                $option = $('<option selected="selected" value="' + listFunciones[i].IdFuncion + '">' + listFunciones[i].TipoFuncion + '</option>');
+            } else {
+                $option = $('<option  value="' + listFunciones[i].IdFuncion + '">' + listFunciones[i].TipoFuncion + '</option>');
+            }
+            $dropFunciones.append($option);
+        }
+        if (typeof ($divToAppend) != 'undefined') {
+            $divToAppend.append($dropFunciones)
+            $dropFunciones.change(function () {
+                funcionSelected = $(this).val() == "" ? null : { IdFuncion: $(this).val(), TipoFuncion: $(this).find("option:selected").text() };
+            });
+        }
+    }
+    return listFunciones;
+}
+
+function renderDropFuncionIn($elementToAppend, listFunciones, quitInitialOption, idFuncionSelected, onChange) {
+    var $drop;
+    if (typeof (listFunciones) != 'undefined') {
+        var funcionesLocal = listFunciones;
+        if (quitInitialOption === true) {
+            funcionesLocal = $.grep(listFunciones, function (item, index) { return (item.IdFuncion != "" & item.IdFuncion != "-1"); });
+        }
+
+        $drop = $('<select class="form-control"></select>');
+
+        for (var i = 0; i < funcionesLocal.length; i++) {
+            var $option;
+            if (idFuncionSelected == funcionesLocal[i].IdFuncion) {
+                $option = $('<option selected="selected" value="' + funcionesLocal[i].IdFuncion + '" >' + funcionesLocal[i].TipoFuncion + '</option>');
+            } else {
+                $option = $('<option  value="' + funcionesLocal[i].IdFuncion + '" >' + funcionesLocal[i].TipoFuncion + '</option>');
+            }
+            $drop.append($option);
+        }
+
+        if (typeof ($elementToAppend) != 'undefined') {
+            $elementToAppend.append($drop)
+            $drop.change(function () {
+                if (typeof (onChange) === 'function') {
+                    onChange(this);
+                }
+            });
+        }
+    }
+    return $drop;
+}
+
+function updateListaResponsables(event, sender) {
+    if (typeof ($gridDetalleResponsables) != 'undefined' & $gridDetalleResponsables != null) {
+        if (typeof (responsableSelected) != 'undefined' & responsableSelected != null) {
+            if (typeof (funcionSelected) != 'undefined' & funcionSelected != null) {
+                appendResponsable($gridDetalleResponsables, responsableSelected, funcionSelected)
+            } else {
+                alert("Seleccione una funcion a asignar");
+            }
+        } else {
+            alert("Seleccione un responsable");
+        }
+    } else {
+        alert("NO existen los elementos a cargar");
+    }
+}
+
+function appendResponsable($gridResponsables, responsable, tipoFuncion) {
+    var items = $gridResponsables.find("tr");
+    var countItems = (typeof (items) != 'undefined') ? items.length : 0;
+    var classAlternating;
+    if (countItems % 2 != 0) {
+        classAlternating = 'class="gridAlternatingRow-default"';
+    } else {
+        classAlternating = 'class="gridRow-default"';
+    }
+    var $tdAction = $("<td style='width:50px;'></td>");
+    $tdAction.append('<a class="btn btn-warning center text-center" onclick="javascript: return deleteResponsable(this);">Eliminar</a>')
+
+    var $tr = $('<tr ' + classAlternating + ' ></tr>');
+    var $td0 = $("<td class='gridViewColumnHidden'>" + responsable.IdResponsable + "</td>");
+    var $td1 = $("<td></td>");
+    $td1.append(responsable.NombreCompleto)
+    var $td2_0 = $("<td class='gridViewColumnHidden'>" + tipoFuncion.IdFuncion + "</td>");
+    var $td2 = $("<td></td>");
+    //$td2.append(funcion.TipoFuncion)            
+    renderDropFuncionIn($td2, _ListaFunciones, true, tipoFuncion.IdFuncion, function (element) { onChangeTipoFuncion(element); })
+
+    var $td3 = $("<td></td>");
+    $td3.append("");
+    $tr.append($tdAction);
+    $tr.append($td0);
+    $tr.append($td1);
+    $tr.append($td2_0);
+    $tr.append($td2);
+    $tr.append($td3);
+    $gridResponsables.append($tr);
+}
+
+function deleteResponsable(trElement) {
+    if (typeof ($gridDetalleResponsables) != 'undefined' & $gridDetalleResponsables != null) {
+        var $trCurrent = $(trElement).parent().parent();
+        $trCurrent.remove()
+    }
+}
+
+function onChangeTipoFuncion(element) {
+    if (typeof ($gridDetalleResponsables) != 'undefined' & $gridDetalleResponsables != null) {
+        var $tr = $(element).parent().parent();
+        $tr.find("td").eq(3).text($(element).val());
+    }
+}
+
+function renderTableIsbn($divToAppend, listaIsbn) {
+    if (typeof ($gridDetalleIsbn) != 'undefined')
+        $gridDetalleIsbn.remove();
+
+    if (typeof (listaIsbn) != 'undefined') {
+        $gridDetalleIsbn = $('<table class="table table-bordered gridView-default gridView-NoResponsive"></table>');
+        var classAlternating = 'class="gridRow-default"';
+        for (var i = 0; i < listaIsbn.length; i++) {
+            if (i % 2 != 0) {
+                classAlternating = 'class="gridAlternatingRow-default"';
+            } else {
+                classAlternating = 'class="gridRow-default"';
+            }
+            var $tr = $('<tr ' + classAlternating + ' ></tr>');
+            var $tdAction = $("<td style='width:50px;'></td>");
+            $tdAction.append('<a class="btn btn-warning center text-center" onclick="javascript: return deleteIsbn(this);">Eliminar</a>')
+
+            var $td0 = $("<td class='gridViewColumnHidden'>" + listaIsbn[i].IdIsbn + "</td>");
+            var $td1 = $("<td></td>");
+            $td1.append(listaIsbn[i].ClaveIsbn)
+
+            $tr.append($tdAction);
+            $tr.append($td0);
+            $tr.append($td1);
+            $gridDetalleIsbn.append($tr);
+        }
+        if (typeof ($divToAppend) != 'undefined') {
+            $divToAppend.append($gridDetalleIsbn)
+        }
+    }
+    return listaIsbn;
+}
+
+function updateListaIsbn(event, sender) {
+    if (typeof ($gridDetalleIsbn) != 'undefined' & $gridDetalleIsbn != null) {
+        if (typeof (isbnSelected) != 'undefined' & isbnSelected != null) {
+            var isbnCount = 0;
+            $gridDetalleIsbn.find("td").each(function (index, item) {
+                if ($(item).text() == isbnSelected.ClaveIsbn) {
+                    isbnCount++;
+                }
+            });
+
+            if (isbnCount > 0) {
+                alert("El Isbn ya se encuentra en la lista");
+            } else {
+                appendIsbn($gridDetalleIsbn, isbnSelected)
+            }
+        } else {
+            alert("Seleccione un ISBN");
+        }
+    } else {
+        alert("NO existen los elementos a cargar");
+    }
+}
+
+function appendIsbn($gridIsbn, isbn) {
+    var items = $gridIsbn.find("tr");
+    var countItems = (typeof (items) != 'undefined') ? items.length : 0;
+    var classAlternating;
+    if (countItems % 2 != 0) {
+        classAlternating = 'class="gridAlternatingRow-default"';
+    } else {
+        classAlternating = 'class="gridRow-default"';
+    }
+    var $tr = $('<tr ' + classAlternating + ' ></tr>');
+    var $tdAction = $("<td style='width:50px;'></td>");
+    $tdAction.append('<a class="btn btn-warning center text-center" onclick="javascript: return deleteIsbn(this);">Eliminar</a>')
+
+    var $td0 = $("<td class='gridViewColumnHidden'>" + isbn.IdIsbn + "</td>");
+    var $td1 = $("<td></td>");
+    $td1.append(isbn.ClaveIsbn)
+
+    $tr.append($tdAction);
+    $tr.append($td0);
+    $tr.append($td1);
+    $gridIsbn.append($tr);
+}
+
+function deleteIsbn(trElement) {
+    if (typeof ($gridDetalleIsbn) != 'undefined' & $gridDetalleIsbn != null) {
+        var $trCurrent = $(trElement).parent().parent();
+        $trCurrent.remove()
+    }
+}

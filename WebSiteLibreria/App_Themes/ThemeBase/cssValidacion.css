@@ -1,0 +1,77 @@
+﻿.menu {
+    display:inline-block;
+}
+.control-Validate {            
+}
+
+.controlFocus-OnError-border {
+    border-color: red;
+    border-style:solid;
+    border-width:1px;
+    border-radius:3px;
+}
+
+.controlFocus-label-OnError {    
+}
+
+.controlFocus-OnError {
+    background-color:#ffeec5;
+}
+
+.warning-block {            
+    background-color:#FFF2EE;
+    border-color:dimgrey;
+    border-style:solid;
+    border-width:1px;
+    color:black;
+    padding: 6px 7px 5px 27px;
+    border-radius:5px;
+    box-shadow:4px 4px 7px darkgrey;
+    font-size:medium;
+    font-family:Calibri;
+    background-image: url('/Images/Warning.png');
+    background-repeat: no-repeat;
+    background-position-x:5px;
+    background-position-y:5px;
+    background-size:18px;            
+    min-height:35px;
+    min-width:15px;
+    max-width: 250px;
+    max-height:100px;
+    overflow:hidden;
+    position:absolute;
+    z-index:100;
+}
+        
+.info-block {
+    background-color:#DFFFC6;
+    border-color:darkslategrey;
+    border-style:solid;
+    border-width:1px;
+    color:black;
+    padding: 3px 7px 5px 27px;
+    border-radius:5px;
+    box-shadow:4px 4px 7px darkgrey;
+    font-size:medium;
+    font-family:Calibri;
+    background-image: url('/Images/info.png');
+    background-repeat: no-repeat;
+    background-position-x:5px;
+    background-position-y:6px;
+    background-size:18px;            
+    min-height:35px;
+    min-width:15px;
+    max-width: 250px;
+    max-height:100px;
+    overflow:hidden;
+    position:absolute;
+    z-index:100;
+}
+
+.with-errors {
+    display:inline;            
+}
+
+.with-No-errors {
+    display:none;
+}

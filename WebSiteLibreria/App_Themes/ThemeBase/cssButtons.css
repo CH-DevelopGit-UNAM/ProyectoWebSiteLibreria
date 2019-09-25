@@ -1,0 +1,35 @@
+﻿
+/* Boton */
+.btn-primary {
+    padding: 6px; 
+    padding-right: 20px; 
+    padding-left: 20px;
+    color:white;
+}
+
+.btn-primary:hover {
+   background-color:#85a3e0;   
+}
+
+.btn-primary:focus{
+    background-color: #c6d9ec;
+     /* Texto en Color Primario */
+    color:#285e8e;
+}
+
+
+.btn-primary-disabled{
+    background-color: gainsboro;     
+    color:dimgrey;
+}
+
+.aspNetDisabled.btn.btn-primary{
+    background-color: gainsboro;     
+    color:grey;
+    border-color:grey;    
+}
+
+.aspNetDisabled.btn.btn-primary:hover{
+    cursor:not-allowed;
+}
+

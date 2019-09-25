@@ -1,0 +1,93 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unam.CoHu.Libreria.Model", "Unam.CoHu.Libreria\Unam.CoHu.Libreria.Model.csproj", "{8FBD0384-0142-4B8D-B6D3-E871592F483A}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebSiteLibreria", "WebSiteLibreria", "{81B974CE-8B18-4879-8379-FE31C76CFC3F}"
+	ProjectSection(WebsiteProperties) = preProject
+		SccProjectName = "SAK"
+		SccAuxPath = "SAK"
+		SccLocalPath = "SAK"
+		SccProvider = "SAK"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		ProjectReferences = "{8fbd0384-0142-4b8d-b6d3-e871592f483a}|Unam.CoHu.Libreria.Model.dll;{5c5706e4-c494-469d-8dad-fe94f9e17b03}|Unam.CoHu.Libreria.Controller.dll;{485BCEED-6C26-4C63-8288-766DD86457B6}|Unam.CoHu.Libreria.ADO.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_55000"
+		Debug.AspNetCompiler.PhysicalPath = "WebSiteLibreria\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55000\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_55000"
+		Release.AspNetCompiler.PhysicalPath = "WebSiteLibreria\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55000\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "51185"
+		SlnRelativePath = "WebSiteLibreria\"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unam.CoHu.Libreria.Controller", "Unam.CoHu.Libreria.Controller\Unam.CoHu.Libreria.Controller.csproj", "{5C5706E4-C494-469D-8DAD-FE94F9E17B03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unam.CoHu.Libreria.ADO", "Unam.CoHu.Libreria.ADO\Unam.CoHu.Libreria.ADO.csproj", "{485BCEED-6C26-4C63-8288-766DD86457B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unam.Cohu.Libreria.WinForm", "Unam.Cohu.Libreria.WinForm\Unam.Cohu.Libreria.WinForm.csproj", "{4F7E3DBD-F375-4A57-8D53-20CF7E253DE4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8FBD0384-0142-4B8D-B6D3-E871592F483A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FBD0384-0142-4B8D-B6D3-E871592F483A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FBD0384-0142-4B8D-B6D3-E871592F483A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FBD0384-0142-4B8D-B6D3-E871592F483A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81B974CE-8B18-4879-8379-FE31C76CFC3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81B974CE-8B18-4879-8379-FE31C76CFC3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81B974CE-8B18-4879-8379-FE31C76CFC3F}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{81B974CE-8B18-4879-8379-FE31C76CFC3F}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{5C5706E4-C494-469D-8DAD-FE94F9E17B03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C5706E4-C494-469D-8DAD-FE94F9E17B03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C5706E4-C494-469D-8DAD-FE94F9E17B03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C5706E4-C494-469D-8DAD-FE94F9E17B03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{485BCEED-6C26-4C63-8288-766DD86457B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{485BCEED-6C26-4C63-8288-766DD86457B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{485BCEED-6C26-4C63-8288-766DD86457B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{485BCEED-6C26-4C63-8288-766DD86457B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F7E3DBD-F375-4A57-8D53-20CF7E253DE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F7E3DBD-F375-4A57-8D53-20CF7E253DE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F7E3DBD-F375-4A57-8D53-20CF7E253DE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F7E3DBD-F375-4A57-8D53-20CF7E253DE4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 6
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://unamchdevelop.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Unam.CoHu.Libreria.ADO\\Unam.CoHu.Libreria.ADO.csproj
+		SccProjectName1 = Unam.CoHu.Libreria.ADO
+		SccLocalPath1 = Unam.CoHu.Libreria.ADO
+		SccProjectUniqueName2 = Unam.CoHu.Libreria.Controller\\Unam.CoHu.Libreria.Controller.csproj
+		SccProjectName2 = Unam.CoHu.Libreria.Controller
+		SccLocalPath2 = Unam.CoHu.Libreria.Controller
+		SccProjectUniqueName3 = Unam.CoHu.Libreria\\Unam.CoHu.Libreria.Model.csproj
+		SccProjectName3 = Unam.CoHu.Libreria
+		SccLocalPath3 = Unam.CoHu.Libreria
+		SccWebProject4 = true
+		SccProjectUniqueName4 = WebSiteLibreria
+		SccProjectName4 = WebSiteLibreria
+		SccLocalPath4 = WebSiteLibreria
+		SccProjectEnlistmentChoice4 = 2
+		SccProjectUniqueName5 = Unam.Cohu.Libreria.WinForm\\Unam.Cohu.Libreria.WinForm.csproj
+		SccProjectName5 = Unam.Cohu.Libreria.WinForm
+		SccLocalPath5 = Unam.Cohu.Libreria.WinForm
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,70 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Prueba.aspx.cs" Inherits="Prueba" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="utf-8" />    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <style>
+        html{
+            padding:0px;
+            margin:0px;
+            height:100%;
+            width: 100%;
+            background-color:antiquewhite;                        
+        }
+        body {
+            padding:0px;
+            margin:0px;
+            height:100%;
+            width: 100%;
+            background-color:aquamarine;              
+        }
+        .formu {
+            padding:0px;
+            margin:0px;           
+            height:100%;
+            width: 100%;
+            background-color:blueviolet;
+        }
+
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server" class="formu">    
+        <div style="min-height:100px;height:100px;background-color:cornflowerblue; padding:0px;margin:0px; position:fixed; width:100%;z-index:50;">
+            <span>HEADER</span>
+        </div>
+        <div style="height:auto;min-height:100%;background-color:yellowgreen; padding:0px;margin:0px;position:relative;overflow:auto;">
+            <div style="width:70%; height:auto;background-color:darkgray; margin:auto; padding-top:100px;padding-bottom:150px;">
+                <p>INICIO</p>
+                <p>hola</p>
+                <p>hola</p>
+                <p>hola</p>
+                <p>hola</p>
+                 <p>hola</p>
+                <p>hola</p>
+                <p>hola</p>
+                <p>hola</p> <p>hola</p>
+                <p>hola</p>
+                <p>hola</p>
+                <p>hola</p> <p>hola</p>
+                <p>hola</p>
+                <p>hola</p>
+                <p>hola</p> <p>hola</p>
+                <p>hola</p>
+                <p>hola</p>
+                <p>hola</p>
+                <p>FIN</p>
+            </div>
+        </div>
+        <div style="height:auto;min-height:100px;background-color:yellow; padding:0px;margin-top:-140px;padding:20px;position:relative;">
+            <span>FOOTER</span>       
+                         
+                <p>FIN</p>   
+        </div>
+    </form>
+</body>
+</html>

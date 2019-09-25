@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <style>
+        html,body {
+            height:100%;
+            width:100%;
+            padding:0px;
+            margin:0px;     
+            
+        }
+        form {
+            height:100%;
+            width:100%;
+            padding:0px;
+            margin:0px;       
+        }
+        #DivBody {
+           margin:0px;                  
+           padding-top:100px;
+           background-color:aqua;                      
+           min-height:calc(100% - 100px);
+           height: calc(100% - 100px);   
+           position:relative;   
+           
+            
+
+        }
+        h1, h2, h3, h4 {
+            padding:0px;
+            margin:0px;
+        }
+
+        #DivContenido {
+           width:100%;                   
+           background-color:chocolate;           
+           min-height:calc(100% - 0px);
+           height: calc(100% - 0px);
+           overflow:auto;
+           position:relative;            
+                     
+        }
+         #DivContenidoPagina2 {
+            background-color:yellow;
+            width:1100px;           
+            margin:auto;            
+             /* Firefox */
+            min-height: -moz-calc(100% - 150px); /*assume i.e. your header above the wrapper is 80 and the footer bellow is 20*/
+            /* WebKit */
+            min-height: -webkit-calc(100% - 150px);
+            /* Opera */
+            min-height:  -o-calc(100% - 150px);
+            /* Standard */
+            min-height:  calc(100% - 150px);    
+            
+            
+            height:auto;
+        }
+
+        #DivContenidoPagina {
+            background-color:yellow;
+            width:1100px;
+            /* Firefox */
+            min-height: -moz-calc(100% - 250px); /*assume i.e. your header above the wrapper is 80 and the footer bellow is 20*/
+            /* WebKit */
+            min-height: -webkit-calc(100% - 250px);
+            /* Opera */
+            min-height: -o-calc(100% - 250px);
+            /* Standard */
+            min-height: calc(100% - 250px);
+            height:auto !important;
+            margin:auto;
+            position:relative;
+                
+        }
+
+        @media screen and (max-width: 1200px) {
+            #DivContenidoPagina2 {                
+                width:100%;
+                
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <form>
+        <div style="height:100px;background-color:red;position:fixed;width:100%;z-index:200;margin:0px;padding:0px;"></div>
+        <div id="DivBody">
+            <div id="DivContenido">
+                <div id="DivContenidoPagina2">
+                    <h1>INICIO</h1>
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+
+
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+                    <h1>asdasd</h1>
+                    <h1>FIN</h1>
+
+                </div>
+                <div style="min-height:150px;background-color:yellowgreen;width:100%;"></div>    
+            </div>
+            
+        </div>        
+    </form>
+</body>
+</html>

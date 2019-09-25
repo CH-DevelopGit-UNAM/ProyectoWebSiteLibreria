@@ -1,0 +1,51 @@
+﻿<%--
+Default skin template. The following skins are provided as examples only.
+
+1. Named control skin. The SkinId should be uniquely defined because
+   duplicate SkinId's per control type are not allowed in the same theme.
+
+<asp:GridView runat="server" SkinId="gridviewSkin" BackColor="White" >
+   <AlternatingRowStyle BackColor="Blue" />
+</asp:GridView>
+
+2. Default skin. The SkinId is not defined. Only one default 
+   control skin per control type is allowed in the same theme.
+
+<asp:Image runat="server" ImageUrl="~/images/image1.jpg" />
+--%>
+<asp:GridView runat="server" SkinId="GridViewPrimary"  AutoGenerateColumns="false" CssClass="table table-bordered gridView gridView-Responsive" HeaderStyle-CssClass="gridHeader" HeaderStyle-HorizontalAlign="Center"
+              AlternatingRowStyle-CssClass="gridAlternatingRow" RowStyle-CssClass="gridRow"  FooterStyle-CssClass="gridFooter"  EmptyDataText="SIN RESULTADOS" >
+    <PagerSettings Position="Bottom" />
+    <PagerStyle CssClass="footerTable" />
+</asp:GridView>
+
+<asp:GridView runat="server" SkinId="GridViewDefault" AutoGenerateColumns="false" CssClass="table table-bordered gridView-default gridView-Responsive" HeaderStyle-CssClass="gridHeader-default"  HeaderStyle-HorizontalAlign="Center"
+              AlternatingRowStyle-CssClass="gridAlternatingRow-default" RowStyle-CssClass="gridRow-default" FooterStyle-CssClass="gridFooter-default" EmptyDataText="SIN RESULTADOS" ShowHeaderWhenEmpty="true" >   
+    <PagerSettings Position="Bottom" />
+    <PagerStyle CssClass="footerTable-default" />
+</asp:GridView>
+
+<asp:GridView runat="server" SkinId="GridViewMediumPrimary"  AutoGenerateColumns="false" CssClass="table table-bordered gridView gridView-Responsive-md" HeaderStyle-CssClass="gridHeader" HeaderStyle-HorizontalAlign="Center"
+              AlternatingRowStyle-CssClass="gridAlternatingRow" RowStyle-CssClass="gridRow"  FooterStyle-CssClass="gridFooter"  EmptyDataText="SIN RESULTADOS" >
+    <PagerSettings Position="Bottom" />
+    <PagerStyle CssClass="footerTable" />
+</asp:GridView>
+
+<asp:GridView runat="server" SkinId="GridViewMediumDefault" AutoGenerateColumns="false" CssClass="table table-bordered gridView-default gridView-Responsive-md" HeaderStyle-CssClass="gridHeader-default"  HeaderStyle-HorizontalAlign="Center"
+              AlternatingRowStyle-CssClass="gridAlternatingRow-default" RowStyle-CssClass="gridRow-default" FooterStyle-CssClass="gridFooter-default" EmptyDataText="SIN RESULTADOS" ShowHeaderWhenEmpty="true" >   
+    <PagerSettings Position="Bottom" />
+    <PagerStyle CssClass="footerTable-default" />
+</asp:GridView>
+
+
+<asp:GridView runat="server" SkinId="GridViewNoResponsivePrimary"  AutoGenerateColumns="false" CssClass="table table-bordered gridView gridView-NoResponsive" HeaderStyle-CssClass="gridHeader" HeaderStyle-HorizontalAlign="Center"
+              AlternatingRowStyle-CssClass="gridAlternatingRow" RowStyle-CssClass="gridRow"  FooterStyle-CssClass="gridFooter" EmptyDataText="SIN RESULTADOS" ShowHeaderWhenEmpty="true" >
+    <PagerSettings Position="Bottom" />
+    <PagerStyle CssClass="footerTable" />
+</asp:GridView>
+
+<asp:GridView runat="server" SkinId="GridViewNoResponsiveDefault" AutoGenerateColumns="false" CssClass="table table-bordered gridView-default gridView-NoResponsive" HeaderStyle-CssClass="gridHeader-default"  HeaderStyle-HorizontalAlign="Center"
+              AlternatingRowStyle-CssClass="gridAlternatingRow-default" RowStyle-CssClass="gridRow-default"  FooterStyle-CssClass="gridFooter-default" EmptyDataText="SIN RESULTADOS" ShowHeaderWhenEmpty="true" >   
+    <PagerSettings Position="Bottom" />
+    <PagerStyle CssClass="footerTable-default" />
+</asp:GridView>

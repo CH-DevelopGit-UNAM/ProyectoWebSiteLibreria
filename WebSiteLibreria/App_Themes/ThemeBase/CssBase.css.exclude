@@ -1,0 +1,210 @@
+﻿.container-fluid.menuBarTheme {
+    padding: 0px;
+}
+
+    .container-fluid.menuBarTheme ul.nav.navbar-nav > li {
+        padding: 5px;
+    }
+
+/* Menu */
+.menuBarTheme {
+    color: black; 
+    background-color: #04BD5B;        
+}
+/* Menu boton hamburguesa  */
+.menuBarTheme .navbar-toggle {
+    background-color:#04BD5B;
+}
+
+/* Menu boton hamburguesa iconos */
+.menuBarTheme .navbar-toggle .icon-bar{    
+    background-color:white;
+}
+
+/* Opcion Texto */
+.menuBarTheme a {
+    color: black; 
+    font-weight:normal;
+}
+    
+
+/* Opcion Texto */
+.menuBarTheme a[role='button'] {
+    color: black; 
+    font-weight:normal;   
+}
+
+/* Botones menu derecho (ingresar) */
+/*#DivMenu.navbar-collapse.collapse ul.nav.navbar-nav.navbar-right li*/
+#DivMenu ul.nav.navbar-nav.navbar-right.menuAcciones li {
+   padding:7px;
+}  
+
+/* Imagen mas opciones */
+.menuBarTheme li.dropdown span.caret {
+    color:#e7b543;
+    border-top-color: #e7b543;
+    border-bottom-color: #e7b543;
+}
+
+/* Opcion  normal */
+.menuBarTheme li.dropdown a.dropdown-toggle {
+    color: white; 
+     /* Color Primario */
+    background-color:#04BD5B; 
+}
+
+.menuBarTheme button.navbar-toggle.pull-left {
+    margin-left: 18px;
+}
+
+
+
+
+
+
+/* Dropdown menus */
+#DivMenu li .dropdown-item {
+    padding: 10px;
+    padding-left: 25px;
+}
+
+
+
+/* Opcion hover */
+.menuBarTheme a[role=button]:hover {
+    color: #e7b543;
+    background-color: #4E9971; 
+    cursor:pointer;
+}
+
+.menuBarTheme a[role=button]:focus {
+  color: #e7b543;
+  background-color: #2E64FE;
+}
+
+.menuBarTheme a[role=button]:visited  {
+    background-color: #4E9971;
+}
+
+.menuBarTheme a[role=button].dropdown-toggle:hover {
+    color: #e7b543; 
+    background-color: #4E9971; 
+    cursor:pointer;
+}
+
+/* Opcion enfoque */
+.menuBarTheme li.dropdown.open > a:focus {
+  color: #e7b543; 
+  background-color: #386E51;
+}
+
+/* Opcion clic */
+.menuBarTheme li.dropdown.open > a:visited {    
+  color: #e7b543;
+  background-color: #386E51;
+}
+
+/* Menu boton*/
+.menuBarTheme a.btn.btn-primary {
+    padding: 6px; 
+    padding-right: 20px; 
+    padding-left: 20px;
+    background-color:#04BD5B;
+    color:white;
+    border-color:#04BD5B;
+}
+
+/* Menu boton hover */
+.menuBarTheme a.btn.btn-primary:hover {
+   background-color:#4E9971;   
+}
+
+/* Menu boton focus*/
+.menuBarTheme a.btn.btn-primary:focus{
+    background-color: #009200;
+     /* Texto en Color Primario */
+    color:#285e8e;
+}
+
+
+/* Opcion subitems primario */
+.menuBarTheme li.dropdown.open .primary-dropdown {
+  background-color: #ebf0fa;
+}
+
+/* Opcion subitems secundario */
+.menuBarTheme li.dropdown.open .primary-dropdown .dropdown-item:hover {
+  background-color: #ebf0fa;
+  font-weight:normal;
+}
+
+
+/* Opcion subitems secundario */
+.menuBarTheme li.dropdown.open .default-dropdown {
+  background-color: white;
+  margin-top:-6px;
+}
+
+/* Opcion subitems secundario */
+.menuBarTheme li.dropdown.open .default-dropdown .dropdown-item:hover {
+  background-color: #F2F2F2;
+  font-weight:normal;
+}
+
+a.menuNoHover:hover {
+    background-color: #285e8e;    
+}
+a.menuNoHover:hover {
+    background-color: #285e8e;    
+}
+
+
+@media screen and (max-width: 768px) {
+    /* Botones menu derecho (ingresar) */    
+    #DivMenu ul.nav.navbar-nav.navbar-right.menuAcciones li {
+         padding:0px;
+    }  
+    /* Botones menu derecho (ingresar) */
+    #DivMenu ul.nav.navbar-nav.navbar-right.menuAcciones li a {
+     padding:6px;    
+     padding-left:10px;
+    }
+
+    .container-fluid.menuBarTheme a.btn.btn-primary {
+        text-align: left;        
+    }
+
+    .container-fluid.menuBarTheme a.btn.btn-primary span.caret {
+            float: right;
+            margin-top: 10px;
+    }
+
+    .container-fluid.menuBarTheme .nav.navbar-nav {                
+        padding-bottom:0px;
+        margin-bottom:0px;
+    }
+    .container-fluid.menuBarTheme ul.nav.navbar-nav.navbar-right {        
+        border-radius:0px;
+        padding:0px;
+        margin:0px;
+    }
+
+    .container-fluid.menuBarTheme ul.nav.navbar-nav.navbar-right  li.dropdown{                
+        padding:0px;
+        margin:0px;
+        width:calc(100% + 10px);
+    }
+
+    .container-fluid.menuBarTheme ul.nav.navbar-nav.navbar-right  li.dropdown a.dropdown-toggle{
+        padding-left:9px;        
+    }
+
+    .container-fluid.menuBarTheme ul.nav.navbar-nav.navbar-right  li.dropdown.open{
+        padding:0px;
+        margin:0px;   
+        margin-left:1px;     
+        width:calc( + 10px);
+    }
+
+}

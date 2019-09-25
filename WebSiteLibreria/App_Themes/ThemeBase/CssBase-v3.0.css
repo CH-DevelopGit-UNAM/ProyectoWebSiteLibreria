@@ -1,0 +1,253 @@
+﻿.container-fluid.menuBarTheme {
+    padding: 0px;    
+    padding-top:10px;
+}
+
+    /*.container-fluid.menuBarTheme ul.nav.navbar-nav{
+        padding: 0px;        
+    }*/
+
+/* Menu */
+.menuBarTheme {
+    font-family:'AkzidenzGrotesk-Regular';
+    font-size:10.5pt;
+    color: #224F86; 
+    background-color: white;
+}
+
+/* Menu boton hamburguesa  */
+.menuBarTheme .navbar-toggle {
+    background-color:lightgray;
+}
+
+/* Menu boton hamburguesa iconos */
+.menuBarTheme .navbar-toggle .icon-bar{    
+    background-color:white;
+}
+
+.menuBarTheme li.opcionRaiz {        
+    padding-left:6px;
+    padding-right:6px;
+    padding-top:0px;
+    padding-bottom:0px;  
+    font-size:10.5pt;
+}
+
+.menuBarTheme li.opcionRaiz a, .menuBarTheme li.opcionRaiz > a {
+    font-size:inherit;  
+    font-family:inherit;
+}
+
+.menuBarTheme li.dropdown.opcionRaiz {        
+    padding-left:6px;
+    padding-right:6px;
+    padding-top:0px;
+    padding-bottom:0px;    
+    font-size:10.5pt;    
+}
+
+.menuBarTheme li.dropdown.opcionRaiz a, .menuBarTheme li.dropdown.opcionRaiz > a {
+    font-size:inherit;  
+}
+
+/* Menu boton (opcion sin submenus , opcion con submenus) */
+.menuBarTheme a.btn.btn-primary{    
+    padding: 6px;     
+    color: #224F86;     
+    border-radius:0px;
+    border-style:none;
+    background-color:white;
+    text-align:center;    
+    border-bottom:3px solid #CBA672;
+}
+
+.menuBarTheme a.btn.btn-primary:not(.menuSitioSelected) {
+    border-bottom:3px solid white;
+}
+
+/* Opciones Raíz (con submenus) */
+.menuBarTheme li.dropdown a.dropdown-toggle {
+    padding: 6px;
+    color: #224F86;      
+    background-color:white; 
+}
+
+/*  Opciones Raíz (Imagen ) */
+.menuBarTheme li.dropdown span.caret {
+    color:#224F86;    
+}
+
+/* Opciones Raíz NUEVO: NAVEGACION */
+.menuSitioSelected {
+    background-color: white;   
+    border-bottom:3px solid #CBA672;
+}
+
+
+/* Opciones Raíz hover */
+.menuBarTheme a.btn.btn-primary:hover {
+    background-color:white;   
+    border-bottom:3px solid #CBA672;    
+}
+
+/* Opciones Raíz focus*/
+.menuBarTheme a.btn.btn-primary:focus{
+    border-bottom:3px solid #CBA672;
+    color:#285e8e;
+}
+
+/* Opción raíz con submenu mostrado :focus */
+.menuBarTheme li.dropdown.open > a:focus {
+  color: #e7b543; 
+  background-color: inherit;
+  border-bottom:3px solid #CBA672;
+}
+/* Opción raíz con submenu mostrado :visited */
+.menuBarTheme li.dropdown.open > a:visited {    
+  color: #e7b543;
+  background-color: inherit;
+  border-bottom:3px solid #CBA672;
+}
+
+
+
+.menuBarTheme li.dropdown.open .dropdown-menu.default-dropdown {      
+  background-color: #F5F5F5;  
+  font-size:10pt;
+}
+
+.menuBarTheme li.dropdown.open .dropdown-menu.default-dropdown li a:hover {      
+  background-color: #DCDCDC;  
+}
+
+.menuBarTheme button.navbar-toggle.pull-left {
+    margin-left: 18px;
+}
+
+
+.hyperlink-credits {
+    color:goldenrod;
+    font-weight:bold;
+}
+
+.hyperlink-credits:hover {
+    color:gold;    
+}
+
+/* Dropdown menus */
+#DivMenu li .dropdown-item {
+    padding: 10px;
+    padding-left: 25px;
+}
+/* Ajustes por smartmenus */
+#DivMenu a.dropdown-toggle.btn.btn-primary.has-submenu:focus{
+          color: #CBA672 !important;
+        }
+        #DivMenu a.dropdown-toggle.btn.btn-primary.has-submenu:hover{
+          color: #CBA672 !important;
+        }
+        #DivMenu a.dropdown-toggle.btn.btn-primary.has-submenu:active{
+          color: #CBA672 !important;
+        }
+
+
+/*boostrap -> (min-width:768px)*/ 
+@media (max-width: 767px) {
+    #header-menu {
+        overflow-x:hidden;
+    }
+    .container-fluid.menuBarTheme{
+        padding:0px 0px 0px 5px;        
+        width:calc(100% + 30px);
+        overflow-y:hidden;        
+    }
+
+    #DivMenu {   
+       width:calc(100% + 10px);
+       overflow-x:hidden;
+    }
+
+    #DivMenu, #DivMenu.navbar-collapse.collapse.in {                    
+       padding-left:19px;
+        margin-right: 0px;        
+        margin-left: -15px;
+        padding-right:30px;
+                  
+    }
+
+        #DivMenu .nav.navbar-nav.menu-izquierdo {
+        margin-bottom:0px;
+        width:calc(100% + 30px);
+    }
+
+
+        #DivMenu .nav.navbar-nav.menu-izquierdo  a.btn.btn-primary {
+            width:calc(100% + 15px);
+        }
+
+    #DivMenu .nav.navbar-nav.menu-izquierdo  a.btn.btn-primary  span.caret {
+        margin-right:20px;
+    }
+
+
+    #DivMenu .nav.navbar-nav.menu-derecho {
+        margin-top:0px;
+        margin-bottom:0px;
+        width:calc(100% + 30px);
+    }
+
+        #DivMenu .nav.navbar-nav.menu-derecho  .dropdown.opcionRaiz a.btn.btn-primary {
+            width:calc(100% - 5px);
+        }
+
+        #DivMenu .nav.navbar-nav.menu-menu-derecho  .dropdown.opcionRaiz a.btn.btn-primary  span.caret {
+            margin-right:20px;
+        }
+
+
+        #DivMenu .nav.navbar-nav.menu-derecho  .dropdown.opcionRaiz.open {
+                width:calc(100% + 5px);
+        }
+
+        #DivMenu .nav.navbar-nav.menu-menu-derecho  .dropdown.opcionRaiz.open a.btn.btn-primary  span.caret {
+            margin-right:0px;
+        }
+
+        /* Ajustar para submenus */
+        #DivMenu a.has-submenu > span.caret{
+            margin-top:8px;
+            float:right;
+            clear:both;          
+        }
+     
+         a.has-submenu.highlighted:hover {   
+            color:rebeccapurple;
+        }        
+
+    /*
+        #DivMenu .menu-izquierdo .dropdown.opcionRaiz.open,
+        #DivMenu .menu-izquierdo .dropdown.opcionRaiz.open a.btn.btn-primary{
+            padding-right:0px;
+                        
+        }*/
+
+        /*#DivMenu .menu-derecho {
+            width:calc(100% + 30px);
+            margin:0px;
+            margin-left:-10px;
+            margin-right:-10px;
+            display:block;
+        }
+    #DivMenu .menu-derecho li{
+        width:100%;        
+        padding:0px;
+    }
+
+    #DivMenu .menu-derecho .dropdown.opcionRaiz.open,
+        #DivMenu .menu-derecho .dropdown.opcionRaiz.open a.btn.btn-primary{
+            padding-right:3px;
+            margin-right:-1px;
+        }*/
+
+
+}

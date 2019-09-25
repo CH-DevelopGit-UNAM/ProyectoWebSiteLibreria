@@ -1,0 +1,297 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="ProtectedSite.master.cs" Inherits="ProtectedSite" %>
+
+<!DOCTYPE html>
+
+<html lang="es-mx" >
+<head runat="server">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137074105-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+ 
+        gtag('config', 'UA-137074105-1');
+    </script>    
+    <meta name= “language” content=”Spanish”>
+    <meta name="author" content="Coordinación de Humanidades, CH"/>    
+    <meta name="copyright" content="Universidad Nacional Autónoma de México, UNAM, U.N.A.M." />
+    <meta name="description" content="la primera colección bilingüe en el mundo de habla hispana, se inició en 1944. Nutrida desde entonces por especialistas en filología clásica y dirigida tanto al público universitario 
+        como a todos los que deseen introducirse en el conocimiento de los clásicos griegos y latinos, tiene como objetivo publicar las obras humanísticas y científicas que, desde su creación hasta nuestros días, 
+        han sido motivo de admiración, de recreo o de análisis" />
+    <meta name="keywords" content="repositorio, biblioteca, scriptorum, graecorum, romanorum, clásicos griegos, clásicos latinos, filología clásica, griegos, latinos, clásicos, bilingüe, colección, 
+        griego-español, latín español, UNAM, dolosofía, ciencia, literatura, historia, política, discurso forense, urbanismo, conocimiento de la naturaleza, cultivo del campo" />    
+    <meta name="robots" content="index,follow" />
+    <%--conservar el envío de la información de referencia del sitio--%>
+    <meta name="referrer" content="origin" />    
+    <meta name="generator" content="Microsoft ASP.NET 4.5" />    
+    <meta name="rating" content="general" />
+    <%--prevenir la traducción de Google al idioma del usuario --%>
+    <%--<meta name="google" content="notranslate" />--%>
+    <%-- prevenir que Google muestre una caja de búsqueda del sitio--%>
+    <%--<meta name="google" content="nositelinkssearchbox" />--%>
+    <meta charset="utf-8" />    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - BIBLIOTHECA SCRIPTORVM </title>
+    <asp:PlaceHolder  runat="server">        
+    <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+ <webopt:bundlereference runat="server" path="~/Content/css" />
+    <webopt:bundlereference runat="server" path="~/App_Themes/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <asp:PlaceHolder  runat="server">        
+        <script type="text/javascript">
+            var urlSite = '<%=ResolveUrl("~/")%>';            
+        </script>
+    </asp:PlaceHolder>    
+</head>
+    <%-- Las validaciones de asp.net siempre realizan el submit del body, por eso no se asigna en este elemento --%>
+<body>    
+    <%-- Las validaciones de asp.net  siempre realizan el submit del form, pero se asigna al "onsubmit" una funcion "WebForm_OnSubmit" por lo que la funcion "submitBody" es sobreescrita 
+            
+        --%>
+   <form id="formPrincipal" runat="server" class="formPrincipal"  onsubmit="javascript: return submitBody(this);"  autocomplete="off" defaultbutton="" defaultfocus="" > 
+
+        <asp:ScriptManager runat="server" EnablePartialRendering="true" EnablePageMethods="true"   AjaxFrameworkMode="Explicit"  >
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />     
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="bootstrap" />                  
+                <%-- NO REQUIERO USAR NI LAS VALIDACIONES NI FUNCIONES SOBRE LOS FORMULARIOS DE MICROSOFT --%>
+
+            </Scripts>
+        </asp:ScriptManager>     
+        <%: Scripts.Render("~/bundles/Pages") %>   
+
+    <asp:ContentPlaceHolder ID="HeaderPlaceHolder" runat="server">
+
+    </asp:ContentPlaceHolder>
+
+        <%-- HEADER --%>
+
+        <div id="header">
+            <div id="header-login">
+                <div class="container">
+                    <asp:LoginView ID="LoginViewUsuario" runat="server" ViewStateMode="Disabled">
+                            <AnonymousTemplate>
+                                <div id="header-login-anonimo">
+                                    <ul class="nav navbar-nav navbar-right" data-sm-skip="yes">
+                                        <li id="OpcionRegresar" class="" runat="server" >
+                                            <a runat="server" class="" href="~/">REGRESAR</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </AnonymousTemplate>
+                            <LoggedInTemplate>
+                                <div id="header-logout-user">
+                                    <ul class="nav navbar-nav navbar-right" data-sm-skip="yes">
+                                        <li style="text-align: center; padding: 2px; padding-left: 20px;">
+                                            <div class="btn-group">
+                                                <img alt="Logout" src="<%=ResolveUrl("~/")%>images/avatar.png" style="width: 40px; height: 40px;">
+                                                <br />
+                                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                    <span><%: Context.User.Identity.GetUserName().ToUpper()%></span>
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li>
+                                                        <asp:LinkButton ID="LinkButtonLogout" runat="server" class="btn btn-primary" Text="SALIR" OnClick="LinkButton_Click"></asp:LinkButton></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </LoggedInTemplate>
+                        </asp:LoginView>
+                </div>
+            </div>
+
+            <div id="header-banner-1">
+                <div class="container" >
+                    <div id="header-banner-left">
+                        <img src="<%=ResolveClientUrl("~/")%>images/Logo-UNAM.png"  />
+                    </div>
+                    <div id="header-banner-center"> 
+                        <img style="" src="<%=ResolveClientUrl("~/")%>images/Imagen-banner-superior.png"   />
+                    </div>
+                    <div id="header-banner-right">
+                        <table >
+                            <tr>
+                                <td>
+                                    <img src="<%=ResolveClientUrl("~/")%>images/Logo-Bibliotheca.png" /></td>
+                                <td>
+                                    <div>
+                                        <p>BIBLIOTHECA SCRIPTORVM</p>
+                                        <p>GRAECORVM ET</p>
+                                        <p>ROMANORVM MEXICANA</p>                                          
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>                        
+                        <div class="input-group" >                    
+                            <asp:TextBox ID="TextBoxBusqueda" runat="server" CssClass="form-control search-input" aria-describedby="basic-addon1" placeholder="Búsqueda" AutoPostBack="false"> </asp:TextBox>
+                            <br />
+                            <span class="input-group-btn">
+                                <asp:Button ID="ButtonBuscar" runat="server" CssClass="btn btn-default search-icon" OnClick="ButtonBuscar_Click" UseSubmitBehavior="false"/>                                
+                            </span>
+                        </div>                        
+                    </div>
+                </div>                
+            </div>
+
+            <div id="header-menu" class="container">
+                 <%-- MENU --%>
+            <div class="navbar navbar-fixed-top menuHeader">
+                <!-- menuBarTheme -->
+                <div class="container-fluid menuBarTheme">
+                    <div class="navbar-header" style="width:100%;">
+                        <button type="button" class="navbar-toggle pull-left" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>                        
+                    </div>
+
+                    <div id="DivMenu" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav menu-izquierdo">
+                            <%--<li class="opcionRaiz"><a id="OpcionInicio" runat="server" class="btn btn-primary" href="~/" role="button">INICIO</a></li>--%>
+                            <li class="dropdown opcionRaiz">
+                                <a id="OpcionInicio" runat="server" href="javascript:void(0);" class="dropdown-toggle btn btn-primary" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <span>INICIO</span>
+                                    <span class="caret"></span>
+                                </a>
+                                <ul runat="server" class="dropdown-menu default-dropdown">
+                                    <li>
+                                        <a class="dropdown-item" href='<%=ResolveClientUrl("~/")%>'>Inicio</a>                                        
+                                    </li>
+                                    <li><a href="#">Directorio<span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="<%=ResolveClientUrl("~/")%>Directorio/Autoridades">Autoridades</a></li>
+                                            <li><a href="<%=ResolveClientUrl("~/")%>Directorio/ConsejoEditorial">Consejo Editorial</a></li>
+                                        </ul>
+                                    </li>
+                                    <%--<li class="dropdown-submenu">
+                                        <a class="dropdown-submenu-item" href="#">Directorios<span class="caret"></span></a>
+                                        <ul class="dropdown-menu default-dropdown">
+                                            <li><a href="<%=ResolveClientUrl("~/")%>General/Directorio">Consejo Editorial</a></li>
+                                            <li><a href="<%=ResolveClientUrl("~/")%>General/Directorio">Autoridades</a></li>
+                                        </ul>
+                                    </li>--%>
+
+                                </ul>
+                            </li>
+                            <%--<li class="opcionRaiz"><a runat="server" class="btn btn-primary" href="~/" role="button">LA BIBLIOTHECA</a></li>--%>
+                            <li class="dropdown opcionRaiz">
+                                <a id="OpcionBibliotheca" runat="server" href="javascript:void(0);" class="dropdown-toggle btn btn-primary" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <span><i>BIBLIOTHECA</i></span>
+                                    <span class="caret"></span>
+                                </a>
+                                <ul runat="server" class="dropdown-menu default-dropdown">
+                                    <li>
+                                        <a class="dropdown-item" href='<%=ResolveClientUrl("~/")%>General/Presentacion'>Presentación</a>
+                                        <a class="dropdown-item" href='<%=ResolveClientUrl("~/")%>General/Antecedentes'>Antecedentes</a>
+                                        <a class="dropdown-item" href="<%=ResolveClientUrl("~/")%>General/Lineamientos">Lineamientos</a>
+                                        <a class="dropdown-item" href="<%=ResolveClientUrl("~/")%>General/GuiaColaboradores">Guía para colaboradores</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="opcionRaiz"><a id="OpcionCatalogo" runat="server" class="btn btn-primary" href="~/SitiosInteres/Catalogo" role="button">CATÁLOGO</a></li>
+                            <li class="opcionRaiz"><a id="OpcionNovedades" runat="server" class="btn btn-primary" href="~/SitiosInteres/NovedadesLibreria" role="button">NOVEDADES EDITORIALES</a></li>
+                            <li class="opcionRaiz"><a id="OpcionContacto" runat="server" class="btn btn-primary" href="~/SitiosInteres/Contacto" role="button">CONTACTO</a></li>
+                        </ul>                                             
+                    </div>
+
+
+                </div>
+            </div>
+            </div>
+           
+
+        </div>
+
+        <%-- CONTENIDO --%>
+
+        <div id="content-limit">
+            <div></div>
+            <%-- CUERPO CONTENIDO --%>
+
+            <div id="body" class="container">
+                <%-- EN CASO DE SER NECESARIO, UN FONDO PARA OPACIDAD, EN LAS PÁGINAS, UTILIZAR LA CLASE body-background-layout-color para asignar color --%>    
+                <div class="body-background-layout body-background-layout-color" ></div>                
+                <div id="body-content">
+                    <%-- MENSAJES --%>
+                    <div id="message"></div>
+                    <asp:ContentPlaceHolder ID="MainContent" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+            </div>
+
+            <div id="body-footer" class="container-fluid">
+                <asp:ContentPlaceHolder ID="SubMainContent" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+            <%-- BUTTON TOP--%>
+            <div id="ButtonTopDiv">
+                    <input id="ButtonTop" type="button" class="btn btn-danger"  value="TOP" onclick="scrollInicio()"/>
+            </div>   
+
+            <%-- FOOTER --%>            
+            <div id="footer">                
+                <div class="container" style="position:relative;">
+                    <%-- LOGO --%>
+                    <div class="col-sm-12">
+                        <div class="col-sm-4 logo-footer">
+                            <img src="<%=ResolveUrl("~/")%>images/Logo-firma-UNAM.png" alt="Unam" />
+                            <img src="<%=ResolveUrl("~/")%>images/Logo-Coordinacion.png" alt="Unam" />
+                            <img src="<%=ResolveUrl("~/")%>images/Logo-Coord-Divulgacion.png" alt="Unam" />
+                            <img src="<%=ResolveUrl("~/")%>images/Logo-Filologicas.png" alt="Unam" />
+                        </div>
+                        <div class="col-sm-8 leyenda-footer">
+                            <%--El Diccionario de escritores mexicanos abarca del presente período 2016, los datos actualizados hasta 2012 de los autores comprendidos en los cinco tomos del Diccionario de escritores mexicanos sigo XX,
+                                además de otros autores cuyos apellidos paternos comienzan con las letras de la A a la M ...                            --%>
+                            La colección Bibliotheca Scriptorum Graecorum et Romanorum Mexicana, cuyas primeras ediciones datan de 1944, comprende los volúmenes digitalizados de textos bilingües (griego-español y latín-español) de obras 
+                            clásicas publicados por la Universidad Nacional Autónoma de México (UNAM). Las obras que a la fecha han visto la luz suman más de 150 y su temática es diversa: abarca desde temas de filosofía, ciencia y la literatura (en sus diversos géneros acuñados desde la Antigüedad), 
+                            hasta temas de historia, política, discurso forense, urbanismo y conocimiento de la naturaleza y del cultivo del campo, entre otros.
+                            <span class="legal-advertisement">
+                                <br /><br />
+                                Hecho en México, Universidad Nacional Autónoma de México (UNAM), todos los derechos reservados 2019.<br />
+                                Esta página puede ser reproducida con fines no lucrativos, siempre y cuando no se mutile, se cite la fuente completa y su dirección electrónica.<br />
+                                De otra forma, requiere permiso previo por escrito de la institución.
+                            </span>
+                        </div>
+                        <div class="col-sm-12" style="text-align:center;">
+                            <br />
+                            <a runat="server" href="~/General/Creditos.aspx" class="hyperlink-credits">Créditos</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </form>
+
+    <div id="DivAsyncPostback" class="modal" style="z-index:2000;overflow:hidden;overflow-x:hidden; color:white;">
+            <div class="modal-body" >
+                <div class="container-fluid">
+                    <div class="modal" style=" background-color:yellow;opacity:0.4; overflow:hidden;overflow-x:hidden;z-index:2010;"></div>
+                    <div class="row center text-center" style="z-index:3050;  margin-top:345px;">
+                        <div class="col-md-3"></div>
+                        <!-- class="col-md-6 col-md-offset-3 media-middle" -->
+                        <div class="col-md-6" >
+                            <div id="progressBar" class="text-center">
+                                <img  src="<%=ResolveClientUrl("~/")%>images/gifAjax.gif" width="100" height="100" />
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>
+                   </div>
+                  
+                </div>
+            </div>
+    </div>
+</body>
+</html>

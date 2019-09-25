@@ -1,0 +1,377 @@
+﻿<%@ Page Title="ISBN" Language="C#" MasterPageFile="~/ResponsiveSite.master" AutoEventWireup="true" CodeFile="Isbn.aspx.cs" Inherits="Catalogos_Isbn" Theme="SkinBase"%>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="HeaderPlaceHolder" Runat="Server">
+    <style type="text/css">
+        .campo-Numero-Pagina {
+            display:inline-block;
+            padding:2px;
+            text-align:center;
+        }
+        .campoISBN {
+            display: inline-block;
+            padding:3px;
+            text-align:center;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var idGridView = '#<%=GridViewResultado.ClientID%>';
+        var idButtonAceptar = '#<%=ButtonAceptar.ClientID%>';
+        var idHiddenOperacion = '#<%=HiddenTipoOperacion.ClientID%>';
+        var idHiddenClave = '#<%=HiddenFieldClave.ClientID%>';
+        var idHiddenOperacion = '#<%=HiddenTipoOperacion.ClientID%>';
+
+        var idLabelClaveISbn = '#<%=LabelClaveIsbn.ClientID%>';
+        var idTextIsbn_1 = '#<%=TextBoxISBN_1.ClientID%>';
+        var idTextIsbn_2 = '#<%=TextBoxISBN_2.ClientID%>';
+        var idTextIsbn_3 = '#<%=TextBoxISBN_3.ClientID%>';
+        var idTextIsbn_4 = '#<%=TextBoxISBN_4.ClientID%>';
+        var idTextIsbn_5 = '#<%=TextBoxISBN_5.ClientID%>';
+        var idTextDescripcion = '#<%=TextBoxDescripcion.ClientID%>';
+        var idTextReimpresion = '#<%=TextBoxReimpresion.ClientID%>';
+        var idTextReedicion = '#<%=TextBoxReedicion.ClientID%>';        
+        
+        
+        function pageLoad() {
+
+            // Solo los elementos en un UpdatePanel
+            $(document).ready(function () {
+                configurarGridView(idGridView, function (items, element) {
+                    var clave = $(items[1]).find("span").text();
+                    var isbn = $(items[2]).find("span").text();
+                    var descripcion = $(items[3]).find("span").text();
+                    var reimpresion = $(items[4]).find("span").text();
+                    var reedicion = $(items[5]).find("span").text();
+                    setDataModalDetalle(clave, isbn, descripcion, reimpresion, reedicion );
+                });
+
+            });
+
+        }
+
+        $(document).ready(function () {            
+
+            setListenerValidation();
+
+            //// Modal-Until-Show...
+            $("#DialogoDetalleIsbn").on('shown.bs.modal', function (event) {
+                var result = validarPanel($("#DialogoDetalleIsbn"));
+            });
+
+            // Modal-Show
+            $("#DialogoDetalleIsbn").on('show.bs.modal', function (event) {
+
+                $('#DialogoDetalleIsbn').on('hide.bs.modal.prevent', function (event) {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    return false;
+                });
+
+                $(this).find("input[type='button']").each(function (index, value) {
+                    var dataDismiss = $(value).attr('data-dismiss');
+                    if (dataDismiss != null && dataDismiss != undefined) {
+                        $(value).click(function (event) {
+                            $(idHiddenOperacion).val(-1);
+                            cerrarPanel("#DialogoDetalleIsbn");
+                            $("#DialogoDetalleIsbn").off('hide.bs.modal.prevent');
+                            $("#DialogoDetalleIsbn").modal('hide');
+                        });
+                    }
+                });
+
+                $(this).find("button").each(function (index, value) {
+                    var dataDismiss = $(value).attr('data-dismiss');
+                    if (dataDismiss != null && dataDismiss != undefined) {
+                        $(value).click(function (event) {
+                            $(idHiddenOperacion).val(-1);
+                            cerrarPanel("#DialogoDetalleIsbn");
+                            $("#DialogoDetalleIsbn").off('hide.bs.modal.prevent');
+                            $("#DialogoDetalleIsbn").modal('hide');
+                        });
+                    }
+                });
+            });
+
+        });
+        
+
+        function showDialogAdd(element) {
+            $(idHiddenOperacion).val(0);            
+            setDataModalDetalle("-- NUEVO --", "", "", "", "");
+            $("#DialogoDetalleIsbn").modal('show');
+            return false;
+        }
+
+        function showDialogDetalle(element) {            
+            $(idHiddenOperacion).val(1);
+            $("#DialogoDetalleIsbn").modal('show');
+            return false;
+        }
+
+        function aceptarButton() {                        
+            var result = validarPanel("#DialogoDetalleIsbn");
+            if (result.IsValid) {
+                return confirm("¿Desea guardar los cambios?");
+            }
+            return false;
+        }
+
+
+        function validarGrupo(grupoValidacion) {
+            var validationResult = true;
+            if (typeof (Page_ClientValidate) == 'function') {
+                validationResult = Page_ClientValidate(grupoValidacion);
+            }
+            if (validationResult === true) {
+                return true;
+            }
+            return false;
+        }
+
+        function requiredFielddValidator(source, args) {
+            args.IsValid = (args.Value == "");
+        }
+
+
+        function setDataModalDetalle(clave, isbn, descripcion, reimpresion, reedicion) {
+            $(idHiddenClave).val(clave);
+            $(idLabelClaveISbn).text(clave);
+            var isbn1 = "";
+            var isbn2 = "";
+            var isbn3 = ""; 
+            var isbn4 = "";
+            var isbn5 = "";
+
+            if (typeof (isbn) == 'string') {
+                var claves = isbn.split("-");
+                if (claves.length >= 5) {
+                    isbn1 = claves[0];
+                    isbn2 = claves[1];
+                    isbn3 = claves[2];
+                    isbn4 = claves[3];
+                    isbn5 = claves[4];
+                }
+            }
+
+            $(idTextIsbn_1).val(isbn1);
+            $(idTextIsbn_2).val(isbn2);
+            $(idTextIsbn_3).val(isbn3);
+            $(idTextIsbn_4).val(isbn4);
+            $(idTextIsbn_5).val(isbn5);
+
+            $(idTextDescripcion).val(descripcion);
+            $(idTextReimpresion).val(reimpresion);
+            $(idTextReedicion).val(reedicion);
+        }
+
+        function autoPostbackPaginador(sender, args) {            
+            if (args.keyCode === 13) {
+                __doPostBack(sender.id, sender.value);
+                return true;
+            }
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+        }
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
+    <h2>Catálogo ISBN</h2>
+    <div class="jumbotron customJumbotron" style="font-size: small; padding: 30px; padding-top: 10px; padding-bottom: 10px; background-color: transparent; border-color: lightgray; border-style: none; ">
+            <div class="input-group">                
+                <asp:TextBox ID="TextBoxBusqueda" runat="server" CssClass="form-control img-responsive" placeholder="Búsqueda"> </asp:TextBox>                
+                <br />
+                <div class="input-group-btn">                                      
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        <span class="caret"></span>
+                    </button> 
+                    <ul class="dropdown-menu pull-right primary-dropdown">
+                      <li><asp:LinkButton id="LinkBuscarIsbn" runat="server" Text="ISBN" CssClass="dropdown-item" OnClick="LinkBuscarIsbn_Click"/></li>
+                      <li><asp:LinkButton id="LinkBuscarDescripcion" runat="server" Text="Descripcion" CssClass="dropdown-item" OnClick="LinkBuscarDescripcion_Click"/></li>
+                      <li><asp:LinkButton id="LinkTodos" runat="server" Text="Todos" CssClass="dropdown-item" OnClick="LinkTodos_Click"/></li>
+                    </ul>
+      
+                </div>
+            </div>
+            <div  class="input-group" style="padding:10px;">
+                <%--<asp:Button ID="ButtonAdd"  runat="server" CssClass="btn btn-primary" Text="Agregar" OnClientClick="javascript: return showDialogAdd(this);"/>--%>
+                 <input type="button" class="btn btn-primary" value="Agregar" onclick="javascript: return showDialogAdd(this);"/>
+            </div>
+    </div>
+
+    <div class="panel panel-default primaryTheme" style="margin-top: 30px;">
+        <div class="panel-heading">
+            <h3 class="panel-title text-center">RESULTADOS
+            </h3>
+        </div>        
+        <div class="panel-body" style="min-height: 200px;">
+            <div class="row">
+                <div class="col-md-12" style="position:relative;">
+                    <asp:UpdatePanel ID="UpdatePanelBusqueda" runat="server" UpdateMode="Conditional"  ChildrenAsTriggers="true" >
+                        <ContentTemplate>
+                            <asp:HiddenField ID="HiddenCampoBusqueda" runat="server" Value="" />
+                            <asp:GridView ID="GridViewResultado" runat="server" SkinID="GridViewPrimary" PageSize="13" AutoGenerateColumns="false" AllowPaging="true" 
+                                OnPageIndexChanging="GridViewResultado_PageIndexChanging" OnRowDataBound="GridViewResultado_RowDataBound" OnRowCommand="GridViewResultado_RowCommand"  >
+                                <Columns>
+                                    <asp:TemplateField HeaderText="Ciudad" ItemStyle-CssClass="gridViewColumnHidden column-hidden-responsive-sm gridHeader" HeaderStyle-CssClass="gridViewColumnHidden column-hidden-responsive-sm" >
+                                        <ItemTemplate>
+                                            <span> ISBN </span>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Clave" >
+                                        <ItemTemplate>
+                                             <b class="element-hidden-responsive-sm">Clave:</b>
+                                            <asp:Label ID="LabelClave" runat="server" Text='<%#Eval("IdIsbn")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="ISBN">
+                                        <ItemTemplate>
+                                            <b class="element-hidden-responsive-sm">ISBN:</b>
+                                            <asp:Label ID="LabelISBN" runat="server" Text='<%#Eval("ClaveIsbn")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    
+                                    <asp:TemplateField HeaderText="Descripción">
+                                        <ItemTemplate>
+                                            <b class="element-hidden-responsive-sm">Descripción:</b>
+                                            <asp:Label ID="LabelDescripcion" runat="server" Text='<%#Eval("DescripcionVersion")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    
+                                    <asp:TemplateField HeaderText="Reimpresión">
+                                        <ItemTemplate>
+                                            <b class="element-hidden-responsive-sm">Reimpresión:</b>
+                                            <asp:Label ID="LabelReimpresion" runat="server" Text='<%#Eval("Reimpresion")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                     <asp:TemplateField HeaderText="Reedición">
+                                        <ItemTemplate>
+                                            <b class="element-hidden-responsive-sm">Reedición:</b>
+                                            <asp:Label ID="LabelReedicion" runat="server" Text='<%#Eval("Reedicion")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                     <asp:TemplateField ItemStyle-CssClass="center text-center" >
+                                        <ItemTemplate>
+                                            <div style="display:inline-grid;">
+                                                <a class="btn btn-default center text-center" onclick="javascript: return showDialogDetalle(this);">Editar</a>                                                                                                
+                                            </div>                                           
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                                <PagerTemplate>
+                                    <div  id="FooterGridResultado" class="container-fluid footer-Paging" style="padding:0px;">
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                    Registros
+                                                    <%=(GridViewResultado.PageIndex * GridViewResultado.PageSize) + 1%>
+                                                    al
+                                                    <%= ((GridViewResultado.PageIndex * GridViewResultado.PageSize) + GridViewResultado.Rows.Count)%>
+                                            </div>
+                                            <div class="col-md-5 center text-center" style="padding: 0px;">
+                                                <asp:LinkButton runat="server" ID="cmdInicio" CommandName="Page" CommandArgument="First" Text="<<" CssClass="btn btn-primary">
+                                                </asp:LinkButton>
+                                                <asp:LinkButton runat="server" ID="cmdAnterior" CommandName="Page" CommandArgument="Prev" Text="<" CssClass="btn btn-primary"></asp:LinkButton>
+                                                Página 
+                                        <%--AutoPostBack="true" OnTextChanged="TextBoxPaginaActual_TextChanged"--%>
+                                                <asp:TextBox ID="TextBoxPaginaActual" runat="server" CssClass="form-control campo-Numero-Pagina" Width="50" Text="<%# GridViewResultado.PageIndex + 1 %>"></asp:TextBox>
+                                                <ajaxToolkit:FilteredTextBoxExtender id="FilteredTextBoxExtender3" runat="server" targetcontrolid="TextBoxPaginaActual" filtertype="Numbers" />
+                                                de
+                                                <asp:Label ID="LabelPaginaFinal" runat="server" Text="<%# GridViewResultado.PageCount%>"></asp:Label>
+
+                                                <asp:LinkButton runat="server" ID="cmdSiguiente" CommandName="Page" CommandArgument="Next" CssClass="btn btn-primary" Text=">" ></asp:LinkButton>
+                                                <asp:LinkButton runat="server" ID="cmdFinal" CommandName="Page" CommandArgument="Last" CssClass="btn btn-primary" Text=">>"></asp:LinkButton>
+
+                                            </div>
+                                        </div>
+                                    </div>                                   
+                                </PagerTemplate>
+                            </asp:GridView>
+                        </ContentTemplate>
+                       <%-- <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="ButtonBuscar" EventName="Click" />
+                        </Triggers>--%>
+                    </asp:UpdatePanel>                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%-- POPUP Detalle ISBN--%>
+    <div id="DialogoDetalleIsbn" class="modal fade" role="dialog" >
+        <div class="modal-dialog primaryTheme" >
+            <div class="modal-content form-Validate">
+                <!-- Cabecera -->
+                <div class="modal-header btn-primary ">
+                    <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    <!-- Titulo -->
+                    <div class="modal-title">
+                        <h4>Editar</h4>
+                    </div>
+                </div>
+                <!-- body -->
+                <div class="modal-body" style="position:relative; padding: 20px; padding-bottom:8px;">
+                    <asp:HiddenField ID="HiddenTipoOperacion" runat="server" Value="-1" />
+                    <div class="form-horizontal" style="position:relative;" >                        
+                        <div class="form-group" style="position:relative;" >
+                            <asp:HiddenField ID="HiddenFieldClave" runat="server" Value="" />
+                            <asp:Label runat="server"  CssClass="col-md-2 control-label">Clave</asp:Label>
+                            <div class="col-md-10" >                                
+                                <asp:Label ID="LabelClaveIsbn" runat="server" CssClass="col-md-2 control-label-left control-Validate" Width="200" data-rule-validation="LabelClaveIsbn::1::NA:: :: ::La clave no puede estar vacía"></asp:Label>
+                            </div>
+                        </div>
+
+                        <div class="form-group" >
+                            <asp:Label runat="server" CssClass="col-md-2 control-label">ISBN:</asp:Label>
+                            <div class="col-md-10" style="min-width:">
+                                <asp:TextBox runat="server" ID="TextBoxISBN_1" CssClass="form-control control-Validate campoISBN" data-rule-validation="TextBoxISBN_1::1::{regExp}:: ::^[a-zA-Z0-9]{1,4}$::FORMATO XXX-XXX-XX-XXXX-X" Width="50" MaxLength="4"/> -
+                                <ajaxToolkit:FilteredTextBoxExtender ID="FilteredISBN_1" runat="server" targetcontrolid="TextBoxISBN_1" FilterMode="InvalidChars"  InvalidChars="!'$%&/()=?¡¿?*¨´*][{}-_=|°,.:;"  />
+                                <asp:TextBox runat="server" ID="TextBoxISBN_2" CssClass="form-control control-Validate campoISBN" data-rule-validation="TextBoxISBN_2::1::{regExp}:: ::^[a-zA-Z0-9]{1,4}$::FORMATO XXX-XXX-XX-XXXX-X" Width="50" MaxLength="4"/> -
+                                <ajaxToolkit:FilteredTextBoxExtender ID="FilteredISBN_2" runat="server" targetcontrolid="TextBoxISBN_2" FilterMode="InvalidChars"  InvalidChars="!'$%&/()=?¡¿?*¨´*][{}-_=|°,.:;" />
+                                <asp:TextBox runat="server" ID="TextBoxISBN_3" CssClass="form-control control-Validate campoISBN" data-rule-validation="TextBoxISBN_3::1::{regExp}:: ::^[a-zA-Z0-9]{1,4}$::FORMATO XXX-XXX-XX-XXXX-X" Width="50" MaxLength="4"/> -
+                                <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender1" runat="server" targetcontrolid="TextBoxISBN_3" FilterMode="InvalidChars"  InvalidChars="!'$%&/()=?¡¿?*¨´*][{}-_=|°,.:;" />
+                                <asp:TextBox runat="server" ID="TextBoxISBN_4" CssClass="form-control control-Validate campoISBN" data-rule-validation="TextBoxISBN_4::1::{regExp}:: ::^[a-zA-Z0-9]{1,4}$::FORMATO XXX-XXX-XX-XXXX-X" Width="50" MaxLength="4"/> -
+                                <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender2" runat="server" targetcontrolid="TextBoxISBN_4" FilterMode="InvalidChars"  InvalidChars="!'$%&/()=?¡¿?*¨´*][{}-_=|°,.:;"  />
+                                <asp:TextBox runat="server" ID="TextBoxISBN_5" CssClass="form-control control-Validate campoISBN" data-rule-validation="TextBoxISBN_5::1::{regExp}:: ::^[a-zA-Z0-9]{1,4}$::FORMATO XXX-XXX-XX-XXXX-X" Width="50" MaxLength="4"/>
+                                <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender4" runat="server" targetcontrolid="TextBoxISBN_5" FilterMode="InvalidChars"  InvalidChars="!'$%&/()=?¡¿?*¨´*][{}-_=|°,.:;"  />
+                            </div>
+                        </div>
+
+                        <div class="form-group" >
+                            <asp:Label runat="server" CssClass="col-md-2 control-label">Descripción:</asp:Label>
+                            <div class="col-md-10">
+                                <asp:TextBox runat="server" ID="TextBoxDescripcion" CssClass="form-control img-responsive" />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" >
+                            <asp:Label runat="server" CssClass="col-md-2 control-label">Reimpresión:</asp:Label>
+                            <div class="col-md-10">
+                                <asp:TextBox runat="server" ID="TextBoxReimpresion" CssClass="form-control img-responsive" MaxLength="10" />
+                                <ajaxToolkit:FilteredTextBoxExtender ID="FilteredReimpresion" runat="server" targetcontrolid="TextBoxReimpresion" filtertype="LowercaseLetters, UppercaseLetters, Numbers"   />
+                            </div>
+                        </div>
+
+                        <div class="form-group" >
+                            <asp:Label runat="server" CssClass="col-md-2 control-label">Reedición:</asp:Label>
+                            <div class="col-md-10">
+                                <asp:TextBox runat="server" ID="TextBoxReedicion" CssClass="form-control img-responsive" MaxLength="10"  />
+                                <ajaxToolkit:FilteredTextBoxExtender ID="FilteredReedicion" runat="server" targetcontrolid="TextBoxReedicion" filtertype="LowercaseLetters, UppercaseLetters, Numbers"   />
+                            </div>
+                        </div>
+                                                                                                                     
+                    </div>
+                    <div id="messageValidationEditor" class="group-validation">
+                    </div>
+                </div>                
+                <div class="modal-footer" style="margin-top:0px;">
+                    <asp:Button ID="ButtonAceptar" runat="server" Text="Aceptar" CssClass="btn btn-success" OnClick="ButtonAceptar_Click" OnClientClick="javascript: return aceptarButton(this);"/>
+                        <input type="button" value="Cerrar" class="btn btn-default" data-dismiss="modal" />                        
+                </div>
+            </div>
+        </div>   
+    </div>
+</asp:Content>

@@ -1,0 +1,145 @@
+﻿
+.gridView-NoResponsive {
+}
+
+.gridView-Responsive {
+
+}
+
+/* Tabla GridView */
+.gridView {
+    font-family:Calibri;
+}
+
+/* Tabla GridView */
+.gridHeader {
+    background-color:#4080bf;
+    color:white;
+    font-size:1.2em;
+}
+
+/* Tabla GridView */
+.gridHeader[data-column-sorted] {
+    background-color:orange;
+}
+
+.gridHeader[data-column-sorted='asc'] span.caret {
+    
+}
+
+.gridHeader[data-column-sorted='desc'] span.caret {
+    margin-top:-12px;
+    border-top-width: 0;
+    border-bottom: 4px solid #fff;
+}
+
+.gridAlternatingRow {
+    background-color:#d9e6f2;
+    font-size:0.96em;
+}
+
+.gridRow {
+    background-color:#ffffff;
+    font-size:0.96em;
+}
+
+.gridRow:hover{
+    cursor:default;
+    cursor:pointer;
+}
+
+.gridRow-selected{
+    background-color: #7FBAFF ;        
+}
+
+.gridAlternatingRow:hover{
+    cursor:pointer;
+}
+
+/*.gridAlternatingRow-selected{
+    background-color:yellow;
+}*/
+
+.gridFooter {
+    border-width: 10px;
+    border-color:blue;
+    
+}
+
+.footerTable {
+    font-size:medium;
+    font-family:Calibri;    
+}
+
+
+.table tr.footerTable{
+   padding:8px;
+   line-height:1.428571429;
+   vertical-align:top;
+   border-bottom:2px solid white;
+   border-left:2px solid white;
+   border-right:2px solid white;
+}
+
+/* Tabla GridView Default*/
+.gridView-default {
+    font-family:Calibri;
+}
+
+/* Tabla GridView */
+.gridHeader-default {
+    background-color:#d9d9d9;
+    color:black;
+    font-size:1.2em;
+}
+
+.gridAlternatingRow-default {
+    background-color:#f2f2f2;
+    font-size:0.96em;
+}
+
+.gridRow-default {
+    background-color:#ffffff;
+    font-size:0.96em;
+}
+
+.gridRow-default:hover{
+    cursor:default;
+    cursor:pointer;
+}
+
+.gridAlternatingRow-default:hover{
+    cursor:pointer;
+}
+
+.gridRow-default-selected{
+    background-color: #B7B7BA ;    
+}
+
+
+/*.gridAlternatingRow-default-selected{
+    background-color:yellow;
+}*/
+
+.gridFooter-default {
+}
+
+.footerTable-default {
+    font-size:medium;
+    font-family:Calibri;    
+}
+
+
+.table tr.footerTable-default{
+   padding:8px;
+   line-height:1.428571429;
+   vertical-align:top;
+   border-bottom:2px solid white;
+   border-left:2px solid white;
+   border-right:2px solid white;
+}
+
+/* Columna Oculta */
+.gridViewColumnHidden {
+    display:none;    
+}

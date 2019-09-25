@@ -328,3 +328,13 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+# Agregado: excluir archivos dentro de la carpeta "\WebSiteLibreria\PostedFiles", pero no la carpeta "\WebSiteLibreria\PostedFiles"
+# Ignorar los archivos jpg
+#[Ww]eb[Ss]ite[Ll]ibreria/[pP]osted[Ff]iles/*.jpg
+# Ignorar los archivos png
+#[Ww]eb[Ss]ite[Ll]ibreria/[pP]osted[Ff]iles/*.png
+# Ignorar todos los archivos
+[Ww]eb[Ss]ite[Ll]ibreria/[pP]osted[Ff]iles/*.*
+# No ignorar el archivo README.md
+![Ww]eb[Ss]ite[Ll]ibreria/[pP]osted[Ff]iles/README.md

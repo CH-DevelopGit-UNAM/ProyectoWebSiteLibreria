@@ -1,0 +1,342 @@
+﻿<!DOCTYPE html>
+<html lang="es-mx">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137074105-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-137074105-1');
+    </script>
+    <meta name=“language” content=”Spanish”>
+    <meta name="author" content="Coordinación de Humanidades, CH" />
+    <meta name="copyright" content="Universidad Nacional Autónoma de México, UNAM, U.N.A.M." />
+    <meta name="description" content="la primera colección bilingüe en el mundo de habla hispana, se inició en 1944. Nutrida desde entonces por especialistas en filología clásica y dirigida tanto al público universitario 
+        como a todos los que deseen introducirse en el conocimiento de los clásicos griegos y latinos, tiene como objetivo publicar las obras humanísticas y científicas que, desde su creación hasta nuestros días, 
+        han sido motivo de admiración, de recreo o de análisis" />
+    <meta name="keywords" content="repositorio, biblioteca, scriptorum, graecorum, romanorum, clásicos griegos, clásicos latinos, filología clásica, griegos, latinos, clásicos, bilingüe, colección, 
+        griego-español, latín español, UNAM, dolosofía, ciencia, literatura, historia, política, discurso forense, urbanismo, conocimiento de la naturaleza, cultivo del campo" />
+    <meta name="robots" content="index,follow" />
+    <meta name="referrer" content="origin" />
+    <meta name="generator" content="Microsoft ASP.NET 4.5" />
+    <meta name="rating" content="general" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mantenimiento</title>
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link type="text/css" rel="stylesheet" href="Content/fontCssTrajan.css" />    
+    <link type="text/css" rel="stylesheet" href="Content/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="Content/jquery-ui.min.css" />
+    <link type="text/css" rel="stylesheet" href="Content/responsiveSite-v3.0.css"/>    
+    <link type="text/css" rel="stylesheet" href="Content/responsiveGrid.css" />
+    <link type="text/css" rel="stylesheet" href="Content/jquery.smartmenus.bootstrap.css" />
+        
+    <link type="text/css" rel="stylesheet" href="App_Themes/ThemeBase/cssButtons.css" />
+    <link type="text/css" rel="stylesheet" href="App_Themes/ThemeBase/cssDropDown.css" />
+    <link type="text/css" rel="stylesheet" href="App_Themes/ThemeBase/cssGridView.css" />
+    <link type="text/css" rel="stylesheet" href="App_Themes/ThemeBase/cssModalDialog.css" />
+    <link type="text/css" rel="stylesheet" href="App_Themes/ThemeBase/cssPanel.css" />
+    <link type="text/css" rel="stylesheet" href="App_Themes/ThemeBase/cssLabel.css" />
+    <link type="text/css" rel="stylesheet" href="App_Themes/ThemeBase/cssValidacion.css" />
+    <link type="text/css" rel="stylesheet" href="App_Themes/ThemeBase/CssBase-v3.0.css" />    
+    <link type="text/css" rel="stylesheet" href="App_Themes/ThemeBase/cssBodyFooterPage.css" />
+    <link type="text/css" rel="stylesheet" href="App_Themes/ThemeBase/cssTitlePage.css" />   
+    <script type="text/javascript" src="Scripts/jquery-2.1.0.js"></script>
+    <script type="text/javascript" src="Scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="Scripts/Pages/bootstrap-select.js"></script>
+    <script type="text/javascript" src="Scripts/Pages/jquery-ui-1.11.4.js"></script>
+    <script type="text/javascript" src="Scripts/Pages/bootstrap-submenu.js"></script>
+    <script type="text/javascript" src="Scripts/Pages/jquery.smartmenus.js"></script>
+    <script type="text/javascript" src="Scripts/Pages/jquery.smartmenus.bootstrap.js"></script>
+    <script type="text/javascript" src="Scripts/Pages/Sitio.js"></script>
+    <script type="text/javascript" src="Scripts/Pages/validacion.js"></script>
+    <script type="text/javascript" src="Scripts/bootstrapValidator.js"></script>
+    <style>
+        .body-background-layout-color {
+            background-color: #ccd9ff;
+            opacity: 0.3;
+            border-radius: 20px;
+        }
+
+        #body {
+            background-color: transparent;
+            border-radius: 20px;
+        }
+
+        #body-content {
+            position:relative;
+            width:100%;            
+        }
+
+        #header-login {
+            height:0px;
+            display:none;
+        }
+
+        #content-limit {    
+            /* Tomando los valores mínimos : login (0px) + banner header (280px) + menu (50px) + footer (100px) */
+            height: calc(100% - 436px);    
+            min-height: calc(100% - 436px);
+        }
+        #body {           
+            /* tomando el valor mínimo del footer: 50px */   
+            min-height: calc(100% - 50px);
+        }
+
+        @media (max-width: 1110px) {           
+            #content-limit {
+                /* Tomando los valores mínimos : login (0px) + banner header (210px) + menu (50px) + footer (100px) */
+                height: calc(100% - 366px);    
+                min-height: calc(100% - 366px);
+            }
+        }
+
+        @media screen and (max-width: 846px) {           
+             #content-limit {
+                /* Tomando los valores mínimos : login (0px) + banner header (190px) + menu (50px) + footer (100px) */
+                height: calc(100% - 336px);    
+                min-height: calc(100% - 336px);
+            }
+        }        
+        @media (max-width: 767px) {           
+            #content-limit {
+                /* Tomando los valores mínimos : login (0px) + banner header (130px) + menu (50px) + footer (100px) */
+                height: calc(100% - 276px);    
+                min-height: calc(100% - 276px);
+            }           
+        }
+    </style>
+</head>
+<body>
+
+    <form id="formPrincipal" class="formPrincipal" onsubmit="javascript: return submitBody(this);" autocomplete="off">
+
+        <!-- HEADER -->
+
+        <div id="header">
+            <div id="header-login">
+                <div class="container">
+                    <div id="header-login-anonimo">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a class="" href="/">REGRESAR</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="header-banner-1">
+                <div class="container">
+                    <div id="header-banner-left">
+                        <img src="/images/Logo-UNAM.png"  />
+                    </div>
+                    <div id="header-banner-center">
+                        <img style="" src="/images/Imagen-banner-superior.png"   />
+                    </div>
+                    <div id="header-banner-right">
+                        <table>
+                            <tr>
+                                <td>
+                                    <img src="/images/Logo-Bibliotheca.png" />
+                                </td>
+                                <td>
+                                    <div>
+                                        <p>BIBLIOTHECA SCRIPTORVM</p>
+                                        <p>GRAECOVM ET</p>
+                                        <p>ROMANORVM MEXICANA</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>                       
+                    </div>
+                </div>
+            </div>
+
+            <div id="header-menu" class="container">
+                <!-- MENU -->
+                <div class="navbar navbar-fixed-top menuHeader">
+                    <!-- menuBarTheme -->
+                    <div class="container-fluid menuBarTheme">
+                        <div class="navbar-header" style="width:100%;">
+                            <button type="button" class="navbar-toggle pull-left" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+
+                        <div id="DivMenu" class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav menu-izquierdo">
+                                <!--<li class="opcionRaiz"><a class="btn btn-primary" href="/" role="button">INICIO</a></li>-->
+                                <li class="dropdown opcionRaiz">
+                                    <a id="OpcionInicio" href="javascript:void(0);" class="dropdown-toggle btn btn-primary" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <span>INICIO</span>
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu default-dropdown">
+                                        <li>
+                                            <a class="dropdown-item" href='/'>Inicio</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);">Directorio<span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="/Directorio/Autoridades">Autoridades</a></li>
+                                                <li><a href="/Directorio/ConsejoEditorial">Consejo Editorial</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown opcionRaiz">
+                                    <a href="javascript:void(0);" class="dropdown-toggle btn btn-primary" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <span><i>BIBLIOTHECA</i></span>
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu default-dropdown">
+                                        <li>
+                                            <a class="dropdown-item" href='/General/Presentacion'>Presentación</a>
+                                            <a class="dropdown-item" href='/General/Antecedentes'>Antecedentes</a>
+                                            <a class="dropdown-item" href="/General/Lineamientos">Lineamientos</a>
+                                            <a class="dropdown-item" href="/General/GuiaColaboradores">Guía para colaboradores</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="opcionRaiz"><a class="btn btn-primary" href="/SitiosInteres/Catalogo" role="button">CATÁLOGO</a></li>
+                                <li class="opcionRaiz"><a class="btn btn-primary" href="/SitiosInteres/NovedadesLibreria" role="button">NOVEDADES EDITORIALES</a></li>
+                                <li class="opcionRaiz"><a class="btn btn-primary" href="/SitiosInteres/NovedadesLibreria" role="button">CONTACTO</a></li>
+                            </ul>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- CONTENIDO -->
+
+        <div id="content-limit">
+            <div></div>
+            <!-- CUERPO CONTENIDO -->
+
+            <div id="body" class="container">
+                <!-- EN CASO DE SER NECESARIO, UN FONDO PARA OPACIDAD, EN LAS PÁGINAS, UTILIZAR LA CLASE body-background-layout-color para asignar color -->
+                <div class="body-background-layout body-background-layout-color"></div>
+                <div id="body-content">
+                    <!-- MENSAJES -->
+                    <div id="message"></div>
+                    <div style="display:none;padding:30px;color:black; font-weight:bold; position:relative;border-radius:8px;border-color:black;border-style:solid;border-width:10px;border-top-width:3px;border-left-width:3px;border-right-width:3px;">
+                        <div style="position:absolute;width:100%;height:30px;background-color:black;top:0px;left:0px;z-index:-1;opacity:0.9;font-size:medium;">
+                            <!--<div style="color:white;position:relative; width:20px; float:left; text-align:center; margin-left:10px;">
+                                    <span class='glyphicon glyphicon-arrow-left' aria-hidden='true' style='float:left;'></span>
+                                </div>
+                                <div style="color:white;position:relative; width:20px; float:left; text-align:center;">
+                                    <span class='glyphicon glyphicon-arrow-right' aria-hidden='true' style='float:left;'></span>
+                                </div>
+                                <div style="color:white;position:relative; width:20px; float:left; text-align:center;">
+                                    <span class='glyphicon glyphicon-home' aria-hidden='true' style='float:left;'></span>
+                                </div>-->
+                            <div style="color:black;position:relative; width:20px; float:right; text-align:center;padding-left:9px;padding-right:30px;margin:0px;"><img src="/images/close-red.png" width="25" height="25" /></div>
+                            <div style="color:black;position:relative; width:20px; float:right; text-align:center;padding-left:5px;padding-right:5px;margin:0px;"><img src="/images/minus-red.png" width="23" height="23" /></div>
+                            <div style="color:black;position:relative; width:20px; float:right; text-align:center;padding-right:5px;margin:0px;"><img src="/images/square-red.png" width="23" height="23" /></div>
+                        </div>
+
+                        <div>
+                            <h2 style="padding-bottom:0px;">ERROR</h2>
+                            <hr style="border-color:black;" />
+                            <div style="padding-left:30px;">
+                                <h3>Estamos trabajando para restablecer el servicio a la brevedad.</h3><br />
+                            </div>
+                            <div style="margin:auto; text-align:center;">
+                                <img src="images/icon-error.png" width="150" height="150" />
+                            </div>
+                        </div>
+                        <div style="position:absolute;width:100%;height:100%;background-color:black;top:0px;left:0px;z-index:-2;opacity:0.4;"></div>
+                    </div>
+
+                    <div style="color:black; padding: 10px; font-weight: bold; position: relative;">
+                        <div style="height:100%;">
+                            <h3 style="padding-bottom: 0px;">
+                                <img src="images/icon-error.png" width="60" height="60" />&nbsp;&nbsp;&nbsp;FILE NOT FOUND
+                            </h3>
+                            <hr style="border-color: white;" />
+                            <div style="padding-left: 30px;">
+                                <h4>El recurso solicitado no se ha encontrado.</h4>
+                                <br />
+                            </div>
+                            <div style="width: 100%; text-align: center;">
+                                <img src="images/404-file.png" width="180" height="180" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="body-footer" class="container-fluid">
+                
+            </div>
+            
+            <!-- BUTTON TOP-->
+            <div id="ButtonTopDiv">
+                <input id="ButtonTop" type="button" class="btn btn-danger" value="TOP" onclick="scrollInicio()" />
+            </div>   
+
+            <!-- FOOTER -->
+            <div id="footer">
+                <div class="container" style="position:relative;">
+                    <!-- LOGO -->
+                    <div class="col-sm-12">
+                        <div class="col-sm-4 logo-footer">
+                            <img src="/images/Logo-firma-UNAM.png" alt="Unam" />
+                            <img src="/images/Logo-Coordinacion.png" alt="Unam" />
+                            <img src="/images/Logo-Coord-Divulgacion.png" alt="Unam" />
+                            <img src="/images/Logo-Filologicas.png" alt="Unam" />
+                        </div>
+                        <div class="col-sm-8 leyenda-footer">
+                            La colección Bibliotheca Scriptorum Graecorum et Romanorum Mexicana, cuyas primeras ediciones datan de 1944, comprende los volúmenes digitalizados de textos bilingües (griego-español y latín-español) de obras
+                            clásicas publicados por la Universidad Nacional Autónoma de México (UNAM). Las obras que a la fecha han visto la luz suman más de 150 y su temática es diversa: abarca desde temas de filosofía, ciencia y la literatura (en sus diversos géneros acuñados desde la Antigüedad),
+                            hasta temas de historia, política, discurso forense, urbanismo y conocimiento de la naturaleza y del cultivo del campo, entre otros.
+                            <span class="legal-advertisement">
+                                <br /><br />
+                                Hecho en México, Universidad Nacional Autónoma de México (UNAM), todos los derechos reservados 2019.<br />
+                                Esta página puede ser reproducida con fines no lucrativos, siempre y cuando no se mutile, se cite la fuente completa y su dirección electrónica.<br />
+                                De otra forma, requiere permiso previo por escrito de la institución.
+                            </span>
+                        </div>                        
+                        <div class="col-sm-12" style="text-align:center;">                            
+                            <br />
+                            <a href="/General/Creditos.aspx" class="hyperlink-credits">Créditos</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </form>
+
+    <div id="DivAsyncPostback" class="modal" style="z-index:2000;overflow:hidden;overflow-x:hidden; color:white;">
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="modal" style=" background-color:yellow;opacity:0.4; overflow:hidden;overflow-x:hidden;z-index:2010;"></div>
+                <div class="row center text-center" style="z-index:3050;  margin-top:345px;">
+                    <div class="col-md-3"></div>                    
+                    <div class="col-md-6">
+                        <div id="progressBar" class="text-center">
+                            <img src="/images/gifAjax.gif" width="100" height="100" />
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

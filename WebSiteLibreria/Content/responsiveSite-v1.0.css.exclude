@@ -1,0 +1,281 @@
+﻿/* Set widths on the form inputs since otherwise they're 100% wide */
+input,
+select {
+    /*max-width: 280px;*/
+}
+
+textarea {
+    resize: none;
+}
+
+
+html, body {
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+.formPrincipal {
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    position: relative;
+    overflow: auto;
+    background-image: url(/images/Fondo.jpg);
+    background-size: cover;
+}
+
+#header {
+    min-height: 50px;
+    height: auto;
+    width: 100%;
+    min-width: 220px;
+    max-width: 100%;
+    /*background-color: white;*/
+    background-color:#04BD5B;
+    /* relative para que se mueva junto con el contenido, y no permanezca estatico*/
+    position: relative;
+    /* sticky para que se mueva con el contenido, pero permanezca estatico*/
+    /*position: sticky;*/
+    /* fixed para que No se mueva con el contenido, pero permanezca estatico*/
+    /*position: fixed;*/
+    /* 
+       los elementos popup como el dropdown están a 1000 
+       Los .modal a 1050
+       El div asynpostback a 2000
+       Los warning block a 100
+       El layout de fondo del contenido a 0
+    */
+    z-index: 1001;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0px;
+}
+
+#header-banner-1 {
+    background-color:blue;
+    height:150px;
+    position:sticky;
+}
+
+#header .menuHeader {
+    /* fixed para que el menu no desplaze el contenido */
+    /* relative para que el menu desplaze el contenido */    
+    position:relative; padding:0;margin:0;
+    
+}
+
+#header .menuBarTheme {
+    
+}
+
+#DivMenu .navbar-right {
+    margin-right: 0px;
+}
+
+#content-limit {
+    /* Tamaño fijo : 105 footer + 10 padding-bottom */
+    height: calc(100% - 175px);
+    /*  100 + padding 40 (20 top y 20 bottom) */
+    min-height: calc(100% - 175px);
+    padding-bottom: 10px;
+    position: relative;
+    width: 100%;
+}
+
+#content-body {
+    width: 100%;
+    min-height: calc(100% - 0px);
+    background-color: chocolate;
+    /* auto */
+    height: auto;
+    position: relative;
+}
+
+#logoHeader {
+    background-color: white;
+    height: auto;
+    width: 100%;
+    position: relative;
+}
+
+    #logoHeader img.logo-left {
+        width: 70px;
+    }
+
+    #logoHeader img.logo-center {
+        width: 80%;
+        min-width: 200px;
+        max-width: 600px;
+    }
+
+    #logoHeader img.logo-right {
+        width: 80px;
+    }
+
+
+#body {
+    background-color: white;
+    border-radius: 6px;
+    /*  100 + padding 40 (20 top y 20 bottom) */
+    min-height: calc(100% - 104px);
+    height: auto;
+    margin: auto;
+    padding: 20px;    
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#body div.body-background-layout {
+    position:absolute;height:100%; 
+    width:100%;
+    top:0;left:0; border-radius:inherit;        
+    z-index:0;
+}
+
+
+
+#footer {
+    height: auto;
+    min-height: 100px;
+    padding: 7px;
+    padding-bottom: 8px;
+    width: 100%;
+    min-width: 220px;
+    /*background-color: blue;*/
+    position: relative;
+    margin-top: 25px;
+    /* Color primario */
+    background-color: #03B557;
+    color: white;
+    background-image: url(/images/Footer.jpg);
+    background-size: cover;
+}
+
+    /* Pie de pagina: Logo */
+    #footer div.logo-footer {
+        text-align: center;
+        margin-top: 0px;
+        min-width: 90px;
+        max-width: 90px;
+        padding-left: 0px;
+    }
+
+        /* Pie de pagina: Logo imagen*/
+        #footer div.logo-footer img {
+            width: 80px;
+        }
+    /* Pie de pagina: correo */
+    #footer div.leyenda-footer {
+        text-align: center;
+        padding: 9px;
+    }
+
+.top-element {        
+    position: relative;
+    margin-top: 8%;    
+}
+
+.center-element {        
+    position: relative;
+    margin-top: 15%;    
+}
+
+/* Ajustar al 90% el tamaño del contenido de la pagina */
+@media screen and (max-width: 1200px) {
+    #body{
+        width:90%;
+        max-width:90%;
+    }
+}
+
+/* Ajustar al 100% el tamaño del contenido de la pagina */
+@media screen and (max-width: 992px) {
+    #body{
+        width:100%;
+        max-width:100%;
+    }
+
+}
+
+/* Ajustar al 100% el tamaño del contenido de la pagina */
+@media screen and (max-width: 768px) {
+    #body {    
+        /*min-height: calc(100% - 104px);*/    
+        padding: 10px;    
+    }
+
+    /*#DivMenu .navbar-right {
+                        margin-right:-20px;
+    }*/
+
+    /* Pie de pagina: Logo */
+    #footer div.logo-footer {
+        text-align: center;
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    /* Pie de pagina: correo */
+    #footer div.leyenda-footer {
+        text-align: center;
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .container-fluid.menuBarTheme a.btn.btn-primary {
+        text-align: left;
+    }
+
+        .container-fluid.menuBarTheme a.btn.btn-primary span.caret {
+            float: right;
+            margin-top: 10px;
+        }
+}
+
+
+/* Div Logo, Disclaimer */
+@media screen and (max-width: 526px) {
+    #body {    
+        /*min-height: calc(100% - 104px);*/    
+        padding: 3px;   
+    }
+
+    #body-content {
+        padding:0px;
+    }
+    #header {        
+        /* relative para que se mueva junto con el contenido, y no permanezca estatico*/
+        position: relative;
+        /* sticky para que se mueva con el contenido, pero permanezca estatico*/
+        /*position: sticky;*/
+        /* fixed para que No se mueva con el contenido, pero permanezca estatico*/
+        /*position: fixed;*/        
+    }
+
+    #header .menuHeader {
+        /* fixed para que el menu no desplaze el contenido */
+        /* relative para que el menu desplaze el contenido */    
+        position:relative; padding:0;margin:0;    
+    }
+
+    #logoHeader div.container {
+        width: 100%;
+        padding: 0px;
+    }
+
+    #logoHeader img.logo-left {
+        width: 44px;
+        /*display:none;*/
+    }
+
+    #logoHeader img.logo-right {
+        width: 50px;
+        display: none;
+    }
+}

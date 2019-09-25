@@ -1,0 +1,1464 @@
+﻿<%@ Page Title="Novedades" Language="C#" MasterPageFile="~/ResponsiveSite.master" AutoEventWireup="true" CodeFile="NovedadesLibreria.aspx.cs" Inherits="SitiosInteres_NovedadesLibreria" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="HeaderPlaceHolder" Runat="Server">
+    <style>
+        div [id*='FooterGridResultado'] {
+            bottom:0px;
+            
+        }
+        .empty-result {
+            margin:auto;border: 1px solid #ddd;text-align:left;padding:8px;font-family: Calibri;
+        }
+        .container-grid {
+            background-color:none;
+            padding:0px;
+            text-align:center;
+            vertical-align:middle;
+            align-items:center;
+            position:relative;
+            min-height:300px;     
+            /*max-height:600px;
+            overflow:auto;*/       
+        }
+
+        .item {            
+            height:240px; 
+            width:240px;
+            position:relative;
+            background-color:none;
+            display:inline-block;
+            padding:0px;            
+        }
+
+        .item:hover {            
+            cursor:pointer;
+        }
+        
+        .item-container {
+            -webkit-transition: all 0.2s ease-in-out;
+            height:210px; 
+            width:210px;
+            background-color:none;
+            position:relative;
+            margin:auto;
+            top:0px;
+            border-color:whitesmoke;
+            border-width:0px;
+            border-style:solid;   
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+            /*border-radius:8px;*/
+            /* importante establecer el overflow desde un inicio, para los efectos del escalado de la imagen */
+            overflow:hidden;
+        }
+        
+
+        .item-backgroud-container {
+            width:100%;
+            height:100%;
+            position:absolute;
+            background-color:black;
+            opacity:0.1;
+        }
+
+        .item-image {            
+            margin:auto;            
+            text-align:center;
+            vertical-align:middle;                        
+            -webkit-transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .item-image img{            
+            width: 100%;
+            height: 100%;
+            object-fit:contain;
+            align-self:center;
+            text-align:center;
+            vertical-align:middle;
+            margin:auto;
+            position:absolute;
+            /* Establecer para todos los efectos en la imagen una velocidad de 0.4 seg */
+            -webkit-transition: all 0.4s ease-in-out;     
+            transition: all 0.4s ease-in-out;       
+        }
+
+       .item-container:hover {
+            height:215px;
+            width:215px;                                         
+        }
+
+        .item-container:hover .item-image img{
+            /*object-fit:cover;*/
+            /* Solamente se escala la imagen a un 150% */
+            transform: scale(1.5);
+        }
+
+
+         .item-contenedor-Titulo {
+            z-index: 10;
+            bottom:0;
+            position: absolute;
+            text-align: center;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, .6);            
+            padding: 0px;            
+            width:100%;
+        }
+        .item-contenedor-Titulo > h4,.item-contenedor-Titulo > p{        
+            color:yellow;
+            font-size:small;
+        }
+        .item-contenedor-Titulo > h4{
+            font-size:medium;
+            font-weight:bold;
+        }
+
+        .item-fondoTitulo {
+            background-color: black; opacity: 0.4; height: 55%; 
+            position: absolute; z-index:9;
+            /*border-radius:8px;*/
+        }
+
+        /* CSS POPUP */
+
+         .customJumbotron {
+            width:100%;
+            height:auto;
+        }
+
+        .carouselContenedor{
+            background-color: black;
+        }
+
+        .carouselContenedorImagen {
+            display:flex; height:100%; text-align:center; 
+        }
+
+        .carouselImagen {
+            margin:auto;
+            height:270px;
+            -webkit-transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .modalDialog-Detalle {
+            width: 60%;
+            max-width: 1100px;
+        }
+
+        /*boostrap -> (min-width:1200px)*/ 
+        @media (max-width: 1199px) {
+            .modalDialog-Detalle {
+                width: 75%; 
+                margin:auto;
+            }
+            .carouselContenedor{
+                width:100%;
+            }            
+        }
+        /*boostrap -> (min-width:992px)*/ 
+        @media (max-width: 991px) {
+            .text-right {
+                text-align:left;
+            }
+        }
+
+        /* Imagen : boostrap -> (min-width:768px)  */
+        @media (max-width: 767px) {
+            .carouselContenedorImagen {
+                display:flex; height:100%; text-align:center; 
+            }
+            .carouselImagen {
+                margin:auto;
+                height:190px;                
+            }
+            .modalDialog-Detalle {
+                width: 85%;
+                margin:auto;
+            }
+        }
+
+        /* Imagen */
+        @media (max-width: 526px) {    
+            .carouselContenedorImagen {
+                display:flex; height:100%; text-align:center; 
+            }
+            .carouselImagen {
+                margin:auto;
+                height:150px;
+            }
+            .modalDialog-Detalle {
+                width: 95%;      
+                margin:auto;          
+            }
+
+            .container-grid {            
+                max-height:450px;
+                overflow:auto;       
+            }
+
+            .item {            
+                height:210px; 
+                width:210px;            
+            }
+
+            .item-container {
+                height:185px; 
+                width:185px;            
+            }
+
+            .item-container:hover {
+                height:190px;
+                width:190px;            
+            }
+            .item-fondoTitulo {
+                opacity: 0.3; height: 73%;
+            }
+            .panel-body {
+                padding-left:1px;
+                padding-right:1px;
+            }
+        }
+
+        .campo-Numero-Pagina {
+            display:inline-block;
+            padding:2px;
+            text-align:center;
+        }
+
+
+        .item-inner {
+            display:inline-block;
+            padding:10px;
+            width: 200px; height: 250px; position: relative;
+        }
+
+        .flex-item{            
+            display:inline-block;
+            position: relative;
+            height:100%;
+            overflow:hidden;
+            -webkit-transition: all 0.2s ease-in-out;
+        }
+
+        .flex-item-description {
+            position:absolute;
+            top:0px;
+            width:100%;
+            height:100%;            
+            -webkit-transition: all 0.4s ease-in-out;            
+            opacity:0;
+        }
+
+        .flex-item-description > div:first-child{            
+            width:100%;
+            height:100%;
+            background-color:black;
+            position:absolute;
+            opacity:0.5;
+            -webkit-transition: all 0.2s ease-in-out;
+        }
+        
+        .flex-item-description > div:last-child{
+            height:100%;
+            width:100%;                  
+            position:relative;
+            color:yellow;
+            -webkit-transition: all 0.2s ease-in-out;
+            display:flex;
+            align-items:center;
+            justify-content:center;     
+            overflow:hidden
+        }
+
+           
+
+        .flex-item img{
+            height:100%;
+            position:relative;
+            object-fit:contain;
+            object-position:center;
+            -webkit-transition: all 0.2s ease-in-out;
+        }        
+
+        .flex-item:hover img{
+            /*object-fit:cover;*/
+            /* Solamente se escala la imagen a un 150% */
+            transform: scale(1.5);
+        }
+        
+        .flex-item:hover .flex-item-description  {        
+            opacity:1.0;
+        }
+
+        .flex-item-title {
+           position:absolute;
+            top:0px;
+            width:100%;
+            height:100%;
+            opacity:1.0;
+        }
+
+        .flex-item-title > div:first-child{            
+            width:100%;
+            height:60%;
+            background-color:black;
+            position:absolute;
+            top:40%;
+            opacity:0.5;
+            -webkit-transition: all 0.2s ease-in-out;
+        }
+        .flex-item-title > div:last-child{            
+           width:100%;
+            height:60%;
+            
+            position:absolute;
+            top:40%;
+            color:yellow;
+            -webkit-transition: all 0.2s ease-in-out;
+        }
+
+        .flex-item:hover .flex-item-title {        
+            opacity:0;
+        }
+
+    </style>
+    <script type="text/javascript">
+        
+        var idTextoBusqueda = "<%=TextBoxBusqueda.ClientID%>";
+        var IdBusqueda = "<%=HiddenCampoBusqueda.ClientID%>";
+        var IdTipoBusqueda = "<%=HiddenTipoBusqueda.ClientID%>";
+        var IdBusquedaHabilitada = "<%=HiddenBusquedaHabilitada.ClientID%>";
+
+
+        var idTextPaginaActual = "<%=TextBoxPaginaActual.ClientID%>";
+        var IdPaginaActual = "<%=HiddenPaginaActual.ClientID%>";
+        var IdFilasxPagina = "<%=HiddenFilasPorPagina.ClientID%>";        
+        var IdPaginasTotales = "<%=HiddenPaginasTotales.ClientID%>";
+        var IdFilasTotales = "<%=HiddenFilasTotales.ClientID%>";
+        
+        var _Paginacion = { PaginaActual: 1, FilasPorPagina: 1, 'PaginasTotales': 0, FilasTotales: 0, TipoBusqueda: '', IsBusqueda: false, Busqueda1: '', Busqueda2: '', IsNavigating: false };
+        var _ListaItems = [];
+        var _CurrentIndex = 0;
+
+        // [ { Paginacion , Items } ]
+
+        var _ListaPaginas = [];
+
+        //PageMethods.set_path("NovedadesLibreria.aspx");
+
+        $(document).ready(function () {
+            var tipoBusqueda = $("#" + IdTipoBusqueda).val();
+            // Inicializar busqueda
+            initSearch(tipoBusqueda);
+
+            $("#ButtonNavegacion").click(function () {
+                beginSearch();
+                return false;
+            });
+
+
+            //// Modal-Until-Show...
+            $("#DialogoDetalleTitulo").on('shown.bs.modal', function (event) {
+                $("#tabContentDetalle").show();
+                $("#tabContentDetalleLoading").hide();
+            });
+
+            $("#DialogoDetalleTitulo").on('show.bs.modal', function (event) {
+                $("#tabContentDetalle").hide();
+                $("#tabContentDetalleLoading").show();
+                // Seleccionar el primer panel para que los popup se muestren en su posicion correcta
+                $("a[href='#home']").click();
+
+                $('#DialogoDetalleTitulo').on('hide.bs.modal.prevent', function (event) {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    return false;
+                });
+
+                $(this).find("input[type='button']").each(function (index, value) {
+                    var dataDismiss = $(value).attr('data-dismiss');
+                    if (dataDismiss != null && dataDismiss != undefined) {
+                        $(value).click(function (event) {
+                            cerrarPanel("#DialogoDetalleTitulo");
+                            $("#DialogoDetalleTitulo").off('hide.bs.modal.prevent');
+                            $("#DialogoDetalleTitulo").modal('hide');
+                        });
+                    }
+                });
+
+                $(this).find("button").each(function (index, value) {
+                    var dataDismiss = $(value).attr('data-dismiss');
+                    if (dataDismiss != null && dataDismiss != undefined) {
+                        $(value).click(function (event) {
+                            cerrarPanel("#DialogoDetalleTitulo");
+                            $("#DialogoDetalleTitulo").off('hide.bs.modal.prevent');
+                            $("#DialogoDetalleTitulo").modal('hide');
+                        });
+                    }
+                });
+            });
+
+
+            $("#cmdInicio").click(function () {
+                if ($(this).attr("disabled") == undefined) {
+                    firstPage($(this));
+                }                
+            });
+            $("#cmdAnterior").click(function () {
+                if ($(this).attr("disabled") == undefined) {
+                    previousPage($(this));
+                }
+            });
+            $("#cmdSiguiente").click(function () {
+                if ($(this).attr("disabled") == undefined) {
+                    nextPage($(this));
+                }
+            });
+            $("#cmdFinal").click(function () {
+                if ($(this).attr("disabled") == undefined) {
+                    lastPage($(this));
+                }
+            });
+
+            // Deshabilitar "autopostback" predeterminado del formulario en controles text
+            $("#formPrincipal").on("keypress", function (e) {
+                var keycode = (e.keyCode ? e.keyCode : e.which);
+                if (keycode == '13') {
+                    if ($(e.target).prop("type") === "text") {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return false;
+                    }
+                }
+            });
+
+        });
+
+        function initSearch(tipoBusqueda) {
+            _CurrentIndex = 0;
+            _ListaItems = [];
+            _ListaPaginas = [];
+
+            var isBusqueda = false;
+            var campobusqueda = $("#" + idTextoBusqueda).val();            
+            if (tipoBusqueda != undefined && tipoBusqueda.length > 0) {
+                isBusqueda = true;
+            } else {
+                $("#" + idTextoBusqueda).val("");
+                campobusqueda = "";
+                tipoBusqueda = "";
+            }
+            // Actualizar el tipo de Busqueda
+            $("#" + IdBusqueda).val(campobusqueda);
+            $("#" + IdTipoBusqueda).val(tipoBusqueda);
+            $("#" + IdBusquedaHabilitada).val(isBusqueda);
+            // Actualizar Navegacion
+            $("#" + IdPaginaActual).val(1);
+
+            disableAspnet("cmdSiguiente");
+            disableAspnet("cmdFinal");
+            disableAspnet(idTextPaginaActual);
+            disableAspnet("cmdInicio");
+            disableAspnet("cmdAnterior");
+            // Luego ejecutar la busqueda      
+            beginSearch();
+        }
+
+        function beginSearch() {
+            _Paginacion.PaginaActual = tryParseInteger($("#" + IdPaginaActual).val(), 1);
+            _Paginacion.FilasPorPagina = tryParseInteger($("#" + IdFilasxPagina).val(),0);
+            _Paginacion.IsBusqueda = $("#" + IdBusquedaHabilitada).val();
+            _Paginacion.Busqueda1 = $("#" + IdBusqueda).val();
+            _Paginacion.TipoBusqueda = $("#" + IdTipoBusqueda).val();            
+            $("#ajaxSearch").show();
+            //PageMethods.CargarTitulos(_Paginacion, onPaginacionSuccess, onError);
+            PaginarTitulos();
+        }
+
+        function PaginarTitulos() {            
+            $.ajax({
+                url: urlSite + "WebServices/WebSiteServices.asmx/PaginarNovedades",
+                async: true,
+                data: JSON.stringify({ paginacion: _Paginacion }),
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",                
+                dataType  : 'json',
+                success: onPaginacionSuccess,
+                error: onError,
+                complete: function (xhr, status) { }
+            });
+        }
+
+
+        function onPaginacionSuccess(data) {            
+            $("#ajaxSearch").hide();
+            var objeto = data.d;
+            
+            var items = [];
+            if (objeto.Titulos != undefined && objeto.Titulos != null) {
+                items = objeto.Titulos;
+            }
+            //console.log(objeto.Paginacion);
+            if (objeto.Paginacion != undefined && objeto.Paginacion != null) {
+                // Antes de asignar las filas totales, verifico que no hayan cambiado con respecto al cliente; si cambiaron, limpiar la lista bastará para que se realize una busqueda al paginar.
+                // Este escenario se puede dar cuando la cantidad de elementos extraidos de la BD sea diferente a la que está en el cliente
+
+                // Esto no afecta a la carga inicial, puesto que la lista se vacia desde un inicio
+                if (objeto.Paginacion.PaginasTotales != _Paginacion.PaginasTotales) {
+                    // El Refresh solamente aplicará cuando la navegación sea hacia adelante; hacia atrás se considera que no es necesario
+                    // por que ya se han cargado datos
+                    _ListaPaginas = [];
+                }
+                
+
+                // Ahora sí, se asignan las filas totales
+                _Paginacion.FilasTotales = objeto.Paginacion.FilasTotales;
+                _Paginacion.PaginasTotales = objeto.Paginacion.PaginasTotales;
+            } else {
+                paginacionActual.PaginaActual = 1;
+                _Paginacion.PaginasTotales = 0;
+            }
+            $("#" + IdPaginaActual).val(_Paginacion.PaginaActual);
+            $("#" + IdFilasTotales).val(_Paginacion.FilasTotales);
+            $("#" + IdPaginasTotales).val(_Paginacion.PaginasTotales);
+
+            _ListaPaginas.push({
+                Paginacion: {
+                    PaginaActual: _Paginacion.PaginaActual, FilasPorPagina: _Paginacion.FilasPorPagina,
+                    PaginasTotales: _Paginacion.PaginasTotales, FilasTotales: _Paginacion.FilasTotales,
+                    TipoBusqueda: _Paginacion.TipoBusqueda, IsBusqueda: _Paginacion.IsBusqueda, Busqueda1: _Paginacion.Busqueda1,
+                    Busqueda2: _Paginacion.Busqueda2, IsNavigating: _Paginacion.IsNavigating
+                },
+                Items: items
+            });
+
+            //createItems(items)
+            createItemsv_2_0(items);
+            //console.log(_ListaPaginas);
+            enableNavigation(_Paginacion)
+        }
+
+        function onError(xhr, status) {
+            $("#ajaxSearch").hide();
+            $("#ButtonNavegacion").hide();
+            alert("Ocurrio un error desconocido al cargar el dato.");
+        }
+
+        function createItems(listItems) {
+            var $itemList = $("#item-List");
+            $itemList.html("");
+            if (listItems != undefined && listItems.length > 0) {
+                var items;
+                for (var i = 0; i < listItems.length; i++) {
+                    var titulo = listItems[i];
+                    var item = $('<div class="item" onclick="popUpDetalle([' + _Paginacion.PaginaActual + ',' + titulo.IdTitulo + ']);"></div>');
+                    var itemBackgroundContainer = $('<div class="item-backgroud-container"></div>');
+
+                    var itemContainer = $('<div class="item-container"></div>');
+                    itemContainer.append(itemBackgroundContainer);
+
+                    var itemImage = $('<div class="item-image"></div>');
+                    var img = $('<img src="' + titulo.RutaArchivo + '" alt="' + titulo.Titulo + '" class="img-responsive">');
+                    itemImage.append(img);
+                    itemContainer.append(itemImage);
+
+                    var contenedorTitulo = $('<div class="item-contenedor-Titulo"></div>');
+                    var aTitulo = $('<a href="javascript: void(0);" onclick="popUpDetalle([' + _Paginacion.PaginaActual + ',' + titulo.IdTitulo + ']);"></a>');
+                    contenedorTitulo.append(aTitulo);
+
+                    var hTitulo = $('<h4>' + titulo.Titulo + '</h4>');
+                    aTitulo.append(hTitulo);
+
+                    var pTitulo = $('<p>' + titulo.TituloOriginal + '</p>');
+                    aTitulo.append(pTitulo);
+                    itemContainer.append(contenedorTitulo);
+
+                    var fondoTitulo = $('<div class="navbar-fixed-bottom item-fondoTitulo"></div>');
+                    itemContainer.append(fondoTitulo);
+
+                    
+                    item.append(itemContainer);
+                    $itemList.append(item);
+
+                    //_CurrentIndex++;
+                }
+            } else {
+                $itemList.append('<div class="col-md-12 empty-result"><span>SIN RESULTADOS</span></div>');
+            }
+        }
+
+        function createItemsv_2_0(listItems) {
+            var $itemList = $("#item-List");
+            $itemList.html("");
+            if (listItems != undefined && listItems.length > 0) {
+                var items;
+                for (var i = 0; i < listItems.length; i++) {
+                    var titulo = listItems[i];
+                    var item = $('<div class="item-inner" onclick="popUpDetalle([' + _Paginacion.PaginaActual + ',' + titulo.IdTitulo + ']);"></div>');
+                    var aImagen = $('<a href="javascript: void(0);" onclick="popUpDetalle([' + _Paginacion.PaginaActual + ',' + titulo.IdTitulo + ']);"></a>');
+                    
+
+                    var flexItem = $('<div class="flex-item"></div>');
+                    var img = $('<img src="' + titulo.RutaArchivo + '" alt="' + titulo.Titulo + '" class="img-responsive">');
+                    flexItem.append(img);
+
+                    var flexItemTitle = $('<div class="flex-item-title"><div></div><div>' + titulo.Titulo + '</div></div>');
+                    var flexItemDescription = $('<div class="flex-item-description"><div></div><div>' + titulo.TituloOriginal + '</div></div>');
+                    flexItem.append(flexItemTitle);
+                    flexItem.append(flexItemDescription);
+
+                    aImagen.append(flexItem);
+                    item.append(aImagen);
+
+                    $itemList.append(item);
+                }
+            } else {
+                $itemList.append('<div class="col-md-12 empty-result"><span>SIN RESULTADOS</span></div>');
+            }
+        }
+
+
+        function enableNavigation(paginacion) {
+            //console.log(paginacion.PaginasTotales);
+            if (paginacion.PaginasTotales > 0) {
+                //console.log(paginacion);
+                if (paginacion.PaginaActual > 0 & paginacion.PaginaActual < paginacion.PaginasTotales) {
+                    enabledAspnet("cmdSiguiente");
+                    enabledAspnet("cmdFinal");
+                    enabledAspnet(idTextPaginaActual);
+                } else {
+                    disableAspnet("cmdSiguiente");
+                    disableAspnet("cmdFinal");
+                    disableAspnet(idTextPaginaActual);
+                }
+
+                if (paginacion.PaginaActual <= 1) {
+                    disableAspnet("cmdInicio");
+                    disableAspnet("cmdAnterior");
+                } else {
+                    enabledAspnet("cmdInicio");
+                    enabledAspnet("cmdAnterior");
+                }
+                $("#" + idTextPaginaActual).val(paginacion.PaginaActual);                
+            } else {
+                disableAspnet("cmdInicio");
+                disableAspnet("cmdAnterior");
+                disableAspnet("cmdSiguiente");
+                disableAspnet("cmdFinal");
+                disableAspnet(idTextPaginaActual);
+                $("#" + idTextPaginaActual).val(0);
+            }
+
+           
+            $("#SpanPaginaFinal").text(paginacion.PaginasTotales);
+        }
+
+        function disableAspnet(id) {
+            $("#" + id).attr("disabled", "disabled");
+            $("#" + id).addClass("aspNetDisabled");
+        }
+
+        function enabledAspnet(id) {
+            $("#" + id).removeAttr("disabled", "disabled");
+            $("#" + id).removeClass("aspNetDisabled");
+        }
+        function firstPage(element) {            
+            _Paginacion.PaginaActual = 1;
+            enableNavigation(_Paginacion);
+            var items = findItemsInPage(_Paginacion.PaginaActual, _ListaPaginas);
+            if (items != undefined) {
+                //createItems(items.Items);
+                createItemsv_2_0(items.Items);
+            }
+        }
+
+        function previousPage(element) {
+            if (_Paginacion.PaginaActual > 1) {
+                _Paginacion.PaginaActual--;
+            }
+            else {
+                _Paginacion.PaginaActual = 1;
+            }
+            $("#" + IdPaginaActual).val(_Paginacion.PaginaActual);
+            enableNavigation(_Paginacion);
+            var items = findItemsInPage(_Paginacion.PaginaActual, _ListaPaginas);
+            if (items != undefined) {
+                //createItems(items.Items);
+                createItemsv_2_0(items.Items);
+            }
+        }
+
+        function nextPage(element) {
+            if (_Paginacion.PaginaActual < _Paginacion.PaginasTotales) {
+                _Paginacion.PaginaActual++;
+            }
+            else {
+                _Paginacion.PaginaActual = _Paginacion.PaginasTotales;
+            }
+            $("#" + IdPaginaActual).val(_Paginacion.PaginaActual);
+
+            var items = findItemsInPage(_Paginacion.PaginaActual, _ListaPaginas);
+            if (items != undefined) {
+                //createItems(items.Items);
+                createItemsv_2_0(items.Items);
+                enableNavigation(_Paginacion);
+            } else {
+                beginSearch();
+            }
+        }
+
+        function lastPage(element) {
+            _Paginacion.PaginaActual = _Paginacion.PaginasTotales;
+            $("#" + IdPaginaActual).val(_Paginacion.PaginaActual);
+            
+            var items = findItemsInPage(_Paginacion.PaginaActual, _ListaPaginas);
+            if (items != undefined) {
+                //createItems(items.Items);
+                createItemsv_2_0(items.Items);
+                enableNavigation(_Paginacion);
+            } else {
+                beginSearch();
+            }
+        }
+
+        function findItemsInPage(paginaActual, listaPaginas) {
+            if (listaPaginas != undefined && listaPaginas != null) {
+                var items = listaPaginas.find(function (element) {                    
+                    return element.Paginacion.PaginaActual == paginaActual;
+                });
+                return items;
+            } else {
+                return undefined;
+            }
+        }
+
+        function autoPostbackPaginador(event) {
+            if (event.keyCode === 13) {
+                if ($("#" + IdPaginaActual).attr("disabled") == undefined) {
+                    var paginaActual = tryParseInteger($("#" + idTextPaginaActual).val(), 0);
+                    if (paginaActual <= 0) {
+                        paginaActual = 1;
+                    } else if (paginaActual > _Paginacion.PaginasTotales) {
+                        paginaActual = _Paginacion.PaginasTotales;
+                    }
+                    _Paginacion.PaginaActual = paginaActual;
+                    $("#" + IdPaginaActual).val(_Paginacion.PaginaActual);
+                    var items = findItemsInPage(_Paginacion.PaginaActual, _ListaPaginas);
+                    if (items != undefined) {
+                        //createItems(items.Items);
+                        createItemsv_2_0(items.Items);
+                        enableNavigation(_Paginacion);
+                    } else {
+                        beginSearch();
+                    }
+                }                
+                return false;
+            }
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+        }
+
+        function popUpDetalle(item) {
+            if (item != undefined && item != null) {
+                var pagina = item[0];
+                var idTitulo = item[1];
+                var paginaItem = findItemsInPage(pagina, _ListaPaginas);
+                if (paginaItem != undefined) {
+                    var titulo = paginaItem.Items.find(function (element) { return element.IdTitulo == idTitulo });
+
+                    if (titulo != undefined && titulo != null) {
+                        setDataModalDetalle(titulo.IdTitulo, titulo.DetalleIsbn, titulo.Ciudad, titulo.Editor, titulo.Autor, titulo.TituloOriginal, titulo.Titulo, titulo.DetalleResponsables ,titulo.Edicion,
+                                                                titulo.AnioPublicacion, titulo.Paginas, titulo.Medidas, titulo.Serie500, titulo.Contenido, titulo.Cualidades, titulo.Colofon,
+                                                                titulo.Tema, titulo.Secundarias, titulo.UffYL, titulo.UiiFL, titulo.Observaciones, titulo.Serie, titulo.RutaArchivo, titulo.NombreArchivo, titulo.IsNovedad,
+                                                                titulo.NumeroEdicion, titulo.NumeroReimpresion, titulo.UrlPdf, titulo.UrlVirtual, titulo.UrlOnline);
+                    } else {
+                        setDataModalDetalle(idTitulo, "", "", "", "", "", "", "","", "", "", "", "", "", "", "", "", "", "", "", "", "", urlSite + "Images/avatar.png", "avatar.png", false, "", "", "", "", "");
+                    }
+
+                    $("#DialogoDetalleTitulo").modal('show');
+                } else {
+                    alert("No es posible generar una vista previa");
+                }
+            } else {
+                alert("No es posible generar una vista previa");
+            }
+        }
+
+        function setDataModalDetalle(idTitulo, detalleIsbn, ciudad, editor, autor, tituloOriginal, titulo, detalleResponsables, edicion, anioPub, paginas,
+                            medidas, serie500, contenido, cualidades, colofon, tema, secundarias, uffyl, uiifl,
+                            observaciones, serie, rutaArchivo, nombrearchivo, isNovedad, edicionNumero, reimpresion, urlPdf, urlVirtual, urlOnline) {
+            //$(idHiddenClave).val(idTitulo);
+            var dummyValue = null;
+            // Al ejecutar el evento, se habilita la programación manual del Collapse
+            $('#accordion div.collapse').collapse("hide");
+           
+            // Se programa manualmente los cierres de los demás paneles al abrirse el actual
+            // 'show.bs.collapse'  --> Cuando se dispara el evento collapse (apertura)
+            // 'shown.bs.collapse'  --> Cuando se muestra el elemento
+            // Se ejecuta la acción en el evento 'show.bs.collapse', para que seá rápido el efecto
+            $('#accordion div.collapse').on('show.bs.collapse', function (item) {
+                var idSeccion = this.id;
+                $('#accordion div[id*="collapse"]').each(function (index, item) {
+                    if (item.id != idSeccion) {
+                        $(item).collapse("hide");
+                    }
+                });
+            })
+
+            if (typeof (detalleIsbn) != 'undefined' && detalleIsbn != null) {
+                if (detalleIsbn.length > 0) {
+                    // TO-DO : SpanIsbn
+                    //renderTableIsbn($("#DivIsbnEdit"), detalleIsbn);
+                    var isbns = "";
+                    for (var i = 0; i < detalleIsbn.length; i++) {
+                        isbns += detalleIsbn[i].ClaveIsbn + "<br/>";
+                    }
+                    $("#SpanIsbn").html(isbns);
+                } else {
+                    //renderTableIsbn($("#DivIsbnEdit"), []);
+                    $("#SpanIsbn").html("");
+                }
+            } else {
+                //renderTableIsbn($("#DivIsbnEdit"), []);
+                $("#SpanIsbn").text("");
+            }
+
+            if (typeof (ciudad) != 'undefined' & ciudad != null) {
+                if (typeof (ciudad) === 'string') {
+                    $("#SpanCiudad").text(ciudad);
+                    if (ciudad.length > 0) {
+                        $("#bCiudad").show();
+                    } else {
+                        $("#bCiudad").hide();
+                    }
+
+                } else {
+                    $("#SpanCiudad").text(ciudad.Descripcion);
+                    if (ciudad.Descripcion.length > 0) {
+                        $("#bCiudad").show();
+                    } else {
+                        $("#bCiudad").hide();
+                    }
+                }
+            } else {
+                $("#SpanCiudad").text("");
+                $("#bCiudad").hide();
+            }
+
+            if (typeof (editor) != 'undefined' & editor != null) {
+                if (typeof (editor) === 'string') {
+                    $("#SpanEditor").text(editor);
+                } else {
+                    $("#SpanEditor").text(editor.Nombre);
+                }
+            } else {
+                $("#SpanEditor").text("");
+            }
+
+            if (typeof (autor) != 'undefined' & autor != null) {
+                if (typeof (autor) === 'string') {
+                    $("#SpanAutor").text(autor);
+                    if (autor.length > 0) {
+                        $("#bAutor").show();
+                    } else {
+                        $("#bAutor").hide();
+                    }
+
+                } else {
+                    var nombreAutor = autor.NombreEspanol;
+                    //if (autor.NombreLatin.length > 1) {
+                    //    nombreAutor = nombreAutor + '(' + autor.NombreLatin + ')';
+                    //} else if (autor.NombreGriego.length > 1) {
+                    //    nombreAutor = nombreAutor + '(' + autor.NombreGriego + ')';
+                    //}
+                    $("#SpanAutor").text(nombreAutor);
+                    if (nombreAutor.length > 0) {
+                        $("#bAutor").show();
+                    } else {
+                        $("#bAutor").hide();
+                    }
+                }
+            } else {
+                $("#SpanAutor").text("");
+                $("#bAutor").hide();
+            }
+
+            if (typeof (serie) != 'undefined' & serie != null) {
+                if (typeof (serie) === 'string') {
+                    $("#SpanSerie").text(serie);
+                    if (serie.length > 0) {
+                        $("#bSerie").show();
+                    } else {
+                        $("#bSerie").hide();
+                    }
+                } else {
+                    var nombreSerie = "";
+                    if (serie.NombreLatin.length > 1) {
+                        nombreSerie = serie.NombreLatin;
+                    } else if (serie.NombreGriego.length > 1) {
+                        nombreSerie = serie.NombreGriego;
+                    }
+                    $("#SpanSerie").text(nombreSerie);
+                    if (nombreSerie.length > 0) {
+                        $("#bSerie").show();
+                    } else {
+                        $("#bSerie").hide();
+                    }
+                }
+            } else {
+                $("#SpanSerie").text("");
+                $("#bSerie").hide();
+            }
+
+            if (typeof (detalleResponsables) != 'undefined' && detalleResponsables != null) {
+                if (typeof (detalleResponsables) === 'string') {
+                    $("#SpanResponsables").html(detalleResponsables);
+                } else {
+                    if (detalleResponsables.length > 0) {
+                        var listaResponsables = detalleResponsables[0].Responsables;
+                        // TO-DO : SpanResponsables                    
+                        var resp = "";
+                        for (var i = 0; i < listaResponsables.length; i++) {
+                            resp += listaResponsables[i].NombreCompletoResponsable + "  (" + listaResponsables[i].TipoFuncion + ") " + " <br/>";
+                        }
+                        $("#SpanResponsables").html(resp);
+                    } else {
+                        $("#SpanResponsables").html("");
+                    }
+                }                
+            } else {
+                //renderTableResponsables($("#DivResponsablesEdit"), []);
+                $("#SpanResponsables").html("");
+            }
+
+
+            $("#SpanTitulo").text(titulo + " (" + tituloOriginal + ") , " + anioPub);
+            var edicionStr = obtenerRomanoDeNumero(edicionNumero, "Edición");
+            //$("#SpanEdicion").text(edicionStr);
+            $("#SpanEdicion").html(edicionNumero + " <sup><u>a</u></sup>.", "Edición");
+            dummyValue = (edicionNumero > 0 ? $("#bEdicion").show().height() : $("#bEdicion").hide().height());
+            edicionStr = obtenerRomanoDeNumero(reimpresion, "Reimpresión");
+            //$("#SpanReimpresión").text(edicionStr);
+            $("#SpanReimpresión").html(reimpresion + " <sup><u>a</u></sup>.", "Reimpresión");
+            dummyValue = (reimpresion > 0 ? $("#bReimpresion").show().height() : $("#bReimpresion").hide().height());
+            $("#SpanAnio").text(anioPub);
+            dummyValue = (anioPub > 0 ? $("#bAnio").show().height() : $("#bAnio").hide().height());
+            $("#SpanPaginas").text(paginas);
+            dummyValue = (paginas.length > 0 ? $("#bPaginas").show().height() : $("#bPaginas").hide().height());
+            $("#SpanMedidas").text(medidas);
+            dummyValue = (medidas.length > 0 ? $("#bMedidas").show().height() : $("#bMedidas").hide().height());
+            $("#SpanSerie500").text(serie500);
+            dummyValue = (serie500.length > 0 ? $("#bSerie500").show().height() : $("#bSerie500").hide().height());
+            $("#SpanContenido").text(contenido);
+            dummyValue = (contenido.length > 0 ? $("#bContenido").show().height() : $("#bContenido").hide().height());
+            $("#SpanCualidades").text(cualidades);
+            dummyValue = (cualidades.length > 0 ? $("#bCualidades").show().height() : $("#bCualidades").hide().height());
+            $("#SpanColofon").text(colofon);
+            dummyValue = (colofon.length > 0 ? $("#bColofon").show().height() : $("#bColofon").hide().height());
+            $("#SpanTema").text(tema);
+            dummyValue = (tema.length > 0 ? $("#bTema").show().height() : $("#bTema").hide().height());
+            $("#SpanSecundarias").val(secundarias);
+            dummyValue = (secundarias.length > 0 ? $("#bSecundarias").show().height() : $("#bSecundarias").hide().height());
+            $("#SpanU_FFYL").text(uffyl);
+            dummyValue = (uffyl.length > 0 ? $("#bUFFYL").show().height() : $("#bUFFYL").hide().height());
+            $("#SpanU_IIFL").text(uiifl);
+            dummyValue = (uiifl.length > 0 ? $("#bUIIFL").show().height() : $("#bUIIFL").hide().height());
+            $("#SpanObservaciones").text(observaciones);
+            console.log(observaciones);
+            dummyValue = (observaciones.length > 0 ? $("#bObservaciones").show().height() : $("#bObservaciones").hide().height());
+
+            $("#ImagenTitulo").attr("src", rutaArchivo);
+            $("#ImagenTitulo").attr("alt", nombrearchivo);
+
+            if (urlPdf != undefined && urlPdf.length > 0) {
+                $("#ImagenPdf").show();
+                $("#ImagenPdf").attr("data-url", urlPdf);
+            } else {
+                $("#ImagenPdf").hide();
+                $("#ImagenPdf").removeAttr("data-url");
+            }
+
+            if (urlVirtual != undefined && urlVirtual.length > 0) {
+                $("#ImageVirtual").show();
+                $("#ImageVirtual").attr("data-url", urlVirtual);
+            } else {
+                $("#ImageVirtual").hide();
+                $("#ImageVirtual").removeAttr("data-url");
+            }
+
+            if (urlOnline != undefined && urlOnline.length > 0) {
+                $("#ImageOnline").show();
+                $("#ImageOnline").attr("data-url", urlOnline);
+            } else {
+                $("#ImageOnline").hide();
+                $("#ImageOnline").removeAttr("data-url");
+            }
+
+        }
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
+    <h2>Novedades</h2>
+    <div class="jumbotron customJumbotron" style="font-size: small; padding: 30px; padding-top: 10px; padding-bottom: 10px; background-color: transparent; border-color: lightgray; border-style: none;">
+        <div class="input-group">
+            <asp:TextBox ID="TextBoxBusqueda" runat="server" CssClass="form-control img-responsive" placeholder="Búsqueda"> </asp:TextBox>
+            <br />
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu pull-right primary-dropdown">
+                    <li><a id="BtnBuscarNombre" href="javascript:void(0);" class="dropdown-item" onclick="initSearch('nombre');">Nombre</a></li>
+                    <li><a id="BtnBuscarTema" href="javascript:void(0);" class="dropdown-item" onclick="initSearch('tema');">Tema</a></li>
+                    <li><a id="BtnBuscarAutor" href="javascript:void(0);" class="dropdown-item" onclick="initSearch('autor');">Autor</a></li>
+                    <li><a id="BtnBuscarResponsable" href="javascript:void(0);" class="dropdown-item" onclick="initSearch('responsable');">Responsable</a></li>
+                    <li><a id="BtnBuscarCiudad" href="javascript:void(0);" class="dropdown-item" onclick="initSearch('ciudad');">Ciudad</a></li>
+                    <li><a id="BtnTodos" href="javascript:void(0);" class="dropdown-item" onclick="initSearch();">Todos</a></li>
+                </ul>
+
+            </div>
+        </div>
+        <asp:HiddenField ID="HiddenCampoBusqueda" runat="server" Value="" />
+        <asp:HiddenField ID="HiddenTipoBusqueda" runat="server" Value="" />
+        <asp:HiddenField ID="HiddenBusquedaHabilitada" runat="server" Value="false" />
+        <asp:HiddenField ID="HiddenPaginaActual" runat="server" Value="1" />
+        <asp:HiddenField ID="HiddenFilasPorPagina" runat="server" Value="13" />
+        <asp:HiddenField ID="HiddenPaginasTotales" runat="server" Value="0" />
+        <asp:HiddenField ID="HiddenFilasTotales" runat="server" Value="0" />
+    </div>
+
+    <div class="panel panel-default primaryTheme" style="margin-top: 30px;">
+        <div class="panel-heading">
+            <h3 class="panel-title text-center">RESULTADOS
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="container-grid">
+
+                <div id="item-List">
+                    <%--            <div class="item">
+                <div class="item-container">
+                    <div class="item-image">
+                        <img src="/PostedFiles/2ade51bd-e775-437f-a314-f35bd5625186.jpg" alt="Acerca de los deberes" class="carouselImagen img-responsive">
+                    </div>
+                    <div class="carouselContenedorTitulo">
+                        <a href="/General/DetalleTitulo?item=1">
+                            <h4>Acerca de los deberes asdasd asd asd as asd </h4>
+                            <p>M. Tulli Ciceronis De officiis ad Marcum filium libri II asd asd asd  asda sdasd as dsa</p>
+                        </a>
+                    </div>
+                    <div class="navbar-fixed-bottom carouselFondoTitulo"></div>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="item-container">
+                    <div class="item-image">
+                        <img src="/PostedFiles/3115862a-1952-4e34-a9f5-6b99ec1ebcd8old.jpg" alt="Acerca de los deberes" class="carouselImagen img-responsive">
+                    </div>
+                    <div class="carouselContenedorTitulo">
+                        <a href="/General/DetalleTitulo?item=1">
+                            <h4>Acerca de los deberes asdasd asd asd as asd </h4>
+                            <p>M. Tulli Ciceronis De officiis ad Marcum filium libri II asd asd asd  asda sdasd as dsa</p>
+                        </a>
+                    </div>
+                    <div class="navbar-fixed-bottom carouselFondoTitulo"></div>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="item-container">
+                    <div class="item-image">
+                        <img src="/PostedFiles/7e5dc932-0647-4a66-a0b3-78934be26000.jpg" alt="Acerca de los deberes" class="carouselImagen img-responsive">
+                    </div>
+                    <div class="carouselContenedorTitulo">
+                        <a href="/General/DetalleTitulo?item=1">
+                            <h4>Acerca de los deberes asdasd asd asd as asd </h4>
+                            <p>M. Tulli Ciceronis De officiis ad Marcum filium libri II asd asd asd  asda sdasd as dsa</p>
+                        </a>
+                    </div>
+                    <div class="navbar-fixed-bottom carouselFondoTitulo"></div>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="item-container">
+                    <div class="item-image">
+                        <img src="/PostedFiles/Cuadrada.jpg" alt="Acerca de los deberes" class="carouselImagen img-responsive">
+                    </div>
+                    <div class="carouselContenedorTitulo">
+                        <a href="/General/DetalleTitulo?item=1">
+                            <h4>Acerca de los deberes asdasd asd asd as asd </h4>
+                            <p>M. Tulli Ciceronis De officiis ad Marcum filium libri II asd asd asd  asda sdasd as dsa</p>
+                        </a>
+                    </div>
+                    <div class="navbar-fixed-bottom carouselFondoTitulo"></div>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="item-container">
+                    <div class="item-image">
+                        <img src="/PostedFiles/62753c3b-8f2d-4696-8b84-bccd302843f6.jpg" alt="Acerca de los deberes" class="carouselImagen img-responsive">
+                    </div>
+                    <div class="carouselContenedorTitulo">
+                        <a href="/General/DetalleTitulo?item=1">
+                            <h4>Acerca de los deberes asdasd asd asd as asd </h4>
+                            <p>M. Tulli Ciceronis De officiis ad Marcum filium libri II asd asd asd  asda sdasd as dsa</p>
+                        </a>
+                    </div>
+                    <div class="navbar-fixed-bottom carouselFondoTitulo"></div>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="item-container">
+                    <div class="item-image">
+                        <img src="/PostedFiles/cb97dcab-a953-40c3-b842-8d4f5abf3d8d.jpg" alt="Acerca de los deberes" class="carouselImagen img-responsive">
+                    </div>
+                    <div class="carouselContenedorTitulo">
+                        <a href="/General/DetalleTitulo?item=1">
+                            <h4>Acerca de los deberes asdasd asd asd as asd </h4>
+                            <p>M. Tulli Ciceronis De officiis ad Marcum filium libri II asd asd asd  asda sdasd as dsa</p>
+                        </a>
+                    </div>
+                    <div class="navbar-fixed-bottom carouselFondoTitulo"></div>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="item-container">
+                    <div class="item-image">
+                        <img src="/PostedFiles/3115862a-1952-4e34-a9f5-6b99ec1ebcd8.jpg" alt="Acerca de los deberes" class="carouselImagen img-responsive">
+                    </div>
+                    <div class="carouselContenedorTitulo">
+                        <a href="/General/DetalleTitulo?item=1">
+                            <h4>Acerca de los deberes asdasd asd asd as asd </h4>
+                            <p>M. Tulli Ciceronis De officiis ad Marcum filium libri II asd asd asd  asda sdasd as dsa</p>
+                        </a>
+                    </div>
+                    <div class="navbar-fixed-bottom carouselFondoTitulo"></div>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="item-container">
+                    <div class="item-image">
+                        <img src="/PostedFiles/Rectangular.jpg" alt="Acerca de los deberes" class="carouselImagen img-responsive">
+                    </div>
+                    <div class="carouselContenedorTitulo">
+                        <a href="/General/DetalleTitulo?item=1">
+                            <h4>Acerca de los deberes asdasd asd asd as asd </h4>
+                            <p>M. Tulli Ciceronis De officiis ad Marcum filium libri II asd asd asd  asda sdasd as dsa</p>
+                        </a>
+                    </div>
+                    <div class="navbar-fixed-bottom carouselFondoTitulo"></div>
+                </div>
+            </div>--%>
+                    <%--<div class="item-inner" style="width: 200px; height: 250px; position: relative;"><a href="/General/DetalleTitulo?item=3">
+                        <div class="flex-item">
+                            <img class="img-responsive" src="/PostedFiles/c674768a-b506-42e3-bcf7-8320031e0092.png">
+                            <div class="flex-item-title">
+                                <div></div>
+                                <div>HOLA HOLA </div>
+                            </div>
+                            <div class="flex-item-description">
+                                <div></div>
+                                <div>HOLA HOLA </div>
+                            </div>
+                        </div>
+                    </a></div>
+                    <div class="item-inner" style="width: 200px; height: 250px; position: relative;"><a href="/General/DetalleTitulo?item=3">
+                        <div class="flex-item">
+                            <img class="img-responsive" src="/PostedFiles/c674768a-b506-42e3-bcf7-8320031e0092.png">
+                            <div class="flex-item-title">
+                                <div></div>
+                                <div>HOLA HOLA </div>
+                            </div>
+                            <div class="flex-item-description">
+                                <div></div>
+                                <div>HOLA HOLA </div>
+                            </div>
+                        </div>
+                    </a></div>
+                    <div class="item-inner" style="width: 200px; height: 250px; position: relative;"><a href="/General/DetalleTitulo?item=3">
+                        <div class="flex-item">
+                            <img class="img-responsive" src="/PostedFiles/c674768a-b506-42e3-bcf7-8320031e0092.png">
+                            <div class="flex-item-title">
+                                <div></div>
+                                <div>HOLA HOLA </div>
+                            </div>
+                            <div class="flex-item-description">
+                                <div></div>
+                                <div>HOLA HOLA </div>
+                            </div>
+                        </div>
+                    </a></div>
+                    <div class="item-inner" style="width: 200px; height: 250px; position: relative;"><a href="/General/DetalleTitulo?item=3">
+                        <div class="flex-item">
+                            <img class="img-responsive" src="/PostedFiles/c674768a-b506-42e3-bcf7-8320031e0092.png">
+                            <div class="flex-item-title">
+                                <div></div>
+                                <div>HOLA HOLA </div>
+                            </div>
+                            <div class="flex-item-description">
+                                <div></div>
+                                <div>HOLA HOLA </div>
+                            </div>
+                        </div>
+                    </a></div>
+                    <div class="item-inner" style="width: 200px; height: 250px; position: relative;"><a href="/General/DetalleTitulo?item=3">
+                        <div class="flex-item">
+                            <img class="img-responsive" src="/PostedFiles/c674768a-b506-42e3-bcf7-8320031e0092.png">
+                            <div class="flex-item-title">
+                                <div></div>
+                                <div>HOLA HOLA </div>
+                            </div>
+                            <div class="flex-item-description">
+                                <div></div>
+                                <div>HOLA HOLA </div>
+                            </div>
+                        </div>
+                    </a></div>
+                    <div class="item-inner" style="width: 200px; height: 250px; position: relative;"><a href="/General/DetalleTitulo?item=3">
+                        <div class="flex-item">
+                            <img class="img-responsive" src="/PostedFiles/c674768a-b506-42e3-bcf7-8320031e0092.png">
+                            <div class="flex-item-title">
+                                <div></div>
+                                <div>HOLA HOLA </div>
+                            </div>
+                            <div class="flex-item-description">
+                                <div></div>
+                                <div>HOLA HOLA </div>
+                            </div>
+                        </div>
+                    </a></div>--%>
+
+                </div>
+                <div id="ajaxSearch" style="position: relative; margin: auto;">
+                    <img src="../../images/gifAjax.gif" style="width: 60px; height: 60px;" />
+                </div>
+
+                <button id="ButtonNavegacion" class="btn btn-default" style="clear: both; display: none;">Cargar Más</button>
+
+            </div>
+
+            <div id="FooterGridResultado" runat="server" class="container-fluid footer-paging-ajax modal-footer" style="padding: 0px; padding-top: 10px; margin-top: 10px;">
+                <div class="col-md-12 center text-center footer-paging-buttons">
+                    <div>
+                        <a id="cmdInicio" href="javascript:void(0);" class="btn btn-primary"><< </a>
+                        <a id="cmdAnterior" href="javascript:void(0);" class="btn btn-primary">< </a>
+                    </div>
+                    <div>
+                        Página 
+                        <asp:TextBox ID="TextBoxPaginaActual" runat="server" CssClass="form-control campo-Numero-Pagina" Width="35" MaxLength="5"></asp:TextBox>
+                        <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender3" runat="server" TargetControlID="TextBoxPaginaActual" FilterType="Numbers" />
+                        de
+                        <span id="SpanPaginaFinal"></span>
+                    </div>
+                    <div>
+                        <a id="cmdSiguiente" href="javascript:void(0);" class="btn btn-primary">> </a>
+                        <a id="cmdFinal" href="javascript:void(0);" class="btn btn-primary">>> </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%-- POPUP Detalle Titulo--%>
+    <div id="DialogoDetalleTitulo" class="modal fade" role="dialog">
+        <div class="modal-dialog primaryTheme modalDialog-Detalle">
+            <div class="modal-content">
+                <!-- Cabecera -->
+                <div class="modal-header btn-primary ">
+                    <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    <!-- Titulo -->
+                    <div class="modal-title">
+                        <h4>Detalle</h4>
+                    </div>
+                </div>
+                <!-- body -->
+                <div class="modal-body" style="position: relative; padding: 20px; padding-bottom: 8px;">
+                    <div class="form-horizontal">
+                        <asp:HiddenField ID="HiddenFieldClave" runat="server" Value="" />
+
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#home">Descripción del título</a></li>
+                        </ul>
+
+                        <div id="tabContentDetalleLoading" class="tab-content" style="padding-top: 20px; text-align: center; vertical-align: central;">
+                            <img src="../../images/gifAjax.gif" style="width: 120px; height: 120px;" />
+                        </div>
+
+                        <div id="tabContentDetalle" class="tab-content" style="padding-top: 20px; height: auto;">
+                            <%--  TAB DETALLE --%>
+                            <div id="home" class="tab-pane fade in active" style="display: inline-block; width: 100%;">
+
+                                <div class="carouselContenedorImagen" style="overflow-x: auto;">
+                                    <img id="ImagenTitulo" class="carouselImagen" alt="Titulo" />
+                                </div>
+                                <div class="modal-footer" style="margin: 0px; margin-top: 5px; padding: 0px; height: 2px;"></div>
+                                <div class="col-md-12 form-group" style="margin: 0px;">
+                                    <div class="text-center" style="max-height: 170px; overflow: auto;">
+                                        <span id="SpanTitulo" class="control-label"></span>
+                                    </div>
+                                    <div id="bAutor" class="text-center" style="max-height: 170px; overflow: auto;">
+                                        <b>Autor:</b>
+                                        <span id="SpanAutor" class="control-label"></span>
+                                    </div>
+                                    <div class="text-center">
+                                        <b>Editor:</b>
+                                        <span id="SpanEditor" class="control-label"></span>
+                                    </div>
+                                    <div id="bEdicion" class="text-center">
+                                        <b>Edición:</b>
+                                        <span id="SpanEdicion" class="control-label"></span>
+                                    </div>
+                                    <div class="panel-group" id="accordion" style="max-height: 320px; overflow: auto;">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Descripción</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse1" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div id="bReimpresion" class="col-md-12 text-justify" style="max-height: 100px; overflow: auto;">
+                                                        <b>Reimpresión:</b>
+                                                        <span id="SpanReimpresión" class="control-label"></span>
+                                                    </div>
+                                                    <div id="bCiudad" class="col-md-12 text-justify" style="max-height: 100px; overflow: auto;">
+                                                        <b>Ciudad:</b>
+                                                        <span id="SpanCiudad" class="control-label"></span>
+                                                    </div>
+                                                    <div id="bCualidades" class="col-md-12 text-justify" style="max-height: 170px; overflow: auto;">
+                                                        <b>Cualidades:</b>
+                                                        <span id="SpanCualidades" class="control-label"></span>
+                                                    </div>
+                                                    <div id="bUFFYL" class="col-md-12 text-justify" style="max-height: 100px; overflow: auto;">
+                                                        <b>UFFYL:</b>
+                                                        <span id="SpanU_FFYL" class="control-label"></span>
+                                                    </div>
+                                                    <div id="bUIIFL" class="col-md-12 text-justify" style="max-height: 100px; overflow: auto;">
+                                                        <b>UIIFL:</b>
+                                                        <span id="SpanU_IIFL" class="control-label"></span>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Contenido</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse2" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div id="bTema" class="col-md-12">
+                                                        <b>Tema:</b>
+                                                        <div class="text-justify" style="max-height: 170px; overflow: auto;">
+                                                            <span id="SpanTema" class="control-label"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <br />
+                                                    </div>
+                                                    <div id="bContenido" class="col-md-12">
+                                                        <b>Contenido:</b>
+                                                        <div class="text-justify" style="max-height: 200px; overflow: auto;">
+                                                            <span id="SpanContenido" class="control-label"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <br />
+                                                    </div>
+                                                    <div id="bColofon" class="col-md-12">
+                                                        <b>Colofón:</b>
+                                                        <div class="text-justify" style="max-height: 200px; overflow: auto;">
+                                                            <span id="SpanColofon" class="control-label"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <br />
+                                                    </div>
+                                                    <div id="bObservaciones" class="col-md-12">
+                                                        <b>Observaciones:</b>
+                                                        <div class="text-justify" style="max-height: 200px; overflow: auto;">
+                                                            <span id="SpanObservaciones" class="control-label"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">ISBN</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse3" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="col-md-12 text-justify" style="max-height: 320px; overflow: auto;">
+                                                        <span id="SpanIsbn" class="control-label"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Responsables</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse4" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="col-md-12 text-justify" style="max-height: 320px; overflow: auto;">
+                                                        <span id="SpanResponsables" class="control-label"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">Recursos</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse5" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="col-md-12 text-justify" style="max-height: 100px; overflow: auto;">                                                        
+                                                        <div style="text-align: center; display: inline-block;">
+                                                            <img id="ImagenPdf" alt="Pdf" title="Versión PDF" width="30" src="../../images/Icon-document-pdf.png" />
+                                                            <img id="ImageVirtual" alt="Virtual" title="Versión Virtual" width="30" src="../../images/Icon-document-virtual.png" />
+                                                            <img id="ImageOnline" alt="Online" title="Versión Online" width="30" src="../../images/Icon-document-web.png" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- footer -->
+                <div class="modal-footer" style="margin-top: 0px;">
+                    <input type="button" value="Cerrar" class="btn btn-default" data-dismiss="modal" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+</asp:Content>
+

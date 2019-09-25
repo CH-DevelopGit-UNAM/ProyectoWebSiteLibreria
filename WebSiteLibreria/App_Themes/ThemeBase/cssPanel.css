@@ -1,0 +1,19 @@
+﻿
+/* Panel */
+.panel.panel-default.primaryTheme {
+    /* Color Primario */
+    /*border-color: #285e8e;*/
+    border-color: #0d2da7;
+}
+
+/* Panel Cabecera */
+.primaryTheme div.panel-heading{    
+    /* Color Primario */
+    /*background-color: #285e8e;*/
+    background-color: #0d2da7;
+    color:white;
+}
+
+/* Panel Cuerpo */
+.primaryTheme div.panel-body{        
+}

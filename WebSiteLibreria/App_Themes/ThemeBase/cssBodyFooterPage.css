@@ -1,0 +1,215 @@
+﻿        .body-footer {
+            background-color:#EFEFEF;
+            padding:0px;            
+            width:100%; 
+            height:100%;                       
+        }
+
+        .body-footer .container{
+            padding:0px;     
+            /* Dejar espacios top/bottom para el contenido */
+            padding-top:60px;
+            padding-bottom:50px;
+            margin:auto;
+        }
+            .body-footer-background {
+                background-image: url('/images/Fondo-introduccion.png'); background-size: cover; background-repeat: no-repeat; background-position: top; 
+            }
+
+                .body-footer-title {
+                    font-family:'Trajan-Pro-Bold';
+                    font-size:20.5pt;
+                    /*font-size:1.9656771029901121em;*/
+                    color:#224F86;text-align:center; word-break:break-word;
+                    padding: 30px 50px 30px 50px ;                    
+                    margin:auto;
+                }
+                .body-footer-title p, .body-footer-title span{
+                    color:#224F86;
+                    padding:0px !important;
+                    margin-top:-10px !important;                    
+                    display:inline-block !important;                    
+                    margin-bottom:0px !important;
+                    line-height: 1 !important;
+                }
+
+                .body-footer-title p > span{
+                    display:inline-block;
+                    margin: 0px auto;
+                    padding: 0px !important;
+                }
+                               
+                .body-footer-title p::first-letter, .body-footer-title span::first-letter{
+                    font-size: 150%;
+                }
+
+
+                .body-footer-title p > span::first-letter{
+                    font-size: 150%;
+                }
+
+                .body-footer-subtitle {
+                    font-family:'Trajan-Pro-Bold';
+                    font-size:17pt;
+                    /*font-size:1.67291668339584em;*/                    
+                    color:#224F86;text-align:center; word-break:break-word;
+                    padding: 30px 50px 30px 50px ;
+                    margin:auto;
+                }
+                .body-footer-subtitle p, .body-footer-subtitle span{
+                    color:#224F86;
+                    padding:0px;
+                    margin:-25px;
+                    border-style:none;
+                    display:block;
+                }
+               
+                .body-footer-subtitle p::first-letter, .body-footer-subtitle span::first-letter{
+                    font-size: 150%;
+                }
+
+               .body-footer-content {
+                    font-family:'AkzidenzGrotesk-Regular';
+                    font-size:12.5pt;
+                    /*font-size:1.296510429631776em;*/                    
+                    color:black; 
+                    text-align:justify; word-break:break-word;
+                    padding: 40px 70px 40px 70px ;
+                    margin:auto;
+                    /* Maás angosta la descripción */
+                    padding-left:100px;
+                    padding-right:100px;
+                }
+
+                .body-footer-content p, .body-footer-content span{                    
+                    padding:0px;
+                    border-style:none;
+                    margin:0px;
+                    /* Interlineado  */
+                    line-height: 200%; 
+                }
+
+                .body-footer-subtitle-p {
+                    font-family:'Trajan-Pro-Bold';
+                    font-size:15pt;
+                    /*font-size:1.505625015056256em;*/
+                    color:#224F86;text-align:left; word-break:break-word;
+                    padding: 10px 0px 10px 10px ;                    
+                }
+                .body-footer-subtitle-p p, .body-footer-subtitle-p span{
+                    color:#224F86;
+                    padding:0px;
+                    margin:-25px;
+                    border-style:none;
+                    display:block;
+                }
+               
+                .body-footer-subtitle-p p::first-letter, .body-footer-subtitle-p span::first-letter{
+                    font-size: 101%;
+                }
+
+                .body-footer-content-p p, .body-footer-content-p span{                    
+                    padding:10px 0px 5px 0px;
+                    border-style:none;
+                    margin:0px;
+                }
+
+                .body-footer-content-p > ol p, .body-footer-content-p > ol span{                    
+                    padding:5px 0px 2px 0px;
+                    border-style:none;
+                    margin:0px;
+                    text-align:justify;
+                }
+
+            .title-content > p:nth-of-type(1){
+                color:#224F86 !important;
+            }
+
+            .subtitle-small {
+                font-size:12.5pt;
+                /* Interlineado  */
+                line-height: 150%;
+            }
+
+        /*526px*/ 
+        @media screen and (max-width: 595px ) {            
+                /*.body-footer-title p > span{                    
+                    margin-top:-8px;
+                    margin-bottom:-8px;
+                }*/
+
+                .body-footer-title p, .body-footer-title span{                    
+                    padding:0px !important;
+                    margin-top:-2px !important;
+                    display:block !important;                    
+                    margin-bottom:6px !important;
+                    line-height: 1.1 !important;
+                }
+
+                .body-footer-title br{
+                    display:none;
+                }
+        }
+
+        /*526px*/ 
+        @media screen and (max-width: 595px ) {
+            .body-footer-title {
+	            font-size:16.5pt;
+            }
+
+            
+            .body-footer-title p::first-letter, .body-footer-title span::first-letter{
+                font-size: 140%;
+            }
+
+            .body-footer-title p > span::first-letter{
+                font-size: 140%;
+            }
+
+            .body-footer-title p > span:first-child{                                    
+                margin-top:2px;
+            }
+
+            .body-footer-subtitle {
+	            font-size:15pt;
+            }
+
+
+             .body-footer-subtitle p::first-letter, .body-footer-subtitle span::first-letter{
+	            font-size: 140%;
+            }
+
+            .body-footer-content {
+	            font-size:11.5pt;             
+            }
+
+            .body-footer-subtitle-p {                    
+	            font-size:16pt;                
+            }
+
+            .body-footer-background {
+                background-size: cover;                
+            }
+
+            .body-footer .container{
+                padding:10px;                     
+                margin:auto;
+            }
+
+            .body-footer-content {             
+                padding: 10px;
+            }
+
+            .body-footer-content p, .body-footer-content span{                    
+                /* Interlineado  */
+                line-height: 190%; 
+            }
+            
+            .subtitle-small {
+                font-size:12pt;
+                /* Interlineado  */
+                line-height: 150%;
+            }
+        }
+
+

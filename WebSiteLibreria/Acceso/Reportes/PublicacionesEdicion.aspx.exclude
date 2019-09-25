@@ -1,0 +1,570 @@
+﻿<%@ Page Title="Publicaciones Edicion" Language="C#" MasterPageFile="~/ResponsiveSite.master" AutoEventWireup="true" CodeFile="PublicacionesEdicion.aspx.cs" Inherits="Acceso_Reportes_PublicacionesEdicion" Theme="SkinBase" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="HeaderPlaceHolder" Runat="Server">
+ <style type="text/css">
+        .carouselContenedorImagen {
+            display:flex; height:100%; text-align:center; 
+        }
+
+        .carouselImagen {
+            margin:auto;
+            height:370px;
+            -webkit-transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .modalDialog-Detalle {
+            width: 60%;
+            max-width: 1100px;
+        }
+
+        @media screen and (max-width: 1200px) {
+       
+        }
+
+        @media screen and (max-width: 991px) {
+            .text-right {
+                text-align:left;
+            }
+        }
+
+        /* Imagen */
+        @media screen and (max-width: 768px) {    
+            .carouselContenedorImagen {
+                display:flex; height:100%; text-align:center; 
+            }
+            .carouselImagen {
+                margin:auto;
+                height:270px;                
+            }
+
+            .modalDialog-Detalle {
+                width: 85%;
+                margin:auto;
+            }       
+           
+        }
+
+        /* Imagen */
+        @media screen and (max-width: 525px) {    
+             .carouselContenedorImagen {
+                display:flex; height:100%; text-align:center; 
+            }
+            .carouselImagen {
+                margin:auto;
+                height:180px;                
+            }
+            .modalDialog-Detalle {
+                width: 95%;      
+                margin:auto;          
+            }
+           
+               
+        }
+
+        .campo-Numero-Pagina {
+            display:inline-block;
+            padding:2px;
+            text-align:center;
+        }
+    </style>
+    <script type="text/javascript">
+        var idGrid = '#<%=GridViewResultado.ClientID%>';        
+        var idTxtBusqueda = '<%=TextBoxBusqueda.ClientID%>';
+        var idUpdatePanelBusqueda = '<%=UpdatePanelBusqueda.ClientID%>';
+        
+        var idHiddenClave = '#<%=HiddenFieldClave.ClientID%>';
+        var idCheckIsNovedad = '#<%=CheckIsNovedad.ClientID%>';        
+        var $gridDetalleResponsables;
+        var $gridDetalleIsbn;
+        var idImgExcel = '<%=ButtonExportar.ClientID%>';
+        var idCampoBusqueda = '<%=HiddenCampoBusqueda.ClientID%>';        
+    </script>
+    <script src="/Scripts/Pages/default.js"></script>
+    <script type="text/javascript">
+        function autoPostbackPaginador(sender, args) {
+            if (args.keyCode === 13) {
+                __doPostBack(sender.id, sender.value);
+                return true;
+            }
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+        }
+        
+        function pageLoad() {
+            $(document).ready(function () {
+                configurarGridView(idGrid, function (items, element) {
+                    var idTitulo = tryParseInteger($(items[1]).text(), 0);
+                    setDataModalDetalle(idTitulo, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "/Images/avatar.png", "avatar.png", false);
+                });
+
+                $("#" + idImgExcel).click(function (e) {
+                    var busqueda = $("#" + idCampoBusqueda).val();
+                    var orden = "edicion";
+                    window.open("GenerarReportePublicaciones.ashx?tipoRpt=4&tipo=excel&param1=" + busqueda + "&ord=" + orden);
+                    return false;
+                });
+
+            });
+        }
+
+    </script>
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
+    <h2>Publicaciones por Edicion</h2>
+    <div class="jumbotron customJumbotron" style="font-size: small; padding: 30px; padding-top: 10px; padding-bottom: 10px; background-color: transparent; border-color: lightgray; border-style: none; ">
+            <div class="input-group">                
+                <asp:TextBox ID="TextBoxBusqueda" runat="server" CssClass="form-control img-responsive" placeholder="Nombre Edicion" MaxLength="50"> </asp:TextBox>
+                <br />
+                <div class="input-group-btn">
+                    <asp:Button ID="ButtonBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" UseSubmitBehavior="false" OnClick="ButtonBuscar_Click"/>
+                </div>
+            </div>            
+    </div>
+
+    <div class="panel panel-default primaryTheme" style="margin-top: 30px;">
+        <div class="panel-heading">
+            <h3 class="panel-title text-center">RESULTADOS
+            </h3>
+        </div>        
+        <div class="panel-body" style="min-height: 200px;">
+            <div class="row">
+                <div class="col-md-12" style="position:relative;">                    
+                     <asp:UpdatePanel ID="UpdatePanelBusqueda" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="true" >
+                        <ContentTemplate>
+                            <asp:HiddenField ID="HiddenCampoBusqueda" runat="server" Value="" />
+                            <asp:Button ID="ButtonExportar" runat="server" Text="Descargar" CssClass="btn btn-default" Visible="false" />
+                            <br />
+                            <br />
+                            <%--AllowSorting="true" OnSorting="GridViewResultado_Sorting"--%>
+                            <asp:GridView ID="GridViewResultado" runat="server" SkinID="GridViewPrimary" PageSize="13" AllowPaging="true" OnPageIndexChanging="GridViewResultado_PageIndexChanging" OnRowDataBound="GridViewResultado_RowDataBound" 
+                                ShowHeaderWhenEmpty="false" OnRowCommand="GridViewResultado_RowCommand"  >
+                                <Columns>
+                                    <asp:TemplateField HeaderText="Titulo" ItemStyle-CssClass="gridViewColumnHidden column-hidden-responsive-sm gridHeader" HeaderStyle-CssClass="gridViewColumnHidden column-hidden-responsive-sm" >
+                                        <ItemTemplate>
+                                            <span> TITULO </span>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:BoundField HeaderText="Id Titulo" DataField="IdTitulo" ItemStyle-CssClass="gridViewColumnHidden" HeaderStyle-CssClass="gridViewColumnHidden" ></asp:BoundField>
+                                    <asp:BoundField HeaderText="Contenido" DataField="Contenido" ItemStyle-CssClass="gridViewColumnHidden" HeaderStyle-CssClass="gridViewColumnHidden" ></asp:BoundField>
+                                    <asp:BoundField HeaderText="Colofon" DataField="Colofon" ItemStyle-CssClass="gridViewColumnHidden" HeaderStyle-CssClass="gridViewColumnHidden" ></asp:BoundField>
+                                    <%--HeaderStyle-CssClass="gridHeader"--%>
+                                    <asp:TemplateField HeaderText="Titulo Original" >
+                                       <%-- <HeaderTemplate>
+                                            <asp:LinkButton ID="LinkSortTituloOriginal" runat="server"  CommandArgument="tituloOriginal" CommandName="Sort" >
+                                                <ul style="list-style:none;display:block;padding:0px;margin:0px;list-style-type:none;" >
+                                                    <li style="display:block;padding:0px;margin:0px; position:relative; color:white;font-size:medium;">                                                        
+                                                        <span style="float:left; width:100%;">Titulo Original</span>
+                                                         <span style="float: right; height:15px;right:0px;top:10px; position:absolute;" class="caret"></span>
+                                                    </li>
+                                                </ul>
+                                            </asp:LinkButton>
+                                        </HeaderTemplate>--%>
+                                        <ItemTemplate>
+                                            <b class="element-hidden-responsive-sm">Titulo Original:</b>
+                                            <asp:Label ID="LabelNombre" runat="server" Text='<%#Eval("TituloOriginal")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <%--HeaderStyle-CssClass="gridHeader"--%>
+                                    <asp:TemplateField HeaderText="Titulo" >
+                                         <%--<HeaderTemplate>
+                                            <asp:LinkButton ID="LinkSortTitulo" runat="server"  CommandArgument="titulo" CommandName="Sort" >
+                                                <ul style="list-style:none;display:block;padding:0px;margin:0px;list-style-type:none;" >
+                                                    <li style="display:block;padding:0px;margin:0px; position:relative; color:white;font-size:medium;">                                                        
+                                                        <span style="float:left; width:100%;">Titulo</span>
+                                                         <span style="float: right; height:15px;right:0px;top:10px; position:absolute;" class="caret"></span>
+                                                    </li>                                                    
+                                                </ul>                                                                                                                
+                                            </asp:LinkButton>                                            
+                                        </HeaderTemplate>--%>
+                                        <ItemTemplate>
+                                            <b class="element-hidden-responsive-sm">Titulo:</b>
+                                            <asp:Label ID="LabelDescripcion" runat="server" Text='<%#Eval("Titulo")%>' ></asp:Label>                                          
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <%--HeaderStyle-CssClass="gridHeader"--%>
+                                    <asp:TemplateField HeaderText="Autor" >
+                                        <%--<HeaderTemplate>
+                                            <asp:LinkButton ID="LinkSortAutor" runat="server"  CommandArgument="autor" CommandName="Sort" >
+                                                <ul style="list-style:none;display:block;padding:0px;margin:0px;list-style-type:none;" >
+                                                    <li style="display:block;padding:0px;margin:0px; position:relative; color:white;font-size:medium;">                                                        
+                                                        <span style="float:left; width:100%;">Autor</span>
+                                                         <span style="float: right; height:15px;right:0px;top:10px; position:absolute;" class="caret"></span>
+                                                    </li>                                                    
+                                                </ul>                                                                                                                
+                                            </asp:LinkButton>
+                                        </HeaderTemplate>--%>
+                                        <ItemTemplate>
+                                            <b class="element-hidden-responsive-sm">Autor:</b>
+                                            <asp:Label ID="LabelAutor" runat="server" Text=""></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Edicion">
+                                        <ItemTemplate>
+                                            <b class="element-hidden-responsive-sm">Edición:</b>
+                                            <asp:Label ID="LabelEdicion" runat="server" Text='<%#Eval("Edicion")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                           
+                                    <asp:TemplateField HeaderText="Observaciones">
+                                        <ItemTemplate>
+                                            <b class="element-hidden-responsive-sm">Observaciones:</b>
+                                            <asp:Label ID="LabelObservaciones" runat="server" Text='<%#Eval("Observaciones")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                                          
+                                                                 
+                                    <asp:TemplateField HeaderText="Archivo" ItemStyle-CssClass="gridViewColumnHidden" HeaderStyle-CssClass="gridViewColumnHidden">
+                                        <ItemTemplate>                                            
+                                             <asp:Label ID="LabelRuta" runat="server" Text='<%# string.Format(@"{0}",Eval("RutaArchivo"))%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                     <%--HeaderStyle-CssClass="gridHeader"--%>
+                                    <asp:TemplateField HeaderText="Año">
+                                         <%--<HeaderTemplate>
+                                            <asp:LinkButton ID="LinkSortAnio" runat="server"  CommandArgument="año" CommandName="Sort" >
+                                                <ul style="list-style:none;display:block;padding:0px;margin:0px;list-style-type:none;" >
+                                                    <li style="display:block;padding:0px;margin:0px; position:relative; color:white;font-size:medium;">                                                        
+                                                        <span style="float:left; width:100%;">Año&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                                         <span style="float: right; height:15px;right:0px;top:10px; position:absolute;" class="caret"></span>
+                                                    </li>                                                    
+                                                </ul>                                                                                                                
+                                            </asp:LinkButton>
+                                        </HeaderTemplate>--%>
+                                        <ItemTemplate>
+                                             <div class="element-hidden-responsive-sm" >
+                                                <b>Año:</b>
+                                            </div>
+                                             <asp:Label ID="LabelAnio" runat="server" Text='<%#Eval("AnioPublicacion")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    
+                                    <asp:TemplateField ItemStyle-CssClass="center text-center" >
+                                        <ItemTemplate>
+                                            <a class="btn btn-default center text-center" onclick="javascript: return showDialogDetail(this);">Detalles</a>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                                                                                                                                   
+                                </Columns>
+                                <PagerTemplate>
+                                    <div  id="FooterGridResultado" class="container-fluid footer-Paging" style="padding:0px;">
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                    Registros
+                                                    <%=(GridViewResultado.PageIndex * GridViewResultado.PageSize) + 1%>
+                                                    al
+                                                    <%= ((GridViewResultado.PageIndex * GridViewResultado.PageSize) + GridViewResultado.Rows.Count)%>
+                                            </div>
+                                            <div class="col-md-5 center text-center" style="padding: 0px;">
+                                                <asp:LinkButton runat="server" ID="cmdInicio" CommandName="Page" CommandArgument="First" Text="<<" CssClass="btn btn-primary">
+                                                </asp:LinkButton>
+                                                <asp:LinkButton runat="server" ID="cmdAnterior" CommandName="Page" CommandArgument="Prev" Text="<" CssClass="btn btn-primary"></asp:LinkButton>
+                                                Página 
+                                        <%--AutoPostBack="true" OnTextChanged="TextBoxPaginaActual_TextChanged"--%>
+                                                <asp:TextBox ID="TextBoxPaginaActual" runat="server" CssClass="form-control campo-Numero-Pagina" Width="50" Text="<%# GridViewResultado.PageIndex + 1 %>"></asp:TextBox>
+                                                <ajaxToolkit:FilteredTextBoxExtender id="FilteredTextBoxExtender3" runat="server" targetcontrolid="TextBoxPaginaActual" filtertype="Numbers" />
+                                                de
+                                                <asp:Label ID="LabelPaginaFinal" runat="server" Text="<%# GridViewResultado.PageCount%>"></asp:Label>
+
+                                                <asp:LinkButton runat="server" ID="cmdSiguiente" CommandName="Page" CommandArgument="Next" CssClass="btn btn-primary" Text=">" ></asp:LinkButton>
+                                                <asp:LinkButton runat="server" ID="cmdFinal" CommandName="Page" CommandArgument="Last" CssClass="btn btn-primary" Text=">>"></asp:LinkButton>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </PagerTemplate>
+                            </asp:GridView>                            
+                        </ContentTemplate>
+                        <Triggers>    
+                            <asp:AsyncPostBackTrigger ControlID="ButtonBuscar" EventName="Click" />
+                        </Triggers>
+                    </asp:UpdatePanel>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+       <%-- POPUP Detalle Titulo--%>
+    <div id="DialogoDetalleTitulo" class="modal fade" role="dialog" >
+        <div class="modal-dialog primaryTheme modalDialog-Detalle">
+            <div class="modal-content">
+                <!-- Cabecera -->
+                <div class="modal-header btn-primary ">
+                    <button type="button" class="close" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    <!-- Titulo -->
+                    <div class="modal-title">
+                        <h4>Detalle</h4>
+                    </div>
+                </div>
+                <!-- body -->
+                <div class="modal-body" style="position:relative; padding: 20px; padding-bottom:8px;">                                 
+                    <div class="form-horizontal" style="position: relative;">
+                        <asp:HiddenField ID="HiddenFieldClave" runat="server" Value="" />
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#home">General</a></li>                            
+                            <li><a data-toggle="tab" href="#menu1">Contenido</a></li>
+                            <li><a data-toggle="tab" href="#menu2">Descripcion</a></li>
+                            <li><a data-toggle="tab" href="#menu3">ISBN</a></li>
+                            <li><a data-toggle="tab" href="#menu4">Responsables</a></li>
+                            <li><a data-toggle="tab" href="#menu5">Imagen</a></li>
+                        </ul>
+                        <div id="tabContentDetalleLoading" class="tab-content" style="padding-top:20px; text-align:center; vertical-align:central; ">
+                            <img src="../../images/gifAjax.gif" style="width:120px; height:120px;" />
+                        </div>
+
+                        <div id="tabContentDetalle" class="tab-content" style="padding-top:20px; ">
+
+                            <%--  TAB CAMPOS "CONTENIDO" --%>
+
+                            <div id="home" class="tab-pane fade in active">
+                                <div class="form-group" style="position: relative;">
+                                    <div class="col-md-2 text-right">
+                                        <span class="control-label"><b>Clave:</b></span>
+                                    </div>
+                                    <div class="col-md-10 text-left">
+                                        <span id="SpanIdTitulo" class="control-label"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-2 text-right">
+                                        <span class="control-label"><b>Titulo Original:</b></span>
+                                    </div>
+                                    <div class="col-md-10 text-justify" style="max-height:170px; overflow:auto;">
+                                        <span id="SpanTituloOriginal" class="control-label"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-2 text-right">
+                                        <span class="control-label"><b>Titulo:</b></span>
+                                    </div>
+                                    <div class="col-md-10 text-justify" style="max-height:170px; overflow:auto;">
+                                        <span id="SpanTitulo" class="control-label"></span>                                        
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-2 text-right">
+                                        <span class="control-label"><b>Autor:</b></span>
+                                    </div>
+                                    <div class="col-md-10 text-left">                                        
+                                        <span id="SpanAutor"></span>                                        
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-2 text-right">
+                                        <span class="control-label"><b>Editor:</b></span>
+                                    </div>
+                                    <div class="col-md-10 text-left">
+                                        <span id="SpanEditor" class="control-label"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-10">
+                                        <table class="img-responsive">
+                                            <tr>
+                                                <td>
+                                                    <span class="control-label"><b>Año:</b></span>
+                                                </td>
+                                                <td style="width: 25px;"></td>
+                                                <td>
+                                                    <span class="control-label"><b>Páginas:</b></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span id="SpanAnio" class="control-label"></span>
+                                                </td>
+                                                <td style="width: 25px;"></td>
+                                                <td>
+                                                    <span id="SpanPaginas" class="control-label"></span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-2 text-right">
+                                        <span class="control-label"><b>Medidas:</b></span>
+                                    </div>
+                                    <div class="col-md-10 text-left">
+                                        <span id="SpanMedidas" class="control-label"></span>                                        
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-2 text-right">
+                                        <span class="control-label"><b>Serie:</b></span>
+                                    </div>
+                                    <div class="col-md-10 text-left">                                        
+                                        <span id="SpanSerie" class="control-label"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                     <div class="col-md-2 text-right">
+                                        <span class="control-label"><b>¿Es Novedad?:</b></span>
+                                    </div>
+                                     <div class="col-md-10 text-left">                                        
+                                        <asp:CheckBox runat="server" ID="CheckIsNovedad" Enabled="false" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <%--  TAB CAMPOS NO OBLIGATORIOS --%>
+
+                            <div id="menu1" class="tab-pane fade">
+
+                                <div class="form-group">
+                                    <div class="col-md-2 text-right">
+                                        <span class="control-label"><b>Tema:</b></span>
+                                    </div>
+                                    <div class="col-md-10 text-justify" style="max-height:170px; overflow:auto;">
+                                        <span id="SpanTema" class="control-label"></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <div class="col-md-2 text-right">
+                                        <span class="control-label"><b>Contenido:</b></span>
+                                    </div>
+                                    <div class="col-md-10 text-justify" style="max-height:240px; overflow:auto;">
+                                        <span id="SpanContenido" class="control-label"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-2 text-right">
+                                        <span class="control-label"><b>Colofon:</b></span>
+                                    </div>
+                                    <div class="col-md-10 text-justify" style="max-height:240px; overflow:auto;">
+                                        <span id="SpanColofon" class="control-label"></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <div class="col-md-2 text-right">
+                                        <span class="control-label"><b>Observaciones:</b></span>
+                                    </div>
+                                    <div class="col-md-10 text-justify" style="max-height:200px; overflow:auto;">
+                                        <span id="SpanObservaciones" class="control-label"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <%--  TAB OTROS CAMPOS --%>
+
+                            <div id="menu2" class="tab-pane fade">
+                                 <div class="form-group">
+                                     <div class="col-md-2 text-right">
+                                        <span class="control-label"><b>Cualidades:</b></span>
+                                    </div>
+                                    <div class="col-md-10 text-justify" style="max-height:200px; overflow:auto;">
+                                        <span id="SpanCualidades" class="control-label"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-2 text-right">
+                                        <span class="control-label"><b>Edición:</b></span>
+                                    </div>
+                                    <div class="col-md-10 text-justify" style="max-height:220px; overflow:auto;">
+                                        <span id="SpanEdicion" class="control-label"></span>
+                                    </div>
+                                </div>                                
+
+                                <div class="form-group">
+                                     <div class="col-md-2 text-right">
+                                        <span class="control-label"><b>Serie 500:</b></span>
+                                    </div>
+                                    <div class="col-md-10 text-justify" style="max-height:220px; overflow:auto;">
+                                        <span id="SpanSerie500" class="control-label"></span>
+                                    </div>
+                                </div>
+                                                              
+                                <div class="form-group">
+                                    <div class="col-md-2 text-right">
+                                        <span class="control-label"><b>Ciudad:</b></span>
+                                    </div>
+                                    <div class="col-md-10 text-justify" style="max-height:100px; overflow:auto;">
+                                        <span id="SpanCiudad" class="control-label"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-2 text-right">
+                                        <span class="control-label"><b>Secundarias:</b></span>
+                                    </div>
+                                    <div class="col-md-10 text-justify" style="max-height:220px; overflow:auto;">
+                                        <span id="SpanSecundarias" class="control-label"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-2 text-right">
+                                        <span class="control-label"><b>U_FFYL:</b></span>
+                                    </div>
+                                    <div class="col-md-10 text-justify" style="max-height:100px; overflow:auto;">
+                                        <span id="SpanU_FFYL" class="control-label"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-2 text-right">
+                                        <span class="control-label"><b>U_IIFL:</b></span>
+                                    </div>
+                                    <div class="col-md-10 text-justify" style="max-height:100px; overflow:auto;">
+                                        <span id="SpanU_IIFL" class="control-label"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            
+                            <%--  TAB ISBN --%>
+
+                            <div id="menu3" class="tab-pane fade">
+                                <div id="DivIsbnEdit" style="min-height: 300px; max-height: 350px; overflow: auto;">
+                                </div>
+                            </div>
+
+                            <%--  TAB RESPONSABLES--%>
+
+                            <div id="menu4" class="tab-pane fade">                                                                
+                                <div id="DivResponsablesEdit" style="min-height:350px; max-height:370px; overflow:auto;">
+
+                                </div>
+                            </div>
+
+                            <%--  TAB RESPONSABLES--%>
+                            <div id="menu5" class="tab-pane fade">                                
+                                <div class="carouselContenedorImagen" style="overflow-x:auto;">
+                                    <img id="ImagenTitulo" class="carouselImagen" alt="imagen" />
+                                </div>
+                                
+                            </div>
+                        </div>
+
+
+                    </div>                        
+                </div>                
+                <div class="modal-footer" style="margin-top:0px;">                    
+                    <input type="button" value="Cerrar" class="btn btn-default" data-dismiss="modal" />                        
+                </div>
+            </div>
+            
+        </div>               
+    </div>
+        
+</asp:Content>

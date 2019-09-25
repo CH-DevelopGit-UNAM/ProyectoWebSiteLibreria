@@ -1,0 +1,641 @@
+﻿
+/* Set widths on the form inputs since otherwise they're 100% wide */
+input,
+select {
+    /*max-width: 280px;*/
+}
+
+textarea {
+    resize: none;
+}
+
+
+html, body {
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    font-size:12pt;
+    /*font-size:1.003750010037504em;*/
+    font-family: 'AkzidenzGrotesk-Regular';    
+}
+
+.formPrincipal {
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    position: relative;
+    /*overflow: auto;*/
+    /*yellowgreen*/
+    background-color: white;
+    /*background-image: url(/images/Fondo.jpg);
+            background-size: cover;*/
+}
+
+#header {
+    min-height: 50px;
+    height: auto;
+    width: 100%;
+    min-width: 220px;
+    max-width: 100%;
+    background-color: white;
+    /* relative para que se mueva junto con el contenido, y no permanezca estatico*/
+    position: relative;
+    /* sticky para que se mueva con el contenido, pero permanezca estatico*/
+    /*position: sticky;*/
+    /* fixed para que No se mueva con el contenido, pero permanezca estatico*/
+    /*position: fixed;*/
+    /* 
+               los elementos popup como el dropdown están a 1000 
+               Los .modal a 1050
+               El div asynpostback a 2000
+               Los warning block a 100
+               El layout de fondo del contenido a 0
+            */
+    z-index: 1001;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0px;
+}
+/* LOGIN*/
+#header-login {
+    background-color: white;
+    padding-bottom: 5px;
+    font-family: 'Trajan-Pro-Regular';
+    color: #717171;
+    font-size:10pt;
+}
+    /* LOGIN-USER */
+    #header-login #header-login-anonimo .navbar-nav > li:not(.menuSitioSelected) {
+        border-bottom: 3px solid white;
+    }
+        /* LOGIN-USER */
+        #header-login #header-login-anonimo .navbar-nav > li > a {
+            padding: 0px;
+            padding-top: 8px;
+            font-family: 'Trajan-Pro-Regular';
+            color: #717171;
+        }
+    /* LOGIN-USER */
+    #header-login #header-login-anonimo .nav.navbar-nav.navbar-right:hover > li > a {
+        background-color: inherit;
+    }
+    /* LOGIN-USER */
+    #header-login #header-login-anonimo .nav.navbar-nav.navbar-right:hover > li {
+        border-bottom: 3px solid #CBA762;
+    }
+    /* LOGOUT-USER */
+    #header-login #header-logout-user .nav.navbar-nav.navbar-right .dropdown-menu {
+        position: absolute;
+        
+    }
+
+    /* LOGOUT-USER */
+    #header-login #header-logout-user .nav.navbar-nav.navbar-right .dropdown-menu  a{
+        color:white;
+    }
+
+        /* LOGOUT-USER */
+    #header-login #header-logout-user .nav.navbar-nav.navbar-right .dropdown-menu  a:hover{
+        background-color:#85a3e0;
+    }
+
+    #header-login #header-logout-user .nav.navbar-nav.navbar-right .dropdown-menu  a:visited{
+        background-color:#2e6da4;
+    }
+
+    #header-login #header-logout-user .nav.navbar-nav.navbar-right .dropdown-menu  a:focus{
+        background-color:#85a3e0;
+    }
+
+#header-banner-1 {
+    background-color: #042B6C;
+    height: 280px;
+    position: sticky;
+    background-image: url('/images/Banner-superior.png');
+    background-size: cover;
+    object-fit: contain;
+    font-family: 'Trajan-Pro-Regular';
+    font-size: 18pt;
+    /*font-size: 1.505625015056256em;*/    
+    color: white;
+}
+
+    #header-banner-1 > div.container {
+        width: 1200px;
+        position: relative;
+        height: 100%;
+    }
+
+#header-banner-left {
+    background-size: contain;
+    height: 100%;
+    text-align: left;
+    vertical-align: text-top;
+    width: 10%;
+    float: left;
+    min-width: 76px;
+    padding-top: 30px;
+}
+
+    #header-banner-left > img {
+        height: 115px;
+        object-fit: contain;
+        vertical-align: top;
+        text-align: start;
+    }
+
+#header-banner-center {
+    background-size: contain;
+    height: 100%;
+    text-align: left;
+    vertical-align: middle;
+    width: 40%;
+    float: left;
+    min-width: 200px;
+    margin-left: 0px;
+}
+
+    #header-banner-center > img {
+        height: 100%;
+        object-fit: contain;
+    }
+
+#header-banner-right {
+    background-size: contain;
+    height: 100%;
+    text-align: left;
+    vertical-align: top;
+    width: 50%;
+    float: right;
+    min-width: 250px;
+    margin-left: -10px;
+    padding-top: 30px;
+    position: relative;
+}
+
+    #header-banner-right > table {
+        list-style: none;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+    }
+
+        #header-banner-right > table td img {
+            height: 120px;
+            object-fit: contain;
+        }
+
+        #header-banner-right > table div {
+            padding: 10px;
+            text-align: left;
+        }
+
+
+        #header-banner-right > table p {
+            padding: 0px;
+            margin: 0px;
+            font-family:inherit;
+            font-size:inherit;
+        }
+
+    #header-banner-right div.input-group {
+        width: 40%;
+        min-width: 150px;
+        position: absolute;
+        bottom: 10px;
+        right: 0px;
+        margin-top: -50px;
+    }
+
+.search-icon {
+    width: 34px;
+    height: 34px;
+    background-image: url('/images/lupa.png');
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position: center;
+}
+
+.search-input {
+    font-family: 'AkzidenzGrotesk-Regular';
+    font-size:11pt;
+    /*font-size:1.171041678377088em;*/    
+    background-color:#EDEBF0;
+    color:#7B7B7B;
+}
+
+#header-menu {
+    background-color: white;
+    padding: 0px;
+}
+
+    #header-menu > div.container {
+        padding: 0px;
+    }
+
+    #header-menu .menuHeader {
+        /* fixed para que el menu no desplaze el contenido */
+        /* relative para que el menu desplaze el contenido */
+        position: relative;
+        padding: 0;
+        margin: 0;
+    }
+
+
+
+#DivMenu .navbar-right {
+    margin-right: 0px;
+}
+
+#content-limit {
+    /* Tamaño fijo : 105 footer + 10 padding-bottom */
+    /*height: calc(100% - 175px);*/
+    /*  100 + padding 40 (20 top y 20 bottom) */
+    /*min-height: calc(100% - 175px);*/
+
+    /* Tomando los valores mínimos : login (36px) + banner header (280px) + menu (50px) + footer (100px) */
+    height: calc(100% - 466px);    
+    min-height: calc(100% - 466px);
+
+    padding-bottom: 10px;
+    position: relative;
+    width: 100%;
+}
+
+#content-body {
+    width: 100%;
+    min-height: calc(100% - 0px);
+    background-color: chocolate;
+    /* auto */
+    height: auto;
+    position: relative;
+}
+
+#body-content {
+    position:relative;
+    width:100%;
+}
+
+#body {
+    background-color: white;
+    /*border-radius: 6px;*/
+    /*  100 + padding 40 (20 top y 20 bottom) */
+    /*min-height: calc(100% - 104px);*/
+    
+    /* tomando el valor mínimo del footer: 50px */   
+    min-height: calc(100% - 50px);
+
+    height: auto;
+    margin: auto;
+    padding: 20px;
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+    #body div.body-background-layout {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        border-radius: inherit;
+        z-index: 0;
+    }
+
+
+
+#footer {
+    height: auto;
+    min-height: 100px;
+    padding: 20px;
+    width: 100%;
+    min-width: 220px;
+    position: relative;
+    margin-top: 25px;
+    background: -prefix-linear-gradient(left, #031E4D, #2C91A5);
+    background: linear-gradient(to right, #031E4D, #2C91A5);
+    background-image: url(/images/Banner-inferior.png);
+    background-size: cover;
+    font-family: 'AkzidenzGrotesk-Regular';
+    font-size: 11.5pt;
+    /*font-size: 0.961927092952608em;*/    
+    color: white;
+}
+
+    #footer > div.container {
+        width: 1200px;
+        position: relative;
+        height: 100%;
+    }
+
+    /* Pie de pagina: Logo */
+    #footer div.logo-footer {
+        text-align: center;
+        margin-top: 0px;
+        padding-left: 0px;
+    }
+
+        /* Pie de pagina: Logo imagen*/
+        #footer div.logo-footer img {
+            height: 70px;
+            padding: 5px;
+        }
+        /* Nueva imagen incorporada */
+        #footer div.logo-footer img:nth-child(3) {
+            height: 45px;            
+        }
+
+    /* Pie de pagina: correo */
+    #footer div.leyenda-footer {
+        text-align: justify;
+        padding: 9px;
+    }
+
+     #footer .legal-advertisement {
+        font-size: 9.5pt;
+        text-align:center !important;
+        align-items:center;
+        /*display:flex;*/
+    }
+
+#ButtonTop{
+    position:fixed;
+    bottom: 0px;
+    left:calc(100% - 100px);
+    z-index:100;
+    display:none;
+}
+
+.title-page {      
+    margin-top: 20px !important;
+    margin-bottom: 22px !important;
+}
+
+
+
+.image-src-libro:hover{
+    cursor:pointer;
+}
+
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+}
+
+/* Ajustar al 90% el tamaño del contenido de la pagina: boostrap -> (min-width:1200px) */
+@media (max-width: 1199px) {
+    #body {
+        width: 100%;        
+    }
+
+    #header-banner-1 > div.container {
+        width: 100%;
+    }
+
+    #footer > div.container {
+        width: 100%;
+    }
+
+    #header-menu.container {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 1110px) {
+    #header-banner-1 {
+        height: 210px;
+    }
+
+        #header-banner-1 .container {
+            padding-left: 2px;
+        }
+
+    #header-banner-left > img {
+        height: 100px;
+    }
+
+    #header-banner-right > table td img {
+        height: 105px;
+    }
+
+    #content-limit {
+        /* Tomando los valores mínimos : login (36px) + banner header (210px) + menu (50px) + footer (100px) */
+        height: calc(100% - 396px);    
+        min-height: calc(100% - 396px);
+    }
+}
+
+
+/* Ajustar al 100% el tamaño del contenido de la pagina: boostrap -> (min-width:992px) */
+@media (max-width: 991px) {
+    #body {
+        width: 100%;
+        max-width: 100%;
+    }
+
+}
+
+@media (max-width: 927px) {
+    #header-banner-1 {       
+        font-size: 15pt;        
+    }
+
+    #header-banner-left {
+        padding-top:5px
+    }
+
+    #header-banner-right {
+        padding-top:2px
+    }
+    #header-banner-right > table td img {
+        height: 90px;
+    }
+
+}
+
+@media screen and (max-width: 846px) {
+    #header-banner-1 {
+        height: 190px;
+    }
+
+    #header-banner-left > img {
+        height: 90px;
+    }
+
+
+     #content-limit {
+        /* Tomando los valores mínimos : login (36px) + banner header (190px) + menu (50px) + footer (100px) */
+        height: calc(100% - 366px);    
+        min-height: calc(100% - 366px);
+    }
+}
+
+
+
+/* Ajustar al 100% el tamaño del contenido de la pagina: boostrap -> (min-width:768px) */
+@media (max-width: 767px) {
+    #body {
+        /*min-height: calc(100% - 104px);*/
+        padding: 10px;
+    }
+
+    #header-banner-1 {
+        height: 130px;
+        font-size: 13pt;
+        /*font-size: 1.338333346716672em;*/        
+    }
+
+    #content-limit {
+        /* Tomando los valores mínimos : login (36px) + banner header (130px) + menu (50px) + footer (100px) */
+        height: calc(100% - 306px);    
+        min-height: calc(100% - 306px);
+    }
+
+    #header-banner-left {
+        padding-top: 5px;
+    }
+
+    #header-banner-center {
+        margin-left: -30px;
+    }
+
+    #header-banner-right {
+        padding-top: 0px;
+    }
+
+        #header-banner-right > table td img {
+            display: none;
+        }
+
+    /* Pie de pagina: Logo */
+    #footer div.logo-footer {
+        text-align: center;
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    /* Pie de pagina: correo */
+    #footer div.leyenda-footer {
+        text-align: justify;
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .container-fluid.menuBarTheme a.btn.btn-primary {
+        text-align: left;
+    }
+
+        .container-fluid.menuBarTheme a.btn.btn-primary span.caret {
+            float: right;
+            margin-top: 10px;
+        }
+
+    .dropdown-submenu {
+        height:auto !important;
+        position:relative !important;
+        background-color: yellow;
+        padding-bottom:10px;
+    }
+
+    .dropdown-submenu .dropdown-menu {
+      background-color:red !important;      
+      position:relative !important;
+      left:0px;
+      top:10px;
+      padding:0px;      
+      margin-left:10px;
+    }
+
+}
+
+
+/* Div Logo, Disclaimer 526px */
+@media (max-width: 595px) {
+    #body {
+        /*min-height: calc(100% - 104px);*/
+        padding: 3px;
+    }
+
+    #body-content {
+        padding: 0px;
+    }
+
+    #header {
+        /* relative para que se mueva junto con el contenido, y no permanezca estatico*/
+        position: relative;
+        /* sticky para que se mueva con el contenido, pero permanezca estatico*/
+        /*position: sticky;*/
+        /* fixed para que No se mueva con el contenido, pero permanezca estatico*/
+        /*position: fixed;*/
+    }
+
+        #header .menuHeader {
+            /* fixed para que el menu no desplaze el contenido */
+            /* relative para que el menu desplaze el contenido */
+            position: relative;
+            padding: 0;
+            margin: 0;
+        }
+
+
+    #header-banner-1 {
+        font-size: 13pt;
+        /*font-size: 1.087395844207296em;*/
+    }
+
+    #header-banner-center {
+        display: none;
+    }
+
+    #header-banner-left {
+        display: none;
+    }
+
+    #header-banner-right {
+        width: 100%;
+        text-align: center;
+    }
+
+
+        #header-banner-right > table p {
+            text-align: center;
+        }
+
+        #header-banner-right div.input-group {
+            width: 100%;
+        }
+
+        #header-banner-right div.input-group {            
+            width: 100%;
+        }
+
+    #footer {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+        #footer > div.container {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+}
+
+
+/* Div Logo, Disclaimer 526px */
+@media (max-width: 320px) {
+    #header-banner-1 {
+        height:150px;
+        background-color:red;   
+    }
+}

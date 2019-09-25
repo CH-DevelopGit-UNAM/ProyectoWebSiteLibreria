@@ -1,0 +1,54 @@
+﻿/* Modal Dialog */
+.modal-dialog.primaryTheme > div.modal-content {
+    /*background-color:rebeccapurple;*/
+    /*border-color: #33d6ff;
+    border-width:thin;
+    border-style:solid;
+    */
+}
+
+/* Modal Dialog Header */
+.modal-dialog.primaryTheme > div.modal-content > div.modal-header{
+    /* color primario RGB(40,94,142)*/
+   /*background-color: #285e8e;*/
+   background-color: #0d2da7;
+   font-weight:bold;
+   color:gold;
+   font-size: 1.1em;
+}
+
+/* Modal Dialog Header hover */
+.modal-dialog.primaryTheme > div.modal-content > div.modal-header:hover{    
+   /*background-color: #3378B5;*/
+   background-color: #554DC3;
+}
+
+/* Modal Dialog header button close */
+.modal-dialog.primaryTheme > div.modal-content > div.modal-header button > span {   
+   font-size: 1.2em;   
+   color:white;
+   opacity:1;      
+}
+
+.modal-dialog.primaryTheme > div.modal-content > div.modal-header button > span:hover {   
+   color:white;
+}
+
+/* Modal Dialog Body */
+.modal-dialog.primaryTheme > div.modal-content > div.modal-body{
+   color:black;   
+}
+
+/* Modal Dialog Footer */
+.modal-dialog.primaryTheme > div.modal-content > div.modal-footer{
+   /* background-color:#97B2FF;  */
+   border-top-color:#d9e6f2;
+}
+
+
+/* Cabeceras Colapsables default */
+.modal-dialog.primaryTheme > div.modal-content > div.modal-body .panel.panel-default .panel-heading{
+   color: #333;
+   background-color: #f5f5f5;
+   border-color: #ddd
+}

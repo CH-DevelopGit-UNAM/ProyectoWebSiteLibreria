@@ -1,0 +1,440 @@
+﻿<%@ Page Title="Inicio" Language="C#" MasterPageFile="~/ResponsiveSite.Master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" Theme="SkinBase" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
+<%@ Register TagPrefix="UserControl" TagName="Carousel" Src="~/UserControls/NovedadesCarousel.ascx" %>
+
+<asp:Content runat="server" ContentPlaceHolderID="HeaderPlaceHolder">
+    <style type="text/css">
+       
+        a[id*='LinkUpdateNoticias']:hover {
+            cursor:pointer;
+        }
+
+        a[id*='LinkUpdateNoticias'] {
+            text-decoration:underline;
+        }
+
+        .customJumbotron {
+            width:100%;
+            height:auto;
+        }
+
+        .carouselJumbotron {
+            width:77%;            
+        }
+
+        .carouselContenedor{
+            background-color: black;
+        }
+
+        .carouselContenedorImagen {
+            display:flex; height:100%; text-align:center; 
+        }
+
+        .carouselImagen {
+            margin:auto;
+            height:370px;
+            -webkit-transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .carouselContenedorTitulo a{
+            color:yellow;
+            text-decoration:none;
+        }
+
+        .carouselContenedorTitulo {
+            margin-bottom: -20px; color: yellow;
+        }
+        .carouselContenedorTitulo p{
+            font-size:small;
+        }
+        .carouselFondoTitulo {
+            background-color: black; opacity: 0.4; height: 120px; position: absolute; z-index:0
+        }
+
+        /* Responsables */
+        table[id*='GridResponsables'].gridView-default{
+            font-size:0.9em;
+            text-align:left;            
+        }
+
+        table[id*='GridResponsables'] tr.gridHeader-default {
+            display:none;
+        }
+
+        table[id*='GridResponsables'] table.gridHeader-default {           
+            font-size:0.95em;            
+        }
+
+        table[id*='GridResponsables'] table.gridAlternatingRow-default {            
+            font-size:0.95em;
+        }
+
+        a[id*='LinkResponsables'] {
+                display:none;
+        }
+
+        .modalDialog-Detalle {
+            width: 60%;
+            max-width: 1100px;
+        }
+
+
+        @media screen and (max-width: 1200px) {
+            .modalDialog-Detalle {
+                width: 75%; 
+                margin:auto;
+            }
+
+            .carouselJumbotron {
+                 width:85%;
+            }
+
+            .carouselContenedor{
+                width:100%;
+            }
+
+            .jumbotron.customJumbotron {
+                 padding:5px; padding-top:7px;padding-bottom:5px;
+            }
+
+            .jumbotron.customJumbotron h4{
+                 padding-left:15px;
+                 padding-right:15px;
+            }
+
+            table[id*='GridResponsables'].gridView-default{
+                display:none;
+            }
+
+            a[id*='LinkResponsables'] {
+                display:inline;
+            }
+           
+
+        }
+
+        @media screen and (max-width: 991px) {
+            .text-right {
+                text-align:left;
+            }
+        }
+
+        /* Imagen */
+        @media screen and (max-width: 768px) {    
+            /*.carouselContenedorImagen {
+                display:block; height:100%; text-align:center;
+            }*/
+
+            /*.carouselImagen {
+                width:400px;        
+                height:350px;                
+            }*/
+            
+            .carouselJumbotron {
+                 width:89%;
+            }
+
+            .modalDialog-Detalle {
+                width: 85%;
+                margin:auto;
+            }
+
+            .carouselContenedorImagen {
+                display:flex; height:100%; text-align:center; 
+            }
+
+            .carouselImagen {
+                margin:auto;
+                height:270px;                
+            }            
+
+            .jumbotron.customJumbotron {
+                 width:100%;
+                 padding:5px; padding-top:7px;padding-bottom:5px;
+            }
+
+            .jumbotron.customJumbotron h4{
+                 padding-left:15px;
+                 padding-right:15px;
+            }
+
+            .carouselFondoTitulo {
+                height: 140px;
+            }
+            
+           
+        }
+
+        /* Imagen */
+        @media screen and (max-width: 525px) {    
+            /*.carouselContenedorImagen {
+                display:block; height:100%; text-align:center;
+            }*/ 
+
+            /*.carouselImagen {
+                width:300px;        
+                height:250px;
+            }*/
+            
+            .carouselJumbotron {
+                 width:100%;
+            }
+
+            .modalDialog-Detalle {
+                width: 95%;      
+                margin:auto;          
+            }
+            .carouselContenedorImagen {
+                display:flex; height:100%; text-align:center; 
+            }
+
+            .carouselImagen {
+                margin:auto;
+                height:180px;                
+            }                              
+
+            .jumbotron.customJumbotron {
+                padding:0px; padding-top:5px;padding-bottom:0px; height:auto;
+            }
+
+            .jumbotron.customJumbotron h4{
+                 padding-left:15px;
+                 padding-right:15px;    
+            }
+
+            .carouselFondoTitulo {
+                height: 160px;
+            }     
+               
+        }
+
+        .campo-Numero-Pagina {
+            display:inline-block;
+            padding:2px;
+            text-align:center;
+        }
+    </style>
+    <script type="text/javascript">
+        var idGrid = '#<%=GridViewResultado.ClientID%>';
+        var idTxtPaginador = '<%=TextBoxPaginaActual.ClientID%>';
+        var idTxtBusqueda = '<%=TextBoxBusqueda.ClientID%>';
+        var idUpdatePanelBusqueda = '<%=UpdatePanelBusqueda.ClientID%>';
+        var idButtonBuscar = '<%=ButtonBuscar.ClientID%>';
+
+        
+    </script>
+        
+</asp:Content>
+
+<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <div class="customJumbotron " style="padding:20px; padding-top:10px;padding-bottom:50px; margin:auto;">
+        <h4 style="padding:0px; font-size:medium; font-weight:bold;">NOVEDADES EDITORIALES</h4>
+        <UserControl:Carousel ID="Carousel" runat="server" />
+    </div>    
+    <div class="jumbotron customJumbotron" style="font-size:small; padding:20px; padding-top:10px;padding-bottom:10px;background-color:transparent;border-color:lightgray;border-style:solid;border-width:thin;display:none;">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Q</span>
+            <asp:TextBox ID="TextBoxBusqueda" runat="server" CssClass="form-control img-responsive" aria-describedby="basic-addon1" placeholder="Búsqueda"> </asp:TextBox>
+            <%--<asp:RequiredFieldValidator ID="Req" runat="server" ControlToValidate="TextBoxBusqueda" Text="REQUERIDO"  ValidationGroup="BusquedaGroup" ErrorMessage="REQUERDIO" EnableClientScript="true" ></asp:RequiredFieldValidator>--%>
+            <br />
+            <span class="input-group-btn">
+                
+                <!-- Al usar una validacion, al form del master page se la asigna al evento "onsubmit" la funcion "WebForm_OnSubmit" -->
+                <!-- Al estar asignado el boton al UpdatePanel  "UpdatePanelBusqueda", en "AsyncPostBackTrigger", realiza un postback asincrono -->                
+                <!-- Al realizar un postback asincrono, es necesario validar manualmente antes de que se realice un postback asincrono , mediante el "ValidationGroup" -->
+                <!-- CausesValidation="true" ValidationGroup="BusquedaGroup" OnClientClick="return validarBusqueda('BusquedaGroup');"  -->
+                <asp:Button ID="ButtonBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="ButtonBuscar_Click" UseSubmitBehavior="false" Visible="false"/>
+            </span>
+        </div>
+    </div>
+
+    <div class="row" style="margin:0px; margin-top:-25px;">
+        <div class="col-md-12" >
+            <div class="center text-center">
+                <asp:Button ID="ButtonCatalogo" runat="server" Text="Catalogo" CssClass="btn btn-default" OnClick="ButtonCatalogo_Click" Visible="false" />
+                <asp:Button ID="ButtonEventos" runat="server" Text="Eventos" CssClass="btn btn-default" OnClick="ButtonEventos_Click" Visible="false" />
+                <asp:Button ID="ButtonGaleria" runat="server" Text="Galeria" CssClass="btn btn-default" OnClick="ButtonGaleria_Click" Visible="false"/>
+                <asp:Button ID="ButtonCompras" runat="server" Text="Compras" CssClass="btn btn-default" OnClick="ButtonCompras_Click" Visible="false"/>
+            </div>        
+             
+        </div>
+    </div>
+
+    <%-- RESULTADOS--%>
+
+    <div class="panel panel-default primaryTheme" style="margin-top: 30px; display:none;">
+        <div class="panel-heading">
+            <h3 class="panel-title text-center">RESULTADOS
+            </h3>
+        </div>
+        <div class="panel-body" style="min-height: 200px;">
+            <div class="row">
+                <div class="col-md-12" style="position:relative;">
+                    <asp:UpdatePanel ID="UpdatePanelBusqueda" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="true" Visible="false" >
+                        <ContentTemplate>
+                            <asp:HiddenField ID="HiddenCampoBusqueda" runat="server" Value="" />
+                            <asp:GridView ID="GridViewResultado" runat="server" SkinID="GridViewPrimary" PageSize="10" AllowPaging="true" OnPageIndexChanging="GridViewResultado_PageIndexChanging" OnRowDataBound="GridViewResultado_RowDataBound" AllowCustomPaging="true"
+                                ShowHeaderWhenEmpty="false" AllowSorting="true" OnSorting="GridViewResultado_Sorting" OnRowCommand="GridViewResultado_RowCommand" OnSorted="GridViewResultado_Sorted" >
+                                <Columns>
+                                    <asp:TemplateField HeaderText="Titulo" ItemStyle-CssClass="gridViewColumnHidden column-hidden-responsive-sm gridHeader" HeaderStyle-CssClass="gridViewColumnHidden column-hidden-responsive-sm" >
+                                        <ItemTemplate>
+                                            <span> TITULO </span>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:BoundField HeaderText="Id Titulo" DataField="IdTitulo" ItemStyle-CssClass="gridViewColumnHidden" HeaderStyle-CssClass="gridViewColumnHidden" ></asp:BoundField>
+                                    <%--<asp:BoundField HeaderText="Contenido" DataField="Contenido" ItemStyle-CssClass="gridViewColumnHidden" HeaderStyle-CssClass="gridViewColumnHidden" ></asp:BoundField>
+                                    <asp:BoundField HeaderText="Colofon" DataField="Colofon" ItemStyle-CssClass="gridViewColumnHidden" HeaderStyle-CssClass="gridViewColumnHidden" ></asp:BoundField>--%>
+                                    <asp:TemplateField HeaderText="Titulo Original" HeaderStyle-CssClass="gridHeader">
+                                        <HeaderTemplate>
+                                            <asp:LinkButton ID="LinkSortTituloOriginal" runat="server"  CommandArgument="tituloOriginal" CommandName="Sort" >
+                                                <ul style="list-style:none;display:block;padding:0px;margin:0px;list-style-type:none;" >
+                                                    <li style="display:block;padding:0px;margin:0px; position:relative; color:white;font-size:medium;">                                                        
+                                                        <span style="float:left; width:100%;">Titulo Original</span>
+                                                         <span style="float: right; height:15px;right:0px;top:10px; position:absolute;" class="caret"></span>
+                                                    </li>
+                                                </ul>
+                                            </asp:LinkButton>
+                                        </HeaderTemplate>
+                                        <ItemTemplate>
+                                            <b class="element-hidden-responsive-sm">Titulo Original:</b>
+                                            <asp:Label ID="LabelNombre" runat="server" Text='<%#Eval("TituloOriginal")%>'></asp:Label>
+                                        </ItemTemplate>                                        
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Titulo" HeaderStyle-CssClass="gridHeader">
+                                        <HeaderTemplate>
+                                            <asp:LinkButton ID="LinkSortTitulo" runat="server"  CommandArgument="titulo" CommandName="Sort" >
+                                                <ul style="list-style:none;display:block;padding:0px;margin:0px;list-style-type:none;" >
+                                                    <li style="display:block;padding:0px;margin:0px; position:relative; color:white;font-size:medium;">                                                        
+                                                        <span style="float:left; width:100%;">Titulo</span>
+                                                         <span style="float: right; height:15px;right:0px;top:10px; position:absolute;" class="caret"></span>
+                                                    </li>                                                    
+                                                </ul>                                                                                                                
+                                            </asp:LinkButton>
+    
+                                        </HeaderTemplate>
+                                        <ItemTemplate>
+                                            <b class="element-hidden-responsive-sm">Titulo:</b>
+                                            <asp:Label ID="LabelDescripcion" runat="server" Text='<%#Eval("Titulo")%>' ></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Autor" HeaderStyle-CssClass="gridHeader">
+                                        <HeaderTemplate>
+                                            <asp:LinkButton ID="LinkSortAutor" runat="server"  CommandArgument="autor" CommandName="Sort" >
+                                                <ul style="list-style:none;display:block;padding:0px;margin:0px;list-style-type:none;" >
+                                                    <li style="display:block;padding:0px;margin:0px; position:relative; color:white;font-size:medium;">                                                        
+                                                        <span style="float:left; width:100%;">Autor</span>
+                                                         <span style="float: right; height:15px;right:0px;top:10px; position:absolute;" class="caret"></span>
+                                                    </li>                                                    
+                                                </ul>                                                                                                                
+                                            </asp:LinkButton>
+                                        </HeaderTemplate>
+                                        <ItemTemplate>
+                                            <b class="element-hidden-responsive-sm">Autor:</b>
+                                            <asp:Label ID="LabelAutor" runat="server" Text=""></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    
+                                    <asp:TemplateField HeaderText="Año" HeaderStyle-CssClass="gridHeader">
+                                         <HeaderTemplate>
+                                            <asp:LinkButton ID="LinkSortAnio" runat="server"  CommandArgument="año" CommandName="Sort" >
+                                                <ul style="list-style:none;display:block;padding:0px;margin:0px;list-style-type:none;" >
+                                                    <li style="display:block;padding:0px;margin:0px; position:relative; color:white;font-size:medium;">                                                        
+                                                        <span style="float:left; width:100%;">Año</span>
+                                                         <span style="float: right; height:15px;right:0px;top:10px; position:absolute;" class="caret"></span>
+                                                    </li>                                                    
+                                                </ul>                                                                                                                
+                                            </asp:LinkButton>
+                                        </HeaderTemplate>
+                                        <ItemTemplate>
+                                             <div class="element-hidden-responsive-sm" >
+                                                <b>Año:</b>
+                                            </div>
+                                             <asp:Label ID="LabelAnio" runat="server" Text='<%#Eval("AnioPublicacion")%>'></asp:Label>                                          
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+
+                                     <asp:TemplateField ItemStyle-CssClass="center text-center" >
+                                        <ItemTemplate>
+                                            <a class="btn btn-default center text-center" onclick="javascript: return showDialogDetail(this);">Detalles</a>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>                                
+                                <%--La asignación automática de la dirección (SortDirection) solamente funciona con una fuente de datos SqlDataSource, así como la asignación de los estilos. --%>
+                                <%--<SortedAscendingHeaderStyle CssClass="caret.caret-up" /> --%>
+                                <PagerTemplate>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm-7">
+                                                Registros XXX al XXXX 
+                                            </div>
+                                            <div class="col-sm-2 text-center" style="padding:0px;">
+                                                <asp:LinkButton runat="server" ID="cmdInicio" CommandName="Page" CommandArgument="First" Text="<<" CssClass="btn btn-primary">
+                                                </asp:LinkButton>
+                                                <asp:LinkButton runat="server" ID="cmdAnterior" CommandName="Page" CommandArgument="Prev" Text="<" CssClass="btn btn-primary"></asp:LinkButton>
+                                            </div>
+                                            <div class="col-sm-1 center text-center" style="padding:0px;">
+                                                 Página N de N
+                                            </div>
+                                            <div class="col-sm-2 text-center" style="padding:0px;">
+                                                <asp:LinkButton runat="server" ID="cmdSiguiente" CommandName="Page" CommandArgument="Next" CssClass="btn btn-primary" Text=">"></asp:LinkButton>
+                                                <asp:LinkButton runat="server" ID="cmdFinal" CommandName="Page" CommandArgument="Last" CssClass="btn btn-primary" Text=">>"></asp:LinkButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                </PagerTemplate>
+                            </asp:GridView>
+                            <div id="FooterGridResultado" runat="server" class="container-fluid footer-Paging" style="padding:0px;">
+                                <div class="row" >
+                                    <div class="col-md-7" >
+                                     Registros 
+                                            <asp:Label ID="LabelRegistroInicial" runat="server"></asp:Label> 
+                                        al  <asp:Label ID="LabelRegistroFinal" runat="server"></asp:Label>
+                                        
+                                    </div>
+                                    <div class="col-md-5 center text-center" style="padding: 0px;">
+                                        <asp:LinkButton runat="server" ID="cmdInicio" CommandName="Page" CommandArgument="First" Text="<<" CssClass="btn btn-primary" OnClick="CommandPage_Click">
+                                        </asp:LinkButton>
+                                        <asp:LinkButton runat="server" ID="cmdAnterior" CommandName="Page" CommandArgument="Prev" Text="<" CssClass="btn btn-primary" OnClick="CommandPage_Click"></asp:LinkButton>
+                                        Página 
+                                        <asp:TextBox ID="TextBoxPaginaActual" runat="server" CssClass="form-control campo-Numero-Pagina" Width="50" ></asp:TextBox>                                         
+                                        <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender3" runat="server" TargetControlID="TextBoxPaginaActual" FilterType="Numbers" />
+                                        de <asp:Label ID="LabelPaginaFinal" runat="server"></asp:Label>
+
+                                        <asp:LinkButton runat="server" ID="cmdSiguiente" CommandName="Page" CommandArgument="Next" CssClass="btn btn-primary" Text=">" OnClick="CommandPage_Click"></asp:LinkButton>
+                                        <asp:LinkButton runat="server" ID="cmdFinal" CommandName="Page" CommandArgument="Last" CssClass="btn btn-primary" Text=">>" OnClick="CommandPage_Click"></asp:LinkButton>
+
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </ContentTemplate>
+                        <Triggers>                            
+                            <asp:AsyncPostBackTrigger ControlID="ButtonBuscar" EventName="Click" />
+                            <asp:AsyncPostBackTrigger ControlID="cmdInicio" EventName="Click" />
+                            <asp:AsyncPostBackTrigger ControlID="cmdAnterior" EventName="Click" />
+                            <asp:AsyncPostBackTrigger ControlID="cmdSiguiente" EventName="Click" />
+                            <asp:AsyncPostBackTrigger ControlID="cmdFinal" EventName="Click" />
+                        </Triggers>
+                    </asp:UpdatePanel>
+                    <asp:UpdateProgress ID="UpdateBusquedaProgress" runat="server" AssociatedUpdatePanelID="UpdatePanelBusqueda" DisplayAfter="400">
+                        <ProgressTemplate>
+                            <div id="wait" style="text-align: center; display: block; width: 200px; height: 50px; border: 1px solid #F78181; position: relative; margin: auto;padding: 10px; background-color: #FBF2EF; color: #5f3f3f; vertical-align: middle;">
+                                <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+                                <span class="" style="vertical-align: middle">
+                                    <img src="../images/uploading.gif" width="30" />
+                                    <br />
+                                    Cargando...
+                                </span>
+                            </div>
+                        </ProgressTemplate>
+                    </asp:UpdateProgress>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+</asp:Content>

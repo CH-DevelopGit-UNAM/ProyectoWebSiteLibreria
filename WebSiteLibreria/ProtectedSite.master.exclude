@@ -1,0 +1,231 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="ProtectedSite.master.cs" Inherits="ProtectedSite" %>
+
+<!DOCTYPE html>
+
+<html lang="en" >
+<head runat="server">
+    <meta charset="utf-8" />    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - Libreria </title>
+    <asp:PlaceHolder  runat="server">        
+    <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <webopt:bundlereference runat="server" path="~/App_Themes/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <asp:PlaceHolder  runat="server">        
+        <script type="text/javascript">
+            var urlSite = '<%=ResolveUrl("~/")%>';
+        </script>
+    </asp:PlaceHolder>    
+</head>
+    <%-- Las validaciones de asp.net siempre realizan el submit del body, por eso no se asigna en este elemento --%>
+<body>    
+    <%-- Las validaciones de asp.net  siempre realizan el submit del form, pero se asigna al "onsubmit" una funcion "WebForm_OnSubmit" por lo que la funcion "submitBody" es sobreescrita 
+            
+        --%>
+    <form id="formPrincipal" runat="server" class="formPrincipal"  onsubmit="javascript: return submitBody(this);"  autocomplete="off" defaultbutton="" defaultfocus="" > 
+
+        <asp:ScriptManager runat="server" EnablePartialRendering="true" EnablePageMethods="true"   AjaxFrameworkMode="Explicit"  >
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />     
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="bootstrap" />                  
+                <%-- NO REQUIERO USAR NI LAS VALIDACIONES NI FUNCIONES SOBRE LOS FORMULARIOS DE MICROSOFT --%>
+                <%-- <asp:ScriptReference Name="respond" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />              --%>  
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>     
+        <%: Scripts.Render("~/bundles/Pages") %>   
+       <%-- <script type="text/javascript" src="/Scripts/validacion.js"></script>
+        <script type="text/javascript" src="/Scripts/Sitio.js"></script>
+        <script type="text/javascript" src="/Scripts/jquery-ui-1.11.4.js"></script>
+        <script type="text/javascript" src="/Scripts/jquery-ui-1.11.4.min.js"></script>--%>
+        <%--<script type="text/javascript" src="/Scripts/bootstrapValidator.js"></script>--%>       
+        
+    <asp:ContentPlaceHolder ID="HeaderPlaceHolder" runat="server">
+
+    </asp:ContentPlaceHolder>
+
+        <%-- HEADER --%>
+
+        <div id="header">
+
+            <%-- MENU --%>
+
+            <div class="navbar navbar-fixed-top" style="position: relative; padding: 0; margin: 0;">
+
+                <!-- menuBarTheme -->
+                <div class="container-fluid menuBarTheme">
+                    <div class="navbar-header" style="width: 100%;">
+                        <button type="button" class="navbar-toggle pull-left" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <asp:LoginView ID="LoginView2" runat="server" ViewStateMode="Disabled">
+                            <LoggedInTemplate>
+                                <div id="LogoAvatar_2" class="pull-right element-hidden-responsive-md" style="padding: 8px; display: none">
+                                    <ul style="list-style: none; padding: 0px; margin: 0px;">
+                                        <li style="text-align: center; padding: 0px; margin: 0px;">
+                                            <img alt="Logout" src="<%=ResolveUrl("~/")%>images/avatar.png" style="width: 40px; height: 40px;" />
+                                            <br />
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                    <span><%: Context.User.Identity.GetUserName().ToUpper()%></span>
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li>
+                                                        <asp:LinkButton ID="LinkButtonSmallLogout" runat="server" class="btn btn-primary" Text="SALIR" OnClick="LinkButton_Click"></asp:LinkButton></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </LoggedInTemplate>
+                        </asp:LoginView>
+                    </div>
+
+                    <div id="DivMenu" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right menuAcciones">
+                            <asp:LoginView ID="LoginView3" runat="server" ViewStateMode="Disabled">
+                                <AnonymousTemplate>
+                                    <li >
+                                        <a class="btn btn-primary" runat="server" href="~/">Inicio</a>
+                                    </li>
+                                </AnonymousTemplate>
+                                <LoggedInTemplate>
+                                    <div id="LogoAvatar_1">
+                                        <ul class="nav navbar-nav navbar-right">
+                                            <li style="text-align: center; padding: 2px;">
+                                                <div class="btn-group">
+                                                    <img alt="Logout" src="<%=ResolveUrl("~/")%>images/avatar.png" style="width: 40px; height: 40px;" />
+                                                    <br />
+                                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                        <span><%: Context.User.Identity.GetUserName().ToUpper()%></span>
+                                                        <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li>
+                                                            <asp:LinkButton ID="LinkButtonLogout" runat="server" class="btn btn-primary" Text="SALIR" OnClick="LinkButton_Click"></asp:LinkButton></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </LoggedInTemplate>
+                            </asp:LoginView>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <%-- CONTENIDO --%>
+
+        <div id="content-limit">
+            <div></div>
+                <div id="logoHeader">
+                    <div class="container">
+                        <table style="width: 100%;">
+                            <tr>
+                                <td>
+                                    <img src='<%=ResolveUrl("~/")%>images/Logo-Header-1.png' class="logo-left" /></td>
+                                <td style="text-align: center;">
+                                    <img src='<%=ResolveUrl("~/")%>images/Logo-Header-2.png' class="logo-center" />
+                                </td>
+                                <td>
+                                    <img src='<%=ResolveUrl("~/")%>images/Logo-Header-3.png' class="logo-right" /></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            <%-- CUERPO CONTENIDO --%>
+
+            <div id="body" class="container">
+                <%-- EN CASO DE SER NECESARIO, UN FONDO PARA OPACIDAD, EN LAS PÁGINAS, UTILIZAR LA CLASE body-background-layout-color para asignar color --%>    
+                <div class="body-background-layout body-background-layout-color" ></div>
+
+                 <div id="body-content" style="position:relative;">
+                    <%-- MENSAJES --%>
+                    <div id="message"></div>
+                    <asp:ContentPlaceHolder ID="MainContent" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>         
+            </div>
+
+            <%-- FOOTER --%>
+
+            <div id="footer">
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <%-- LOGO --%>
+                        <div class="col-sm-2 logo-footer">
+                            <img src="<%=ResolveUrl("~/")%>images/logoblanco-01.png" alt="Unam" />
+                        </div>
+
+                        <%-- CONTACTO --%>
+                        <div class="col-sm-10 leyenda-footer">
+                            <h4 style="font-family: 'Verdana'; font-size: small;">Hecho en México, Universidad Nacional Autónoma de México (UNAM), todos los derechos reservados 2009 - 2018. Esta página puede ser reproducida con fines no lucrativos, 
+                                        siempre y cuando se cite la fuente completa y su dirección electrónica, y no se mutile. De otra forma requiere permiso previo por escrito de la institución</h4>
+                        </div>
+
+                        <%--<!-- DISCLAIMER -->
+                        <div>
+                            <p>DISCLAIMER</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        </div>
+                        <!-- MAPA DE SITIO-->
+                        <div>
+                            <p>MAPA DE SITIO</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>                                                
+                        </div>--%>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </form>
+
+    <div id="DivAsyncPostback" class="modal" style="z-index:2000;overflow:hidden;overflow-x:hidden; color:white;">
+            <div class="modal-body" >
+                <div class="container-fluid">
+                    <div class="modal" style="background-color:yellow;opacity:0.4; overflow:hidden;overflow-x:hidden;z-index:2010;"></div>
+                    <div class="row center text-center" style="z-index:3050;  margin-top:345px;">
+                        <div class="col-md-3"></div>
+                        <!-- class="col-md-6 col-md-offset-3 media-middle" -->
+                        <div class="col-md-6" >
+                            <div id="progressBar" class="text-center">
+                                <img  src="<%=ResolveClientUrl("~/")%>images/gifAjax.gif" width="100" height="100" />
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>
+                   </div>
+                  
+                </div>
+            </div>
+    </div>
+</body>
+</html>
